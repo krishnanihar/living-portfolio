@@ -83,9 +83,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
             background: var(--bg);
-            color: var(--text-primary);
+            color: var(--text);
+            overflow-x: hidden;
             line-height: 1.6;
             font-size: var(--font-body);
             -webkit-font-smoothing: antialiased;
@@ -533,14 +534,10 @@
             color: var(--orange);
         }
 
-        /* Footer - Enhanced */
+        /* Footer - Clean and centered */
         footer {
             padding: var(--space-2xl) 0 var(--space-xl);
             text-align: center;
-            background: var(--surface);
-            backdrop-filter: var(--blur);
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .footer-title {
@@ -559,21 +556,13 @@
 
         .footer-link {
             font-size: var(--font-small);
-            color: var(--text-tertiary);
+            color: var(--text-dim);
             text-decoration: none;
-            padding: var(--space-xs) var(--space-sm);
-            background: var(--surface);
-            backdrop-filter: var(--blur);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
             transition: var(--transition);
         }
 
         .footer-link:hover {
-            color: var(--text-primary);
-            background: var(--surface-hover);
-            border-color: var(--accent);
-            transform: translateY(-2px);
+            color: var(--text);
         }
 
         .footer-meta {
@@ -614,44 +603,70 @@
                 gap: var(--space-md);
             }
         }
-        /* Container and alignment */
+        /* Container and alignment - like main page */
         .container {
             max-width: var(--maxw);
             margin: 0 auto;
-            padding: 0 var(--space-md);
+            padding: 0 clamp(16px, 5vw, 40px);
         }
 
-        /* Clean card styling - NO TILT */
+        /* All sections transparent like main page */
+        .hero, .section, footer {
+            background: transparent !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero section styling like main page */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 5vw, 40px);
+            background: transparent !important;
+            z-index: 2;
+            overflow: hidden;
+            perspective: 1500px;
+            -webkit-perspective: 1500px;
+        }
+
+        /* Hero Inner - EXACT COPY from hero.css */
         .hero-inner {
-            /* Pure glassmorphism from main page */
-            backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
-            -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
-            background: var(--surface);
+            position: relative;
+            width: 100%;
+            max-width: min(680px, 92vw);
+            padding: clamp(24px, 6vw, 48px);
+
+            /* Pure glassmorphism - transparent background */
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: clamp(20px, 5vw, 32px);
 
-            /* Clean shadows - no 3D tilt */
+            /* Enhanced 3D shadow layers - EXACT COPY */
             box-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.1),
                 0 8px 16px rgba(0, 0, 0, 0.15),
                 0 16px 32px rgba(0, 0, 0, 0.2),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+                0 24px 48px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 -20px 40px rgba(0, 0, 0, 0.05);
 
-            /* Simple hover - NO TILT */
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* NO TILT - simple hover only */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: var(--space-lg);
-            position: relative;
             z-index: 3;
         }
 
         /* Simple hover effect - NO TILT */
         .hero-inner:hover {
             transform: translateY(-4px);
-            box-shadow:
-                0 4px 16px rgba(0, 0, 0, 0.15),
-                0 12px 24px rgba(0, 0, 0, 0.2),
-                0 20px 40px rgba(0, 0, 0, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
 
         /* Particles background - exact from main page */
@@ -766,8 +781,8 @@
     </section>
 
     <!-- Stats -->
-    <section class="container">
-        <div class="stats-row hero-inner">
+    <section class="hero">
+        <div class="hero-inner stats-row">
             <div class="stat">
                 <span class="stat-value">8</span>
                 <span class="stat-label">Key Projects</span>
@@ -787,16 +802,19 @@
         </div>
     </section>
 
-    <!-- All 8 Projects -->
-    <section class="section">
-        <div class="container">
+    <!-- Section Header -->
+    <section class="hero">
+        <div class="hero-inner">
             <div class="section-header">
                 <h2 class="section-title">Eight Key Projects</h2>
                 <p class="section-desc">Systems, experiences, and innovation across Air India</p>
             </div>
+        </div>
+    </section>
 
-            <!-- PROJECT 1: Pixel Radar -->
-            <div class="project hero-inner">
+    <!-- PROJECT 1: Pixel Radar -->
+    <section class="hero">
+        <div class="hero-inner project">
                 <div class="project-meta">
                     <div class="project-label">Design Systems</div>
                     <h3 class="project-title">Pixel Radar</h3>
@@ -1108,8 +1126,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="hero-inner">
-        <div class="container">
+    <section class="hero">
+        <footer class="hero-inner">
             <h2 class="footer-title">Let's build something impactful together</h2>
             <div class="footer-links">
                 <a href="mailto:hello@nihar.design" class="footer-link">Email</a>
@@ -1118,8 +1136,8 @@
                 <a href="https://github.com/krishnanihar" class="footer-link">GitHub</a>
             </div>
             <div class="footer-meta">Updated December 2024 · Exact metrics available on request</div>
-        </div>
-    </footer>
+        </footer>
+    </section>
 
     <!-- Load particles system -->
     <script src="js/utils.js"></script>
