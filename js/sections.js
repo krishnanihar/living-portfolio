@@ -790,35 +790,23 @@ const Sections = {
         // Get project data and navigate
         const project = card.dataset.project;
 
-        if (project === 'latent-space') {
-          // Animate card before navigation
-          card.style.transform = 'scale(0.98)';
-          setTimeout(() => {
-            window.open('https://latent-space.vercel.app/', '_blank');
-            card.style.transform = '';
-          }, 150);
-        } else if (project === 'air-india') {
-          // Animate card before navigation
-          card.style.transform = 'scale(0.98)';
-          setTimeout(() => {
-            window.open('https://air-india-design.vercel.app/', '_blank');
-            card.style.transform = '';
-          }, 150);
-        } else if (project === 'pixel-radar') {
-          // Animate card before navigation
-          card.style.transform = 'scale(0.98)';
-          setTimeout(() => {
-            window.open('https://pixel-radar.vercel.app/', '_blank');
-            card.style.transform = '';
-          }, 150);
-        } else {
-          // For other projects, add some visual feedback
-          card.style.transform = 'scale(0.98)';
-          setTimeout(() => {
-            card.style.transform = '';
-            console.log(`Project ${project} clicked - no navigation configured yet`);
-          }, 150);
-        }
+        // Animate card feedback
+        card.style.transform = 'scale(0.98)';
+
+        // Show project details instead of navigating to non-existent URLs
+        setTimeout(() => {
+          card.style.transform = '';
+
+          if (project === 'latent-space') {
+            alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
+          } else if (project === 'air-india') {
+            alert('✈️ Design at Air India\n\nLeading design transformation for India\'s flag carrier. Building scalable design systems and reimagining digital experiences across web, mobile, and in-flight entertainment.\n\n[Portfolio case study coming soon]');
+          } else if (project === 'pixel-radar') {
+            alert('🎯 Pixel Radar - Figma QA Assistant\n\nFigma plugin that audits components against tokens/variables, flags drift, suggests fixes, and can comment directly on PRs via CI hook.\n\n[Project URL coming soon]');
+          } else {
+            console.log(`Project ${project} clicked - details coming soon`);
+          }
+        }, 150);
       });
     });
   }
