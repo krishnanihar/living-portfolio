@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air India Transformation — Product & Systems Designer</title>
+    <style>
+        /* Design System - Enhanced with glassmorphism */
+        :root {
+            --bg: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-hover: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.12);
+
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+
+            --accent: #da0e29;
+            --accent-blue: #4A90E2;
+            --accent-muted: rgba(218, 14, 41, 0.1);
+            --success: rgba(16, 185, 129, 0.8);
+            --purple: rgba(139, 92, 246, 0.8);
+            --orange: rgba(249, 115, 22, 0.8);
+
+            --radius: 20px;
+            --radius-sm: 12px;
+            --max-width: 1000px;
+
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 40px;
+            --space-xl: 64px;
+            --space-2xl: 120px;
+
+            --font-display: clamp(36px, 5vw, 48px);
+            --font-title: clamp(24px, 4vw, 32px);
+            --font-heading: 20px;
+            --font-body: 16px;
+            --font-small: 14px;
+            --font-micro: 11px;
+
+            --transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --blur: blur(24px) saturate(1.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* Navigation - Enhanced glassmorphism */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            backdrop-filter: var(--blur);
+            background: linear-gradient(135deg,
+                rgba(10, 10, 10, 0.95) 0%,
+                rgba(20, 10, 15, 0.9) 100%);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            transition: var(--transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-size: var(--font-small);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-brand:hover {
+            color: var(--accent);
+        }
+
+        .nav-meta {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 80px;
+            left: var(--space-md);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--font-small);
+            transition: var(--transition);
+            z-index: 50;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            padding: calc(60px + var(--space-2xl)) 0 var(--space-xl);
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-meta {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-md);
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: var(--font-display);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-title strong {
+            font-weight: 600;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--accent), #ff3355);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: var(--font-body);
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto var(--space-xl);
+            line-height: 1.7;
+        }
+
+        /* Stats Row - Enhanced glassmorphism */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            padding: var(--space-lg) var(--space-md);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: var(--space-2xl);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-title);
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+        }
+
+        /* Section */
+        .section {
+            padding: var(--space-xl) 0;
+        }
+
+        .section-header {
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-title {
+            font-size: var(--font-title);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .section-desc {
+            font-size: var(--font-small);
+            color: var(--text-tertiary);
+        }
+
+        /* Enhanced Card with glassmorphism */
+        .card {
+            padding: var(--space-lg);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-size: var(--font-heading);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .card-desc {
+            font-size: var(--font-small);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .card-metric {
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+            font-size: var(--font-small);
+            color: var(--accent);
+        }
+
+        /* Project Layout */
+        .project {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project:last-child {
+            border-bottom: none;
+        }
+
+        .project-meta {
+            padding-top: var(--space-xs);
+        }
+
+        .project-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .project-title {
+            font-size: var(--font-heading);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .project-content {
+            padding-top: var(--space-xs);
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+
+        /* Media Frame - Enhanced glassmorphism */
+        .media-frame {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, var(--surface), rgba(255, 255, 255, 0.02));
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: var(--space-lg) 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .media-placeholder {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+        }
+
+        /* Info Blocks - Enhanced glassmorphism */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            margin: var(--space-lg) 0;
+        }
+
+        .info-block {
+            padding: var(--space-md);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .info-text {
+            font-size: var(--font-small);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Role Block - Enhanced */
+        .role-block {
+            padding: var(--space-md);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border-left: 2px solid var(--accent);
+            border-radius: var(--radius-sm);
+            margin: var(--space-lg) 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .role-text {
+            font-size: var(--font-small);
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .role-text strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Outcome - Enhanced */
+        .outcome {
+            padding: var(--space-md);
+            background: rgba(16, 185, 129, 0.05);
+            backdrop-filter: var(--blur);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: var(--radius-sm);
+            margin: var(--space-lg) 0;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+        }
+
+        .outcome-label {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--success);
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .outcome-text {
+            font-size: var(--font-small);
+            color: var(--text-secondary);
+        }
+
+        /* Link - Enhanced */
+        .link {
+            display: inline-block;
+            font-size: var(--font-small);
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .link:hover {
+            color: var(--text-primary);
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* Section Divider - Enhanced */
+        .section-divider {
+            margin: var(--space-xl) 0;
+            padding: var(--space-lg);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-divider h3 {
+            font-size: var(--font-heading);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .section-divider p {
+            font-size: var(--font-small);
+            color: var(--text-tertiary);
+        }
+
+        /* Badge - Enhanced */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--accent-muted);
+            backdrop-filter: var(--blur);
+            border: 1px solid rgba(218, 14, 41, 0.2);
+            border-radius: 20px;
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .badge.winner {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: rgba(249, 115, 22, 0.2);
+            color: var(--orange);
+        }
+
+        /* Footer - Enhanced */
+        footer {
+            padding: var(--space-2xl) 0 var(--space-xl);
+            text-align: center;
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-title {
+            font-size: var(--font-heading);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-lg);
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+        }
+
+        .footer-link {
+            font-size: var(--font-small);
+            color: var(--text-tertiary);
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-meta {
+            margin-top: var(--space-xl);
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                display: block;
+                margin: var(--space-md) auto;
+                width: fit-content;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: var(--space-lg);
+            }
+
+            .project {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-brand" onclick="window.location.href='index.html'">Portfolio</div>
+            <div class="nav-meta">Air India · 2024–Present</div>
+        </div>
+    </nav>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-meta">Case Study Available</div>
+            <h1 class="hero-title">
+                I build <strong>systems</strong> that help teams ship better products, faster.
+            </h1>
+            <p class="hero-desc">
+                Select work from Air India's digital transformation. Public-safe case study with sanitized examples and directional metrics.
+            </p>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="container">
+        <div class="stats-row">
+            <div class="stat">
+                <span class="stat-value">8</span>
+                <span class="stat-label">Key Projects</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">2</span>
+                <span class="stat-label">Hackathon Wins</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">↑</span>
+                <span class="stat-label">Review Speed</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">↑</span>
+                <span class="stat-label">Design Consistency</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- All 8 Projects -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Eight Key Projects</h2>
+                <p class="section-desc">Systems, experiences, and innovation across Air India</p>
+            </div>
+
+            <!-- PROJECT 1: Pixel Radar -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Design Systems</div>
+                    <h3 class="project-title">Pixel Radar</h3>
+                    <span class="badge">Figma Plugin</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Design drift was causing significant rework and inconsistent experiences across Air India's digital products.
+                        Teams struggled to maintain token compliance without manual reviews.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Plugin Interface Demo</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Plugin architecture, audit logic, token normalization algorithms<br>
+                            <strong>Collaborated:</strong> Design team on token naming conventions, engineering on technical feasibility
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Significantly improved review speed and consistency. Teams report fewer design-dev handoff issues
+                            and cleaner implementation.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View sanitized token report →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 2: Analytics Platform -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Data Visualization</div>
+                    <h3 class="project-title">Analytics Platform</h3>
+                    <span class="badge">Dashboard</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Operations teams were overwhelmed by data complexity. Decision-making slowed as stakeholders
+                        struggled to extract insights from traditional reports.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Narrative Flow Demo</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Information architecture, narrative flow design, interaction patterns<br>
+                            <strong>Collaborated:</strong> Data team on metric definitions, operations on workflow integration
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Reduced decision time to minute-scale. Stakeholders report clearer understanding
+                            and faster alignment in review meetings.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View dashboard wireframes →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 3: Mobile -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Mobile Experience</div>
+                    <h3 class="project-title">UX Pattern Library</h3>
+                    <span class="badge">iOS + Android</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Inconsistent mobile experiences across Air India's apps were causing user friction and development delays.
+                        Teams needed unified patterns for both platforms.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Pattern Matrix & Components</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Pattern documentation, state matrices, gesture guidelines, empty/error/loading states<br>
+                            <strong>Collaborated:</strong> Mobile developers on platform constraints, QA on edge cases
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Faster mobile prototyping with consistent handoffs. Complete coverage of all states reduced
+                            platform-specific bugs significantly.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View pattern library →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 4: Design Systems -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Design Systems</div>
+                    <h3 class="project-title">Token Architecture</h3>
+                    <span class="badge">Foundation</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Beyond Pixel Radar, established comprehensive token architecture supporting themes, brands, and platforms.
+                        Created the foundation for scalable design decisions.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Token Structure & Hierarchy</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Token taxonomy, naming conventions, inheritance model, documentation<br>
+                            <strong>Collaborated:</strong> Design leadership on governance, engineering on implementation
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Established single source of truth for design decisions. Teams now share common language
+                            and systematic approach to theming.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View token documentation →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 5: IFE -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">In-Flight Entertainment</div>
+                    <h3 class="project-title">IFE Concepts</h3>
+                    <span class="badge">Cabin Experience</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Fragmented discovery and continuity experiences in-flight. Passengers struggled with content navigation
+                        and cross-device handoffs.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Browse → Watch → Resume Flow</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Continuity flows, readability standards, motion pacing, offline resilience patterns<br>
+                            <strong>Collaborated:</strong> Content team on catalog structure, backend team on sync architecture
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Stakeholder alignment on modernized IFE journey. Seamless browse-watch-resume experience
+                            with robust offline support.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View continuity maps →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 6: Liftoff -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Team Enablement</div>
+                    <h3 class="project-title">Liftoff Program</h3>
+                    <span class="badge">Culture Building</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Design team needed structured growth paths and visible progress indicators. Traditional mentorship
+                        wasn't scaling with team expansion.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Mentorship Framework & Mission Board</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Program design, mentorship mapping, weekly mission structure, demo cadence<br>
+                            <strong>Collaborated:</strong> Design leadership on goals, team members on feedback loops
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Visible skill progression across the team. Weekly demos created momentum and knowledge sharing.
+                            Higher team velocity and engagement.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View program framework →</a>
+                </div>
+            </div>
+
+            <!-- Hackathon Section Divider -->
+            <div class="section-divider">
+                <h3>Innovation Sprints</h3>
+                <p>48-hour hackathon wins now in production</p>
+            </div>
+
+            <!-- PROJECT 7: Internal Hackathon -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Innovation Sprint</div>
+                    <h3 class="project-title">Internal Hackathon</h3>
+                    <span class="badge winner">Winner</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Annual internal innovation sprint to explore bold ideas outside normal constraints.
+                        Focus on customer pain points with rapid prototyping.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">Winning Prototype Demo</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> Concept development, rapid prototyping, pitch deck, live demo<br>
+                            <strong>Collaborated:</strong> Cross-functional team of 4 engineers and 1 product manager
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            First place win. Prototype moved to production pipeline within 2 weeks.
+                            Validated approach now used for quarterly innovation cycles.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View prototype demo →</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 8: Microsoft Hackathon -->
+            <div class="project">
+                <div class="project-meta">
+                    <div class="project-label">Partnership Innovation</div>
+                    <h3 class="project-title">Microsoft × Air India</h3>
+                    <span class="badge winner">Winner</span>
+                </div>
+
+                <div class="project-content">
+                    <p class="project-desc">
+                        Joint hackathon with Microsoft to explore Azure AI services for aviation.
+                        Challenge: reimagine customer service with cloud-native solutions.
+                    </p>
+
+                    <div class="media-frame">
+                        <span class="media-placeholder">AI Service Architecture</span>
+                    </div>
+
+                    <div class="role-block">
+                        <div class="role-label">My Contribution</div>
+                        <div class="role-text">
+                            <strong>Owned:</strong> UX flows, conversational design, prototype interface, integration patterns<br>
+                            <strong>Collaborated:</strong> Microsoft architects on Azure services, Air India ops on use cases
+                        </div>
+                    </div>
+
+                    <div class="outcome">
+                        <div class="outcome-label">Outcome</div>
+                        <div class="outcome-text">
+                            Winner in customer experience category. Prototype demonstrated 70% query resolution potential.
+                            Now in pilot phase with select routes.
+                        </div>
+                    </div>
+
+                    <a href="#" class="link">View integration patterns →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h2 class="footer-title">Let's build something impactful together</h2>
+            <div class="footer-links">
+                <a href="mailto:hello@nihar.design" class="footer-link">Email</a>
+                <a href="https://linkedin.com/in/nihardesign" class="footer-link">LinkedIn</a>
+                <a href="#" class="footer-link">Download PDF</a>
+                <a href="https://github.com/krishnanihar" class="footer-link">GitHub</a>
+            </div>
+            <div class="footer-meta">Updated December 2024 · Exact metrics available on request</div>
+        </div>
+    </footer>
+</body>
+</html>

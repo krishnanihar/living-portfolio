@@ -800,7 +800,7 @@ const Sections = {
           if (project === 'latent-space') {
             alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
           } else if (project === 'air-india') {
-            alert('✈️ Design at Air India\n\nLeading design transformation for India\'s flag carrier. Building scalable design systems and reimagining digital experiences across web, mobile, and in-flight entertainment.\n\n[Portfolio case study coming soon]');
+            window.open('air-india.html', '_blank');
           } else if (project === 'pixel-radar') {
             alert('🎯 Pixel Radar - Figma QA Assistant\n\nFigma plugin that audits components against tokens/variables, flags drift, suggests fixes, and can comment directly on PRs via CI hook.\n\n[Project URL coming soon]');
           } else {
