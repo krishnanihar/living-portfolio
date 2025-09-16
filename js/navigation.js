@@ -57,11 +57,26 @@ const Navigation = {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const section = link.dataset.section;
-        const target = $('#' + section);
-        
-        if (target) {
+        let target = $('#' + section);
+
+        // Fallback: if section not found, try to find it after a short delay
+        if (!target) {
+          console.log(`Section #${section} not found, retrying...`);
+          setTimeout(() => {
+            target = $('#' + section);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              this.updateActiveSection(section);
+            } else {
+              console.error(`Section #${section} still not found!`);
+            }
+          }, 100);
+        } else {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           this.updateActiveSection(section);
+        }
+
+        if (window.State) {
           State.interactionPatterns.explorer++;
         }
       });

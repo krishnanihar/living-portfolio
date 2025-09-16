@@ -10,9 +10,16 @@ const Sections = {
       await this.loadAbout();
       
       this.setupInteractions();
-      
-      // Re-initialize theme snap scrolling after sections load
+
+      // Re-initialize navigation and theme after sections load
       setTimeout(() => {
+        // Re-initialize navigation to observe new sections
+        if (window.Navigation && Navigation.setupScrollSpy) {
+          console.log('🔄 Re-initializing navigation for loaded sections...');
+          Navigation.setupScrollSpy();
+        }
+
+        // Re-initialize theme snap scrolling
         if (window.Theme && Theme.initMobileSnapScroll) {
           Theme.initMobileSnapScroll();
         }
