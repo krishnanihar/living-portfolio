@@ -607,30 +607,42 @@
                 gap: var(--space-md);
             }
         }
-        /* Additional Air India specific styles */
+        /* Exact Hero Card Styling */
         .air-india-card {
-            background: rgba(255, 255, 255, 0.02);
+            /* Pure glassmorphism - transparent background */
             backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.02) !important; /* Very subtle glass */
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: clamp(20px, 5vw, 32px);
+
+            /* Enhanced 3D shadow layers - EXACT COPY from hero.css */
             box-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.1),
                 0 8px 16px rgba(0, 0, 0, 0.15),
                 0 16px 32px rgba(0, 0, 0, 0.2),
                 0 24px 48px rgba(0, 0, 0, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 -20px 40px rgba(0, 0, 0, 0.05);
+
+            /* 3D transform setup - EXACT COPY */
+            transform-style: preserve-3d !important;
+            -webkit-transform-style: preserve-3d !important;
+            transform-origin: center center;
+            transition: transform 0.08s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: transform;
+            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+
             margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 3;
         }
 
-        .air-india-card:hover {
-            transform: translateY(-4px);
-            box-shadow:
-                0 4px 16px rgba(0, 0, 0, 0.15),
-                0 12px 24px rgba(0, 0, 0, 0.2),
-                0 20px 40px rgba(0, 0, 0, 0.25),
-                0 32px 64px rgba(0, 0, 0, 0.3),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        /* 3D hover effect - EXACT COPY from hero.css */
+        @media (hover: hover) {
+            .air-india-card:hover {
+                transform: rotateX(-2deg) rotateY(2deg) translateZ(20px);
+            }
         }
 
         /* Particles background */
@@ -645,34 +657,69 @@
             opacity: 0.6; /* Subtle for Air India page */
         }
 
-        /* Override navigation for Air India page */
-        .nav-meta-air {
-            font-size: var(--font-micro);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-tertiary);
+        /* Back Button Container */
+        .back-button-container {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
         }
 
-        /* Back button integrated with nav */
+        /* Back Button - Hero Card Style */
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            background: var(--surface);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            padding: 12px 20px;
+
+            /* Exact hero card glassmorphism */
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+
+            /* Hero card shadows */
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
             color: var(--text-secondary);
             text-decoration: none;
             font-size: var(--font-small);
-            transition: var(--transition);
+            font-weight: 400;
+            transition: all 0.08s cubic-bezier(0.2, 0, 0.2, 1);
+
+            /* 3D transform setup */
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
         }
 
         .back-btn:hover {
-            background: var(--surface-hover);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.16);
             color: var(--text-primary);
-            transform: translateY(-1px);
+            transform: rotateX(-1deg) rotateY(1deg) translateZ(10px);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.15),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        /* Mobile back button */
+        @media (max-width: 768px) {
+            .back-button-container {
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .back-btn {
+                margin: 0 auto;
+            }
         }
     </style>
 
@@ -691,22 +738,14 @@
     <!-- Particle Canvas -->
     <canvas id="particles"></canvas>
 
-    <!-- Navigation - Same as main page -->
-    <nav class="nav" id="nav" aria-label="Primary">
-        <div class="container">
-            <a href="index.html" class="logo kinetic" id="logo">NIHAR</a>
-            <ul role="list">
-                <li><a href="index.html#work" class="nav-link">Work</a></li>
-                <li><a href="index.html#reading" class="nav-link">Life</a></li>
-                <li><a href="index.html#about" class="nav-link">About</a></li>
-                <li><span class="nav-meta-air">Air India Case Study</span></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Simple Back Button -->
+    <div class="back-button-container">
+        <a href="index.html" class="back-btn">← Back to Portfolio</a>
+    </div>
 
-    <!-- Hero - Using hero-inner card style -->
-    <section class="hero">
-        <div class="hero-inner air-india-card">
+    <!-- Hero - Using exact hero-inner card style -->
+    <section class="hero" style="padding-top: 80px;">
+        <div class="hero-inner">
             <div class="hero-meta">Case Study Available</div>
             <h1 class="hero-title">
                 I build <strong>systems</strong> that help teams ship better products, faster.
@@ -719,7 +758,7 @@
 
     <!-- Stats -->
     <section class="container">
-        <div class="stats-row air-india-card">
+        <div class="stats-row hero-inner">
             <div class="stat">
                 <span class="stat-value">8</span>
                 <span class="stat-label">Key Projects</span>
@@ -748,7 +787,7 @@
             </div>
 
             <!-- PROJECT 1: Pixel Radar -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Design Systems</div>
                     <h3 class="project-title">Pixel Radar</h3>
@@ -786,7 +825,7 @@
             </div>
 
             <!-- PROJECT 2: Analytics Platform -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Data Visualization</div>
                     <h3 class="project-title">Analytics Platform</h3>
@@ -824,7 +863,7 @@
             </div>
 
             <!-- PROJECT 3: Mobile -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Mobile Experience</div>
                     <h3 class="project-title">UX Pattern Library</h3>
@@ -862,7 +901,7 @@
             </div>
 
             <!-- PROJECT 4: Design Systems -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Design Systems</div>
                     <h3 class="project-title">Token Architecture</h3>
@@ -900,7 +939,7 @@
             </div>
 
             <!-- PROJECT 5: IFE -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">In-Flight Entertainment</div>
                     <h3 class="project-title">IFE Concepts</h3>
@@ -938,7 +977,7 @@
             </div>
 
             <!-- PROJECT 6: Liftoff -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Team Enablement</div>
                     <h3 class="project-title">Liftoff Program</h3>
@@ -976,13 +1015,13 @@
             </div>
 
             <!-- Hackathon Section Divider -->
-            <div class="section-divider air-india-card">
+            <div class="section-divider hero-inner">
                 <h3>Innovation Sprints</h3>
                 <p>48-hour hackathon wins now in production</p>
             </div>
 
             <!-- PROJECT 7: Internal Hackathon -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Innovation Sprint</div>
                     <h3 class="project-title">Internal Hackathon</h3>
@@ -1020,7 +1059,7 @@
             </div>
 
             <!-- PROJECT 8: Microsoft Hackathon -->
-            <div class="project air-india-card">
+            <div class="project hero-inner">
                 <div class="project-meta">
                     <div class="project-label">Partnership Innovation</div>
                     <h3 class="project-title">Microsoft × Air India</h3>
@@ -1060,7 +1099,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="air-india-card">
+    <footer class="hero-inner">
         <div class="container">
             <h2 class="footer-title">Let's build something impactful together</h2>
             <div class="footer-links">
