@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air India Transformation — Product & Systems Designer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Import main CSS files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/particles.css">
+
     <style>
         /* Design System - Enhanced with glassmorphism */
         :root {
@@ -595,23 +607,106 @@
                 gap: var(--space-md);
             }
         }
+        /* Additional Air India specific styles */
+        .air-india-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: clamp(20px, 5vw, 32px);
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.2),
+                0 24px 48px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: var(--space-lg);
+        }
+
+        .air-india-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.15),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                0 20px 40px rgba(0, 0, 0, 0.25),
+                0 32px 64px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        /* Particles background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6; /* Subtle for Air India page */
+        }
+
+        /* Override navigation for Air India page */
+        .nav-meta-air {
+            font-size: var(--font-micro);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+        }
+
+        /* Back button integrated with nav */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--font-small);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
     </style>
+
+    <!-- Critical Inline Particles Setup -->
+    <script>
+        // Minimal particle setup for Air India page
+        window.PARTICLES_CONFIG = {
+            count: 40, // Fewer particles for subtlety
+            opacity: 0.3,
+            connectionOpacity: 0.1,
+            speed: 0.3
+        };
+    </script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-content">
-            <div class="nav-brand" onclick="window.location.href='index.html'">Portfolio</div>
-            <div class="nav-meta">Air India · 2024–Present</div>
+    <!-- Particle Canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation - Same as main page -->
+    <nav class="nav" id="nav" aria-label="Primary">
+        <div class="container">
+            <a href="index.html" class="logo kinetic" id="logo">NIHAR</a>
+            <ul role="list">
+                <li><a href="index.html#work" class="nav-link">Work</a></li>
+                <li><a href="index.html#reading" class="nav-link">Life</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><span class="nav-meta-air">Air India Case Study</span></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Back Button -->
-    <a href="index.html" class="back-btn">← Back to Portfolio</a>
-
-    <!-- Hero -->
-    <header class="hero">
-        <div class="container">
+    <!-- Hero - Using hero-inner card style -->
+    <section class="hero">
+        <div class="hero-inner air-india-card">
             <div class="hero-meta">Case Study Available</div>
             <h1 class="hero-title">
                 I build <strong>systems</strong> that help teams ship better products, faster.
@@ -620,11 +715,11 @@
                 Select work from Air India's digital transformation. Public-safe case study with sanitized examples and directional metrics.
             </p>
         </div>
-    </header>
+    </section>
 
     <!-- Stats -->
     <section class="container">
-        <div class="stats-row">
+        <div class="stats-row air-india-card">
             <div class="stat">
                 <span class="stat-value">8</span>
                 <span class="stat-label">Key Projects</span>
@@ -653,7 +748,7 @@
             </div>
 
             <!-- PROJECT 1: Pixel Radar -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Design Systems</div>
                     <h3 class="project-title">Pixel Radar</h3>
@@ -691,7 +786,7 @@
             </div>
 
             <!-- PROJECT 2: Analytics Platform -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Data Visualization</div>
                     <h3 class="project-title">Analytics Platform</h3>
@@ -729,7 +824,7 @@
             </div>
 
             <!-- PROJECT 3: Mobile -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Mobile Experience</div>
                     <h3 class="project-title">UX Pattern Library</h3>
@@ -767,7 +862,7 @@
             </div>
 
             <!-- PROJECT 4: Design Systems -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Design Systems</div>
                     <h3 class="project-title">Token Architecture</h3>
@@ -805,7 +900,7 @@
             </div>
 
             <!-- PROJECT 5: IFE -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">In-Flight Entertainment</div>
                     <h3 class="project-title">IFE Concepts</h3>
@@ -843,7 +938,7 @@
             </div>
 
             <!-- PROJECT 6: Liftoff -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Team Enablement</div>
                     <h3 class="project-title">Liftoff Program</h3>
@@ -881,13 +976,13 @@
             </div>
 
             <!-- Hackathon Section Divider -->
-            <div class="section-divider">
+            <div class="section-divider air-india-card">
                 <h3>Innovation Sprints</h3>
                 <p>48-hour hackathon wins now in production</p>
             </div>
 
             <!-- PROJECT 7: Internal Hackathon -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Innovation Sprint</div>
                     <h3 class="project-title">Internal Hackathon</h3>
@@ -925,7 +1020,7 @@
             </div>
 
             <!-- PROJECT 8: Microsoft Hackathon -->
-            <div class="project">
+            <div class="project air-india-card">
                 <div class="project-meta">
                     <div class="project-label">Partnership Innovation</div>
                     <h3 class="project-title">Microsoft × Air India</h3>
@@ -965,7 +1060,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="air-india-card">
         <div class="container">
             <h2 class="footer-title">Let's build something impactful together</h2>
             <div class="footer-links">
@@ -977,5 +1072,26 @@
             <div class="footer-meta">Updated December 2024 · Exact metrics available on request</div>
         </div>
     </footer>
+
+    <!-- Load particles system -->
+    <script src="js/utils.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/particles.js"></script>
+
+    <!-- Initialize particles for Air India page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize minimal particle system
+            if (window.Particles) {
+                try {
+                    Particles.init();
+                    console.log('✨ Particles initialized for Air India page');
+                } catch (e) {
+                    console.log('Particles failed to initialize:', e);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
