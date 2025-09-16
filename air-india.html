@@ -17,29 +17,41 @@
     <link rel="stylesheet" href="css/particles.css">
 
     <style>
-        /* Design System - Enhanced with glassmorphism */
+        /* Use exact main page colors and variables */
         :root {
+            /* Exact colors from main page */
+            --primary: #da0e29;
             --bg: #0a0a0a;
-            --surface: rgba(255, 255, 255, 0.04);
-            --surface-hover: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.12);
+            --surface: rgba(255,255,255,0.03);
+            --text: #fff;
+            --text-dim: #9aa3ab;
 
-            --text-primary: rgba(255, 255, 255, 0.95);
+            /* Mood colors for sections */
+            --mood-home: #da0e29;
+            --mood-work: #3b82f6;
+            --mood-labs: #f59e0b;
+            --mood-about: #8b5cf6;
+            --mood-reading: #10b981;
+            --mood: var(--mood-work); /* Air India = work section */
+
+            /* Aurora lights - exact from main */
+            --light-key: rgba(218,14,41,0.24);
+            --light-fill: rgba(59,130,246,0.18);
+            --light-rim: rgba(139,92,246,0.18);
+
+            /* Sizing - exact from main */
+            --blur-sm: 6px;
+            --blur-md: 12px;
+            --blur-lg: 24px;
+            --radius: 16px;
+            --maxw: 1200px;
+
+            /* Text colors for consistency */
+            --text-primary: #fff;
             --text-secondary: rgba(255, 255, 255, 0.7);
             --text-tertiary: rgba(255, 255, 255, 0.5);
 
-            --accent: #da0e29;
-            --accent-blue: #4A90E2;
-            --accent-muted: rgba(218, 14, 41, 0.1);
-            --success: rgba(16, 185, 129, 0.8);
-            --purple: rgba(139, 92, 246, 0.8);
-            --orange: rgba(249, 115, 22, 0.8);
-
-            --radius: 20px;
-            --radius-sm: 12px;
-            --max-width: 1000px;
-
+            /* Spacing */
             --space-xs: 8px;
             --space-sm: 16px;
             --space-md: 24px;
@@ -47,6 +59,7 @@
             --space-xl: 64px;
             --space-2xl: 120px;
 
+            /* Typography */
             --font-display: clamp(36px, 5vw, 48px);
             --font-title: clamp(24px, 4vw, 32px);
             --font-heading: 20px;
@@ -54,8 +67,8 @@
             --font-small: 14px;
             --font-micro: 11px;
 
+            /* Transition */
             --transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-            --blur: blur(24px) saturate(1.5);
         }
 
         * {
@@ -201,18 +214,12 @@
             line-height: 1.7;
         }
 
-        /* Stats Row - Enhanced glassmorphism */
+        /* Stats Row - proper padding */
         .stats-row {
             display: flex;
             justify-content: center;
             gap: var(--space-xl);
-            padding: var(--space-lg) var(--space-md);
-            background: var(--surface);
-            backdrop-filter: var(--blur);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            margin-bottom: var(--space-2xl);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: clamp(24px, 6vw, 48px); /* Same as hero-inner padding */
         }
 
         .stat {
@@ -305,13 +312,13 @@
             color: var(--accent);
         }
 
-        /* Project Layout */
+        /* Project Layout - proper padding */
         .project {
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: var(--space-xl);
-            padding: var(--space-xl) 0;
-            border-bottom: 1px solid var(--border);
+            padding: clamp(24px, 6vw, 48px); /* Same as hero-inner padding */
+            border-bottom: none; /* Remove borders for cleaner look */
         }
 
         .project:last-child {
@@ -607,45 +614,47 @@
                 gap: var(--space-md);
             }
         }
-        /* Exact Hero Card Styling */
-        .air-india-card {
-            /* Pure glassmorphism - transparent background */
-            backdrop-filter: blur(24px) saturate(1.5);
-            -webkit-backdrop-filter: blur(24px) saturate(1.5);
-            background: rgba(255, 255, 255, 0.02) !important; /* Very subtle glass */
+        /* Container and alignment */
+        .container {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* Clean card styling - NO TILT */
+        .hero-inner {
+            /* Pure glassmorphism from main page */
+            backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
+            -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
+            background: var(--surface);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: clamp(20px, 5vw, 32px);
 
-            /* Enhanced 3D shadow layers - EXACT COPY from hero.css */
+            /* Clean shadows - no 3D tilt */
             box-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.1),
                 0 8px 16px rgba(0, 0, 0, 0.15),
                 0 16px 32px rgba(0, 0, 0, 0.2),
-                0 24px 48px rgba(0, 0, 0, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-                inset 0 -20px 40px rgba(0, 0, 0, 0.05);
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-            /* 3D transform setup - EXACT COPY */
-            transform-style: preserve-3d !important;
-            -webkit-transform-style: preserve-3d !important;
-            transform-origin: center center;
-            transition: transform 0.08s cubic-bezier(0.2, 0, 0.2, 1);
-            will-change: transform;
-            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
-
+            /* Simple hover - NO TILT */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: var(--space-lg);
             position: relative;
             z-index: 3;
         }
 
-        /* 3D hover effect - EXACT COPY from hero.css */
-        @media (hover: hover) {
-            .air-india-card:hover {
-                transform: rotateX(-2deg) rotateY(2deg) translateZ(20px);
-            }
+        /* Simple hover effect - NO TILT */
+        .hero-inner:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.15),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                0 20px 40px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
 
-        /* Particles background */
+        /* Particles background - exact from main page */
         #particles {
             position: fixed;
             top: 0;
@@ -654,7 +663,10 @@
             height: 100vh;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.6; /* Subtle for Air India page */
+            opacity: 1; /* Full opacity like main page */
+            background: transparent;
+            will-change: auto;
+            transform: translateZ(0);
         }
 
         /* Back Button Container */
@@ -665,21 +677,21 @@
             z-index: 100;
         }
 
-        /* Back Button - Hero Card Style */
+        /* Back Button - Clean Style */
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 12px 20px;
 
-            /* Exact hero card glassmorphism */
-            backdrop-filter: blur(24px) saturate(1.5);
-            -webkit-backdrop-filter: blur(24px) saturate(1.5);
-            background: rgba(255, 255, 255, 0.02);
+            /* Same glassmorphism as cards */
+            backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
+            -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(1.5);
+            background: var(--surface);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
+            border-radius: var(--radius);
 
-            /* Hero card shadows */
+            /* Clean shadows */
             box-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.1),
                 0 8px 16px rgba(0, 0, 0, 0.15),
@@ -689,18 +701,14 @@
             text-decoration: none;
             font-size: var(--font-small);
             font-weight: 400;
-            transition: all 0.08s cubic-bezier(0.2, 0, 0.2, 1);
-
-            /* 3D transform setup */
-            transform-style: preserve-3d;
-            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.16);
             color: var(--text-primary);
-            transform: rotateX(-1deg) rotateY(1deg) translateZ(10px);
+            transform: translateY(-2px);
             box-shadow:
                 0 4px 16px rgba(0, 0, 0, 0.15),
                 0 12px 24px rgba(0, 0, 0, 0.2),
@@ -723,14 +731,15 @@
         }
     </style>
 
-    <!-- Critical Inline Particles Setup -->
+    <!-- Particles setup - same as main page -->
     <script>
-        // Minimal particle setup for Air India page
+        // Same particle config as main page
         window.PARTICLES_CONFIG = {
-            count: 40, // Fewer particles for subtlety
-            opacity: 0.3,
-            connectionOpacity: 0.1,
-            speed: 0.3
+            count: 60, // Same as main page
+            opacity: 0.8,
+            connectionOpacity: 0.0, // Hidden by default
+            connectionOpacityHover: 0.15, // Show on hover
+            speed: 0.5
         };
     </script>
 </head>
