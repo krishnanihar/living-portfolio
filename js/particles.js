@@ -44,8 +44,11 @@ const Particles = {
     specialOpacity: 0.6,
     specialOpacityLight: 0.9,  // Higher for light mode
     nebulaCount: 5,            // Reduced for performance
+    nebulaCountMobile: 2,      // Even fewer on mobile
     nebulaOpacity: 0.04,
+    nebulaOpacityMobile: 0.02, // Much lower for mobile
     nebulaOpacityLight: 0.1,   // Higher for light mode
+    nebulaOpacityLightMobile: 0.04, // Lower for mobile light mode
     mouseInfluence: 180,       // Optimized range
     scrollParallax: true,
     parallaxFactor: 0.6,        // Optimized for performance
@@ -226,20 +229,27 @@ const Particles = {
   resize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    
+
     this.canvas.width = width * this.dpr;
     this.canvas.height = height * this.dpr;
-    
+
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
-    
+
     this.canvas.style.position = 'fixed';
     this.canvas.style.top = '0';
     this.canvas.style.left = '0';
-    
+
     this.ctx.scale(this.dpr, this.dpr);
-    
+
+    // Update mobile detection
+    const wasMobile = this.config.isMobile;
     this.config.isMobile = width <= 768;
+
+    // If switching between mobile/desktop, recreate stars for optimal count
+    if (wasMobile !== this.config.isMobile) {
+      this.createStars();
+    }
   },
   
   update() {
@@ -376,15 +386,24 @@ const Particles = {
   },
   
   drawNebulaClouds() {
-    for (let i = 0; i < this.config.nebulaCount; i++) {
+    // Use mobile-optimized count and opacity
+    const nebulaCount = this.config.isMobile ? this.config.nebulaCountMobile : this.config.nebulaCount;
+
+    for (let i = 0; i < nebulaCount; i++) {
       const x = (Math.sin(this.time * 0.1 + i * 2) + 1) * window.innerWidth * 0.5;
       const y = (Math.cos(this.time * 0.05 + i * 3) + 1) * window.innerHeight * 0.5;
-      const size = 200 + Math.sin(this.time * 0.1 + i) * 50;
-      
+      const size = this.config.isMobile ? 150 + Math.sin(this.time * 0.1 + i) * 30 : 200 + Math.sin(this.time * 0.1 + i) * 50;
+
       const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
 
-      // Theme-aware nebula with enhanced visibility
-      const baseNebulaOpacity = this.theme === 'dark' ? this.config.nebulaOpacity : this.config.nebulaOpacityLight;
+      // Mobile-optimized nebula opacity
+      let baseNebulaOpacity;
+      if (this.config.isMobile) {
+        baseNebulaOpacity = this.theme === 'dark' ? this.config.nebulaOpacityMobile : this.config.nebulaOpacityLightMobile;
+      } else {
+        baseNebulaOpacity = this.theme === 'dark' ? this.config.nebulaOpacity : this.config.nebulaOpacityLight;
+      }
+
       const nebulaOpacity = baseNebulaOpacity * (0.7 + Math.sin(this.time * 0.2 + i) * 0.3);
 
       if (this.theme === 'dark') {

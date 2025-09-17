@@ -1,28 +1,38 @@
 /* Mobile Optimizations */
 @media (max-width: 768px) {
+  /* Particle background optimizations */
+  #particles {
+    opacity: 0.85; /* Slightly reduce overall particle opacity on mobile */
+  }
+
+  /* Ensure smooth background transitions on mobile */
+  body {
+    background-attachment: fixed; /* Prevent background shifting on mobile scroll */
+  }
+
   /* Hero adjustments */
   .hero-status {
     flex-direction: column;
     gap: 8px;
     top: 10px;
   }
-  
+
   .hero-activity {
     flex-direction: column;
     gap: 8px;
     bottom: 10px;
   }
-  
+
   /* Hide glass cursor on touch */
   .glass-cursor {
     display: none;
   }
-  
+
   /* Reduce film grain */
   .film-grain {
     opacity: 0.04;
   }
-  
+
   /* Simplify depth fog */
   .depth-fog {
     background: radial-gradient(circle at 50% 50%, rgba(218,14,41,0.08), transparent 60%);
