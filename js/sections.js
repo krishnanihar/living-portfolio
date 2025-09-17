@@ -326,28 +326,28 @@ const Sections = {
             </article>
             
             <!-- Fractal Project -->
-            <article class="uni-card" data-project="fractal">
+            <article class="uni-card" data-project="metamorphic-fractal">
               <header class="uni-card-header">
                 <h3 class="uni-card-title">Metamorphic Fractal Reflections</h3>
-                <span class="uni-card-badge">New Media</span>
+                <span class="uni-card-badge">Psychedelic Journey</span>
               </header>
-              
+
               <div class="uni-card-body">
                 <p class="uni-card-description">
-                  Experimental interface exploring consciousness through recursive patterns. Real-time generative visuals that respond to user behavior and create unique, evolving experiences.
+                  An immersive installation exploring consciousness through ego dissolution. Participants enter a bathroom mirror portal and traverse a trippy multiverse of liquid color and pattern-creatures.
                 </p>
-                
+
                 <div class="uni-metric">
-                  <span class="uni-metric-value">∞</span>
-                  <span class="uni-metric-label">Unique Variations</span>
+                  <span class="uni-metric-value">2</span>
+                  <span class="uni-metric-label">Months Development</span>
                 </div>
               </div>
-              
+
               <footer class="uni-card-footer">
                 <div class="uni-tags">
-                  <span class="uni-tag">WebGL</span>
-                  <span class="uni-tag">GLSL</span>
-                  <span class="uni-tag">Generative</span>
+                  <span class="uni-tag">TouchDesigner</span>
+                  <span class="uni-tag">Arduino</span>
+                  <span class="uni-tag">VR + Installation</span>
                 </div>
               </footer>
             </article>
@@ -801,6 +801,8 @@ const Sections = {
             alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
           } else if (project === 'air-india') {
             window.open('air-india.html', '_blank');
+          } else if (project === 'metamorphic-fractal') {
+            window.open('psychedelic-journey.html', '_blank');
           } else if (project === 'pixel-radar') {
             alert('🎯 Pixel Radar - Figma QA Assistant\n\nFigma plugin that audits components against tokens/variables, flags drift, suggests fixes, and can comment directly on PRs via CI hook.\n\n[Project URL coming soon]');
           } else {

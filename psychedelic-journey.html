@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metamorphic Fractal Reflections — A Psychedelic Journey towards Ego Death</title>
+  <meta name="description" content="An immersive, OLED‑black portfolio page showcasing 'Metamorphic Fractal Reflections' — concept, process, video, and tech stack." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Anime.js for elegant animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+    :root{
+      --bg:#000;               /* True OLED black */
+      --fg:rgba(255,255,255,.92);
+      --fg-dim:rgba(255,255,255,.65);
+      --fg-soft:rgba(255,255,255,.45);
+      --card:rgba(255,255,255,.03);
+      --card-2:rgba(255,255,255,.05);
+      --border:rgba(255,255,255,.08);
+      --glow: conic-gradient(from 0deg at 50% 50%, #ff007a 0deg, #ffb800 72deg, #60f 144deg, #0ff 216deg, #0fa 288deg, #ff007a 360deg);
+      --accent:#b583ff;
+      --radius:18px;
+      --shadow:0 0 0 1px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.6);
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--fg);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
+      line-height:1.6; letter-spacing:.2px;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      overflow-x:hidden;
+    }
+    /* Subtle global film grain */
+    .grain{position:fixed; inset:-20px; pointer-events:none; opacity:.08; mix-blend-mode:plus-lighter; filter:contrast(120%); background-image:url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">\
+      <filter id="n">\
+        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" stitchTiles="stitch"/>\
+        <feColorMatrix type="saturate" values="0"/>\
+      </filter>\
+      <rect width="120" height="120" filter="url(%23n)" opacity="0.6"/>\
+    </svg>'); animation:grain 8s steps(6) infinite}
+    @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-10px,6px)}50%{transform:translate(6px,-8px)}75%{transform:translate(-4px,4px)}100%{transform:translate(0,0)}}
+
+    /* Layout */
+    .wrap{width:min(100%, var(--max)); margin-inline:auto; padding:24px}
+    header{position:relative; padding:80px 24px 60px; overflow:hidden}
+    .title{font-family:"Space Grotesk",Inter,system-ui,sans-serif; font-weight:800; letter-spacing:-.5px; line-height:1.08; font-size:clamp(2.2rem, 4.2vw + 1rem, 4.6rem);}
+    .kicker{display:inline-block; font-size:.9rem; letter-spacing:.16em; text-transform:uppercase; color:var(--fg-soft); margin-bottom:10px}
+    .sub{max-width:900px; color:var(--fg-dim); font-size:clamp(1rem, .6vw + .9rem, 1.2rem)}
+
+    .meta{display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:22px}
+    .pill{border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); padding:8px 12px; border-radius:999px; color:var(--fg-dim)}
+
+    /* Chromatic title aura */
+    .title .aura{position:relative; display:inline; text-shadow: 0 0 0 rgba(0,0,0,0);}
+    .title .aura::after{
+      content:attr(data-text);
+      position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; filter:blur(6px) saturate(120%);
+      background:var(--glow); -webkit-background-clip:text; background-clip:text; color:transparent; opacity:.22;
+      animation:hue 9s linear infinite;
+    }
+    @keyframes hue{to{filter:hue-rotate(360deg) blur(6px) saturate(120%);}}
+
+    /* CTA buttons */
+    .cta{display:flex; gap:14px; margin-top:28px}
+    .btn{
+      position:relative; display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:14px;
+      border:1px solid var(--border); color:var(--fg); text-decoration:none; transition:.25s ease; background:var(--card);
+      box-shadow:var(--shadow);
+    }
+    .btn:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.22)}
+    .btn.primary{background:radial-gradient(120% 120% at 0% 0%, rgba(181,131,255,.22), rgba(255,255,255,.02));}
+
+    /* Mirror ribbon behind the hero */
+    .ribbon{position:absolute; inset:auto -20vw -30% -20vw; height:52vh; background:radial-gradient(120% 60% at 50% 50%, rgba(181,131,255,.12), rgba(0,0,0,0) 60%),
+      conic-gradient(from 90deg at 50% 50%, rgba(255,0,122,.14), rgba(0,255,255,.12), rgba(0,255,170,.14), rgba(255,184,0,.14), rgba(255,0,122,.14));
+      filter:blur(70px) saturate(130%); opacity:.4; pointer-events:none; transform:skewY(-10deg);}
+
+    /* Section framing */
+    section{padding:64px 24px; border-top:1px solid var(--border)}
+    h2{font-family:"Space Grotesk",Inter,sans-serif; font-size:clamp(1.4rem, 1vw + 1.2rem, 2rem); letter-spacing:-.2px}
+    .lead{color:var(--fg-dim); max-width:900px}
+
+    /* Video block */
+    .video-wrap{position:relative; border-radius:var(--radius); overflow:hidden; background:
+      radial-gradient(80% 200% at 80% 0%, rgba(181,131,255,.09), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border); box-shadow:var(--shadow)}
+    .video-veil{position:absolute; inset:0; background:radial-gradient(120% 80% at 50% 0%, rgba(0,0,0,.0), rgba(0,0,0,.3) 70%); pointer-events:none}
+    video, iframe{display:block; width:100%; height:auto; aspect-ratio:16/9; background:#000}
+    .caption{color:var(--fg-soft); font-size:.95rem; margin-top:10px}
+
+    /* Process timeline */
+    .timeline{display:grid; grid-template-columns: 260px 1fr; gap:24px; align-items:start;}
+    .timeline .rail{position:sticky; top:24px}
+    .progress{height:4px; background:linear-gradient(90deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); border-radius:999px; overflow:hidden; margin-top:8px}
+    .progress > i{display:block; height:100%; width:0%; background:var(--glow); filter:saturate(140%); opacity:.9;}
+    .step{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--border); padding:18px; border-radius:16px; margin-bottom:14px}
+    .step h3{margin:0 0 6px; font-weight:700; letter-spacing:.1px}
+    .step p{margin:0; color:var(--fg-dim)}
+    .step a{color:#90f; text-underline-offset:3px}
+
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:14px}
+    .card{grid-column:span 12; border:1px solid var(--border); border-radius:16px; background:var(--card); padding:16px}
+    @media (min-width:720px){.card{grid-column:span 6}}
+
+    /* Visuals gallery */
+    .gallery{display:grid; grid-template-columns:repeat(12,1fr); gap:12px}
+    .shot{grid-column:span 12; border-radius:16px; overflow:hidden; border:1px solid var(--border); background:var(--card-2)}
+    @media(min-width:720px){.shot{grid-column:span 6}}
+    .shot img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; filter:saturate(110%)}
+
+    /* Tech stack */
+    .chips{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{border:1px solid var(--border); padding:8px 12px; border-radius:999px; background:var(--card); color:var(--fg-dim)}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(12px); transition:.6s cubic-bezier(.2,.8,.2,1)}
+    .reveal.on{opacity:1; transform:none}
+
+    /* Cursor prism */
+    .cursor{position:fixed; width:240px; height:240px; border-radius:50%; pointer-events:none; mix-blend-mode:screen; background:radial-gradient(closest-side, rgba(181,131,255,.25), rgba(0,0,0,0)); filter:blur(18px) saturate(160%); opacity:.0; transition:opacity .3s ease}
+
+    /* Additional animation states for Anime.js */
+    .morph-target {
+      transform-origin: center center;
+    }
+
+    .pulse-glow {
+      filter: drop-shadow(0 0 10px rgba(181,131,255,0.4));
+    }
+
+    .fractal-float {
+      transform: translateY(0) rotate(0deg) scale(1);
+    }
+
+    .pill-dance {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    .step-emerge {
+      opacity: 0;
+      transform: translateX(-30px) rotateY(-15deg);
+    }
+
+    .gallery-piece {
+      transform: scale(0.95) rotateX(5deg);
+      filter: brightness(0.8) saturate(0.6);
+    }
+
+    /* Accessibility: reduce motion */
+    @media (prefers-reduced-motion:reduce){
+      .title .aura::after, .ribbon, .grain, .cursor{animation:none}
+      .reveal{transition:none}
+      .morph-target, .pulse-glow, .fractal-float, .pill-dance, .step-emerge, .gallery-piece {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+      .timeline {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .timeline .rail {
+        position: static;
+      }
+      .wrap {
+        padding: 16px;
+      }
+      header {
+        padding: 60px 16px 40px;
+      }
+      section {
+        padding: 48px 16px;
+      }
+      .meta {
+        gap: 8px 12px;
+      }
+      .pill {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <header>
+    <div class="ribbon" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="kicker">Classroom Project · Immersive Installation</span>
+      <h1 class="title"><span class="aura" data-text="Metamorphic Fractal Reflections">Metamorphic Fractal Reflections</span><br/>A Psychedelic Journey towards Ego Death</h1>
+      <p class="sub">
+        The participant steps into a bathroom, turns on the tap, and watches their reflection dissolve. Pulled through the mirror, they traverse a trippy multiverse of liquid color, pattern‑creatures and structureless yet beautiful music, guided by a fading companion until reality calls them home.
+      </p>
+      <div class="meta" role="list">
+        <span class="pill pill-dance" role="listitem">Duration: <strong>Two months</strong></span>
+        <span class="pill pill-dance" role="listitem">Guide: Jignesh Khakar · Shoban Shah · Kaushal Sapre · Mochu · Suvani Suri · Arshad Pathan · Ravishekhar Aradhya</span>
+        <span class="pill pill-dance" role="listitem">Based on: Timothy Leary's <em>The Psychedelic Experience</em> (after the Tibetan Book of the Dead)</span>
+        <span class="pill pill-dance" role="listitem">Goal: Safe, accessible encounters with ego‑dissolution themes</span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#experience" aria-label="Jump to the video experience">Watch experience ▶</a>
+        <a class="btn" href="#process">See process</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Experience / Video -->
+    <section id="experience">
+      <div class="wrap">
+        <h2 class="reveal">Experience Film</h2>
+        <p class="lead reveal">A short capture of the installation and the mirror‑portal moment. Replace the placeholder source with your final render or Vimeo/YouTube embed.</p>
+        <div class="video-wrap reveal">
+          <!-- Replace the source below with your file. Example: src="/assets/metamorphic-fractal-reflections.mp4" -->
+          <video id="experienceVideo" controls playsinline preload="metadata" poster="" aria-label="Metamorphic Fractal Reflections video">
+            <source src="" type="video/mp4" />
+            <!-- If hosting on Vimeo/YouTube, comment out the <video> above and paste an <iframe> embed here.  -->
+          </video>
+          <div class="video-veil" aria-hidden="true"></div>
+        </div>
+        <div class="caption">Tip: Serve H.264 MP4 + WebM for best browser coverage. Keep it near 8–12&nbsp;Mbps for crisp results.</div>
+      </div>
+    </section>
+
+    <!-- Concept / Narrative -->
+    <section id="concept">
+      <div class="wrap">
+        <h2 class="reveal">Concept</h2>
+        <div class="grid">
+          <article class="card reveal">
+            <p>
+              The viewers confront death‑like states within an immersive environment. The design intentionally mirrors bardo‑like passages: loss of ordinary identity, surrender to sensory overload, and re‑emergence with insight. While intense, the aesthetic stays tender and humane, allowing participants to form meaning without prescriptive narrative.
+            </p>
+          </article>
+          <article class="card reveal">
+            <p>
+              Soundscapes avoid rigid structure—free‑flowing, emergent, and deeply textural—while visuals behave like sentient reflections (pattern‑creatures) born from light itself. The guide archetype appears briefly as a compassionate presence and then recedes, respecting autonomy as reality reasserts itself.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section id="process">
+      <div class="wrap">
+        <div class="timeline">
+          <aside class="rail">
+            <h2>Process</h2>
+            <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+          </aside>
+          <div>
+            <div class="step step-emerge">
+              <h3>Research</h3>
+              <p>Reading Timothy Leary, Terence McKenna, and Ram Dass; exploring psychedelic subreddits; browsing Erowid for trip reports and safety learnings.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>Conceptualization</h3>
+              <p>Ideating across mediums to distill a bathroom–mirror portal motif and an ego‑dissolution arc. Mapping sensory stages and consent guardrails.<br/>
+                <a href="#" id="miro" rel="noopener">MIRO LINK</a></p>
+            </div>
+            <div class="step step-emerge">
+              <h3>3D Modelling</h3>
+              <p>Blocking the environment in 3D and reviewing the flow in VR to validate spatial pacing before fabrication.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>Construction of Metal Frame</h3>
+              <p>Welding a stable metal skeleton to support panels, mirror assembly, and embedded sensors.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>Building the Bathroom</h3>
+              <p>Plywood superstructure with granite finishes for realistic tactility; concealed cable runs to keep the illusion intact.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>Visuals</h3>
+              <p>Generating video sequences using Deforum Stable Diffusion; comparing models, samplers, steps, prompt embeddings for the most organic motion feel.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>TouchDesigner + Arduino</h3>
+              <p>Tap‑sensor input triggers the mirror dissolve; TouchDesigner orchestrates video, audio and light; Arduino handles IO and safety failsafes.</p>
+            </div>
+            <div class="step step-emerge">
+              <h3>Testing</h3>
+              <p>Every viewer experiences different visuals and timing. Iterative tests tuned thresholds, volume and fade‑curves to keep it safe yet profound.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visuals Gallery (placeholder images) -->
+    <section id="visuals">
+      <div class="wrap">
+        <h2 class="reveal">Stills & Frames</h2>
+        <p class="lead reveal">Drop your favorite renders or documentation stills below. Replace the placeholders with your assets.</p>
+        <div class="gallery">
+          <figure class="shot gallery-piece"><img src="https://picsum.photos/1280/800?random=1" alt="Fractal still placeholder 1"></figure>
+          <figure class="shot gallery-piece"><img src="https://picsum.photos/1280/800?random=2" alt="Fractal still placeholder 2"></figure>
+          <figure class="shot gallery-piece"><img src="https://picsum.photos/1280/800?random=3" alt="Fractal still placeholder 3"></figure>
+          <figure class="shot gallery-piece"><img src="https://picsum.photos/1280/800?random=4" alt="Fractal still placeholder 4"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech stack -->
+    <section id="stack">
+      <div class="wrap">
+        <h2 class="reveal">Tech Stack</h2>
+        <div class="chips reveal" aria-label="Technologies used">
+          <span class="chip">TouchDesigner</span>
+          <span class="chip">Arduino</span>
+          <span class="chip">Deforum Stable Diffusion</span>
+          <span class="chip">VR Previz</span>
+          <span class="chip">Granite · Plywood</span>
+          <span class="chip">Audio‑Reactive SFX</span>
+          <span class="chip">Safety & Consent Flow</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes / Ethics -->
+    <section id="ethics">
+      <div class="wrap">
+        <h2 class="reveal">Notes on Ethics & Safety</h2>
+        <div class="grid">
+          <article class="card reveal">
+            <p>Inspired by <em>The Psychedelic Experience</em> (Leary et al.), the installation frames ego‑dissolution symbolically—no substances involved. The environment includes clear opt‑out, calming lights on exit, and staff‑visible safety indicators.</p>
+          </article>
+          <article class="card reveal">
+            <p>Accessibility: subtitles for audio sequences, path lighting, and a seated option near the mirror. Motion intensity respects <code>prefers‑reduced‑motion</code>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" style="padding-bottom:80px">
+      <div class="lead" style="color:var(--fg-soft)">© Project by Nihar — Product & New Media Design. Built as an OLED‑black, lightweight page with subtle psychedelic aura effects.</div>
+    </div>
+  </footer>
+
+  <script>
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Psychedelic Anime.js Animations
+  function initPsychedelicAnimations() {
+    if (prefersReducedMotion) return;
+
+    // 1. Hero Title Morphing Animation
+    anime({
+      targets: '.title .aura',
+      scale: [0.98, 1.02, 0.99, 1.01, 1],
+      rotateZ: [-0.5, 0.5, -0.3, 0.3, 0],
+      duration: 8000,
+      easing: 'easeInOutSine',
+      loop: true,
+      direction: 'alternate'
+    });
+
+    // 2. Pill Dancing Animation
+    anime({
+      targets: '.pill-dance',
+      translateY: function() { return anime.random(-8, 8); },
+      rotateZ: function() { return anime.random(-2, 2); },
+      scale: function() { return anime.random(0.98, 1.02); },
+      duration: function() { return anime.random(3000, 6000); },
+      delay: function(el, i) { return i * 200; },
+      easing: 'easeInOutSine',
+      loop: true,
+      direction: 'alternate'
+    });
+
+    // 3. CTA Button Pulsing
+    anime({
+      targets: '.btn.primary',
+      boxShadow: [
+        '0 0 0 1px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.6)',
+        '0 0 20px rgba(181,131,255,.3), 0 10px 40px rgba(181,131,255,.2)',
+        '0 0 0 1px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.6)'
+      ],
+      duration: 4000,
+      easing: 'easeInOutQuad',
+      loop: true
+    });
+
+    // 4. Video Container Breathing
+    anime({
+      targets: '.video-wrap',
+      scale: [1, 1.01, 1],
+      filter: [
+        'blur(0px) saturate(100%)',
+        'blur(0.5px) saturate(110%)',
+        'blur(0px) saturate(100%)'
+      ],
+      duration: 6000,
+      easing: 'easeInOutSine',
+      loop: true
+    });
+
+    // 5. Gallery Pieces Floating
+    anime({
+      targets: '.gallery-piece',
+      translateY: function() { return anime.random(-5, 5); },
+      rotateX: function() { return anime.random(-2, 2); },
+      rotateY: function() { return anime.random(-1, 1); },
+      scale: function() { return anime.random(0.98, 1.02); },
+      filter: [
+        'brightness(0.8) saturate(0.6)',
+        'brightness(1) saturate(1.2)',
+        'brightness(0.8) saturate(0.6)'
+      ],
+      duration: function() { return anime.random(4000, 8000); },
+      delay: function(el, i) { return i * 500; },
+      easing: 'easeInOutSine',
+      loop: true,
+      direction: 'alternate'
+    });
+
+    // 6. Tech Chips Morphing
+    anime({
+      targets: '.chip',
+      backgroundColor: [
+        'rgba(255,255,255,.03)',
+        'rgba(181,131,255,.08)',
+        'rgba(255,255,255,.03)'
+      ],
+      borderColor: [
+        'rgba(255,255,255,.08)',
+        'rgba(181,131,255,.2)',
+        'rgba(255,255,255,.08)'
+      ],
+      duration: function() { return anime.random(5000, 8000); },
+      delay: function(el, i) { return i * 300; },
+      easing: 'easeInOutQuad',
+      loop: true
+    });
+  }
+
+  // Process Steps Emergence Animation
+  function animateProcessSteps() {
+    if (prefersReducedMotion) return;
+
+    const steps = document.querySelectorAll('.step-emerge');
+
+    const stepsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            translateX: [-30, 0],
+            rotateY: [-15, 0],
+            scale: [0.9, 1],
+            duration: 1000,
+            delay: index * 150,
+            easing: 'easeOutElastic(1, .8)',
+            complete: function() {
+              // Add subtle continuous animation
+              anime({
+                targets: entry.target,
+                translateY: function() { return anime.random(-2, 2); },
+                duration: function() { return anime.random(3000, 5000); },
+                easing: 'easeInOutSine',
+                loop: true,
+                direction: 'alternate'
+              });
+            }
+          });
+          stepsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    steps.forEach(step => stepsObserver.observe(step));
+  }
+
+  // Ribbon Psychedelic Animation
+  function animateRibbon() {
+    if (prefersReducedMotion) return;
+
+    anime({
+      targets: '.ribbon',
+      rotateZ: [-10, -8, -12, -10],
+      scaleX: [1, 1.1, 0.9, 1],
+      scaleY: [1, 0.9, 1.1, 1],
+      opacity: [0.4, 0.6, 0.3, 0.4],
+      duration: 12000,
+      easing: 'easeInOutSine',
+      loop: true
+    });
+  }
+
+  // Cursor Prism Enhanced Animation
+  function enhanceCursorPrism() {
+    if (prefersReducedMotion) return;
+
+    const cursor = document.querySelector('.cursor');
+    let cx = innerWidth/2, cy = innerHeight/2;
+
+    const track = (e) => {
+      cx = e.clientX;
+      cy = e.clientY;
+      cursor.style.opacity = .55;
+
+      // Add color shifting based on mouse position
+      const hue = (e.clientX / innerWidth) * 360;
+      cursor.style.background = `radial-gradient(closest-side, hsla(${hue}, 70%, 60%, 0.25), rgba(0,0,0,0))`;
+    };
+
+    const fade = () => { cursor.style.opacity = .0; };
+
+    addEventListener('pointermove', track, {passive:true});
+    addEventListener('pointerleave', fade, {passive:true});
+
+    const animate = () => {
+      cursor.style.transform = `translate(${cx-120}px, ${cy-120}px) scale(${1 + Math.sin(Date.now() * 0.001) * 0.1})`;
+      requestAnimationFrame(animate);
+    };
+    animate();
+  }
+
+  // Original functionality
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Reading progress for the timeline rail with animation
+  const bar = document.getElementById('bar');
+  const process = document.getElementById('process');
+  const onScroll = ()=>{
+    const rect = process.getBoundingClientRect();
+    const h = window.innerHeight; const total = rect.height - h; const done = Math.min(Math.max(h - rect.top, 0), rect.height);
+    const p = Math.max(0, Math.min(1, done / (total || 1)));
+
+    if (!prefersReducedMotion) {
+      anime({
+        targets: bar,
+        width: (p*100).toFixed(2) + '%',
+        duration: 300,
+        easing: 'easeOutQuad'
+      });
+    } else {
+      bar.style.width = (p*100).toFixed(2) + '%';
+    }
+  };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Initialize all animations when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    initPsychedelicAnimations();
+    animateProcessSteps();
+    animateRibbon();
+    enhanceCursorPrism();
+  });
+
+  // Optional: quick Vimeo/YouTube embed helper
+  (function(){
+    const v = document.getElementById('experienceVideo');
+    const spec = v?.dataset?.embed; if(!spec) return;
+    const [provider, id] = spec.split('://');
+    const wrap = v.parentElement; v.remove();
+    const ifr = document.createElement('iframe');
+    let src = '';
+    if(provider==='vimeo'){ src = `https://player.vimeo.com/video/${id}?badge=0&autopause=0&player_id=0&app_id=122963` }
+    if(provider==='youtube'){ src = `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1` }
+    ifr.setAttribute('src', src);
+    ifr.setAttribute('title','Experience Film');
+    ifr.setAttribute('frameborder','0');
+    ifr.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+    ifr.setAttribute('allowfullscreen','');
+    ifr.style.width='100%'; ifr.style.aspectRatio='16/9';
+    wrap.prepend(ifr);
+  })();
+  </script>
+</body>
+</html>
