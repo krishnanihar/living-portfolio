@@ -1,13 +1,18 @@
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-  /* Particle background optimizations */
+  /* Particle background optimizations - minimal particles on mobile */
   #particles {
-    opacity: 0.85; /* Slightly reduce overall particle opacity on mobile */
+    opacity: 0.4; /* Much lower particle opacity on mobile */
   }
 
-  /* Ensure smooth background transitions on mobile */
+  /* Plain background on mobile */
   body {
-    background-attachment: fixed; /* Prevent background shifting on mobile scroll */
+    background: #000000 !important; /* Force pure black background */
+    background-attachment: fixed;
+  }
+
+  [data-theme="light"] body {
+    background: #ffffff !important; /* Force pure white background */
   }
 
   /* Hero adjustments */

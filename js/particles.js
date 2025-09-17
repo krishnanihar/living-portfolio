@@ -29,11 +29,13 @@ const Particles = {
   // Ultra-performance optimized configuration
   config: {
     starCount: window.innerWidth > 1400 ? 300 : window.innerWidth > 1200 ? 250 : 200,
-    starCountMobile: 120, // Reduced for better performance
+    starCountMobile: 15, // Minimal particles for mobile
     starSizeRange: [0.4, 2.2],
     starSpeed: 0.02,
     starOpacity: 0.4,
+    starOpacityMobile: 0.2,    // Much lower opacity for mobile
     starOpacityLight: 0.8,     // Higher opacity for light mode
+    starOpacityLightMobile: 0.3, // Lower opacity for mobile light mode
     connectionDistance: 120,
     connectionOpacity: 0.0, // Hide by default
     connectionOpacityLight: 0.0, // Hide by default in light mode
@@ -44,11 +46,11 @@ const Particles = {
     specialOpacity: 0.6,
     specialOpacityLight: 0.9,  // Higher for light mode
     nebulaCount: 5,            // Reduced for performance
-    nebulaCountMobile: 2,      // Even fewer on mobile
+    nebulaCountMobile: 0,      // NO nebula clouds on mobile
     nebulaOpacity: 0.04,
-    nebulaOpacityMobile: 0.02, // Much lower for mobile
+    nebulaOpacityMobile: 0,    // Completely disabled for mobile
     nebulaOpacityLight: 0.1,   // Higher for light mode
-    nebulaOpacityLightMobile: 0.04, // Lower for mobile light mode
+    nebulaOpacityLightMobile: 0, // Completely disabled for mobile light mode
     mouseInfluence: 180,       // Optimized range
     scrollParallax: true,
     parallaxFactor: 0.6,        // Optimized for performance
@@ -146,8 +148,12 @@ const Particles = {
         size: Math.random() * (this.config.starSizeRange[1] - this.config.starSizeRange[0])
               + this.config.starSizeRange[0],
         opacity: isSpecial ?
-          (this.theme === 'dark' ? this.config.specialOpacity : this.config.specialOpacityLight) :
-          (this.theme === 'dark' ? this.config.starOpacity : this.config.starOpacityLight) * (0.4 + depth * 0.6),
+          (this.theme === 'dark' ?
+            (this.config.isMobile ? this.config.specialOpacity * 0.3 : this.config.specialOpacity) :
+            (this.config.isMobile ? this.config.specialOpacityLight * 0.3 : this.config.specialOpacityLight)) :
+          (this.theme === 'dark' ?
+            (this.config.isMobile ? this.config.starOpacityMobile : this.config.starOpacity) :
+            (this.config.isMobile ? this.config.starOpacityLightMobile : this.config.starOpacityLight)) * (0.4 + depth * 0.6),
         twinkle: Math.random() * Math.PI * 2,
         twinkleSpeed: 0.02 + Math.random() * 0.02,
         isSpecial: isSpecial,
@@ -386,6 +392,11 @@ const Particles = {
   },
   
   drawNebulaClouds() {
+    // Skip nebula clouds entirely on mobile
+    if (this.config.isMobile) {
+      return;
+    }
+
     // Use mobile-optimized count and opacity
     const nebulaCount = this.config.isMobile ? this.config.nebulaCountMobile : this.config.nebulaCount;
 
@@ -425,6 +436,11 @@ const Particles = {
   },
   
   drawConnections() {
+    // Skip connections entirely on mobile for clean look
+    if (this.config.isMobile) {
+      return;
+    }
+
     this.connections.forEach(conn => {
       this.ctx.save();
       
@@ -507,8 +523,8 @@ const Particles = {
       const finalOpacity = Math.max(0.4, star.baseOpacity * twinkle * pulse * lightIntensity * safeDimming);
       const size = star.size * twinkle * pulse * (1 + star.growthFactor * 2) * (0.5 + star.z * 0.5);
 
-      // Enhanced glow for depth
-      if (star.isSpecial || star.growthFactor > 0.1 || star.z > 0.7) {
+      // Enhanced glow for depth (disabled on mobile for performance)
+      if (!this.config.isMobile && (star.isSpecial || star.growthFactor > 0.1 || star.z > 0.7)) {
         const glowSize = size * (3 + star.z * 2); // Bigger glow for closer particles
         const gradient = this.ctx.createRadialGradient(
           star.x, star.y, 0,
@@ -569,8 +585,8 @@ const Particles = {
       this.ctx.arc(star.x, star.y, size, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Enhanced sparkle effect for bright/close particles
-      if ((star.isSpecial || star.growthFactor > 0.3 || lightIntensity > 0.8) && finalOpacity > 0.3) {
+      // Enhanced sparkle effect for bright/close particles (disabled on mobile)
+      if (!this.config.isMobile && (star.isSpecial || star.growthFactor > 0.3 || lightIntensity > 0.8) && finalOpacity > 0.3) {
         this.ctx.strokeStyle = this.ctx.fillStyle;
         this.ctx.lineWidth = 0.5 + star.z * 0.5;
         this.ctx.globalAlpha = finalOpacity * 0.6;
