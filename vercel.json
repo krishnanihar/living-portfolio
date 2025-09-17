@@ -2,13 +2,6 @@
   "name": "living-instrument-portfolio",
   "version": 2,
   "public": true,
-  "functions": {},
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
