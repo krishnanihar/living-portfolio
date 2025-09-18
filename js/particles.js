@@ -25,8 +25,10 @@ const Particles = {
   targetDimming: 1.0,         // Target full brightness initially
   skipFrames: 0,              // Frame skipping for performance
   lastFrameTime: 0,           // Frame rate control
+  browser: null,              // Detected browser
+  platformMultipliers: { opacity: 1.0, brightness: 1.0 }, // Platform adjustments
   
-  // Ultra-performance optimized configuration
+  // Cross-platform optimized configuration
   config: {
     starCount: window.innerWidth > 1400 ? 300 : window.innerWidth > 1200 ? 250 : 200,
     starCountMobile: 15, // Minimal particles for mobile
@@ -36,6 +38,14 @@ const Particles = {
     starOpacityMobile: 0.2,    // Much lower opacity for mobile
     starOpacityLight: 0.8,     // Higher opacity for light mode
     starOpacityLightMobile: 0.3, // Lower opacity for mobile light mode
+    
+    // Platform-specific adjustments
+    platformAdjustments: {
+      chrome: { opacityMultiplier: 0.85, brightnessMultiplier: 0.9 },
+      firefox: { opacityMultiplier: 1.0, brightnessMultiplier: 1.0 },
+      safari: { opacityMultiplier: 0.9, brightnessMultiplier: 1.1 },
+      edge: { opacityMultiplier: 1.1, brightnessMultiplier: 1.05 }
+    },
     connectionDistance: 120,
     connectionOpacity: 0.0, // Hide by default
     connectionOpacityLight: 0.0, // Hide by default in light mode
@@ -81,8 +91,53 @@ const Particles = {
     mouseParticleSize: 1.5      // Size of mouse interaction particles
   },
   
+  // Detect browser and platform for compatibility adjustments
+  detectBrowserAndPlatform() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isChrome = userAgent.includes('chrome') && !userAgent.includes('edge') && !userAgent.includes('edg');
+    const isFirefox = userAgent.includes('firefox');
+    const isSafari = userAgent.includes('safari') && !userAgent.includes('chrome');
+    const isEdge = userAgent.includes('edge') || userAgent.includes('edg');
+    const isMac = userAgent.includes('mac');
+    const isWindows = userAgent.includes('win');
+    
+    // Determine browser
+    if (isChrome) this.browser = 'chrome';
+    else if (isFirefox) this.browser = 'firefox';
+    else if (isSafari) this.browser = 'safari';
+    else if (isEdge) this.browser = 'edge';
+    else this.browser = 'unknown';
+    
+    // Apply platform-specific adjustments
+    const platformAdjustment = this.config.platformAdjustments[this.browser] || 
+                               this.config.platformAdjustments.chrome;
+    
+    // Additional Mac-specific adjustments for color profile differences
+    if (isMac) {
+      platformAdjustment.opacityMultiplier *= 0.9; // Mac displays tend to be brighter
+      platformAdjustment.brightnessMultiplier *= 0.95;
+    }
+    
+    // Windows-specific adjustments
+    if (isWindows) {
+      platformAdjustment.opacityMultiplier *= 1.05; // Windows displays can be darker
+      platformAdjustment.brightnessMultiplier *= 1.02;
+    }
+    
+    this.platformMultipliers = {
+      opacity: platformAdjustment.opacityMultiplier,
+      brightness: platformAdjustment.brightnessMultiplier
+    };
+    
+    console.log(`🌐 Detected: ${this.browser} on ${isMac ? 'Mac' : isWindows ? 'Windows' : 'Unknown'}`);
+    console.log(`🎨 Platform adjustments: opacity=${this.platformMultipliers.opacity.toFixed(2)}, brightness=${this.platformMultipliers.brightness.toFixed(2)}`);
+  },
+  
   init() {
     console.log('✨ Initializing Space Particle System (Immediate Mode)...');
+    
+    // Detect browser and platform for compatibility
+    this.detectBrowserAndPlatform();
 
     this.canvas = document.getElementById('particles');
     if (!this.canvas) {
@@ -518,9 +573,12 @@ const Particles = {
 
       const lightIntensity = safeAmbientLight + (safeLightFactor * safeLightStrength);
 
-      // Apply section dimming and 3D lighting - SAFE OPACITY CALCULATION
+      // Apply section dimming and 3D lighting - SAFE OPACITY CALCULATION with platform adjustments
       const safeDimming = Math.max(0.7, this.sectionDimming); // Never below 70%
-      const finalOpacity = Math.max(0.4, star.baseOpacity * twinkle * pulse * lightIntensity * safeDimming);
+      let finalOpacity = Math.max(0.4, star.baseOpacity * twinkle * pulse * lightIntensity * safeDimming);
+      
+      // Apply platform-specific adjustments for cross-browser consistency
+      finalOpacity *= this.platformMultipliers.opacity;
       const size = star.size * twinkle * pulse * (1 + star.growthFactor * 2) * (0.5 + star.z * 0.5);
 
       // Enhanced glow for depth (disabled on mobile for performance)
@@ -567,16 +625,33 @@ const Particles = {
       if (star.isSpecial) {
         const litHue = isFinite(star.hue) ? star.hue : 200;
         const litSaturation = isFinite(lightIntensity) ? Math.max(30, Math.min(100, 50 + lightIntensity * 30)) : 50;
-        const litLightness = isFinite(lightIntensity) ? Math.max(40, Math.min(90, 60 + lightIntensity * 25)) : 60;
+        let litLightness = isFinite(lightIntensity) ? Math.max(40, Math.min(90, 60 + lightIntensity * 25)) : 60;
+        
+        // Apply platform brightness adjustment
+        litLightness *= this.platformMultipliers.brightness;
+        litLightness = Math.max(40, Math.min(90, litLightness));
+        
         this.ctx.fillStyle = `hsl(${litHue}, ${litSaturation}%, ${litLightness}%)`;
       } else {
         if (this.theme === 'dark') {
-          const brightness = isFinite(lightIntensity) ? Math.max(100, Math.min(255, Math.floor(180 + lightIntensity * 75))) : 200;
+          let brightness = isFinite(lightIntensity) ? Math.max(100, Math.min(255, Math.floor(180 + lightIntensity * 75))) : 200;
+          
+          // Apply platform brightness adjustment
+          brightness *= this.platformMultipliers.brightness;
+          brightness = Math.max(100, Math.min(255, Math.floor(brightness)));
+          
           this.ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, 0.9)`;
         } else {
           // Dark particles for light mode - highly visible on white background
-          const baseDark = isFinite(lightIntensity) ? Math.max(20, Math.min(100, Math.floor(30 + lightIntensity * 50))) : 50;
-          const blue = isFinite(lightIntensity) ? Math.max(20, Math.min(130, Math.floor(baseDark + lightIntensity * 30))) : 70;
+          let baseDark = isFinite(lightIntensity) ? Math.max(20, Math.min(100, Math.floor(30 + lightIntensity * 50))) : 50;
+          let blue = isFinite(lightIntensity) ? Math.max(20, Math.min(130, Math.floor(baseDark + lightIntensity * 30))) : 70;
+          
+          // Apply platform brightness adjustment
+          baseDark *= this.platformMultipliers.brightness;
+          blue *= this.platformMultipliers.brightness;
+          baseDark = Math.max(20, Math.min(100, Math.floor(baseDark)));
+          blue = Math.max(20, Math.min(130, Math.floor(blue)));
+          
           this.ctx.fillStyle = `rgba(${baseDark}, ${baseDark}, ${blue}, 0.9)`;
         }
       }
