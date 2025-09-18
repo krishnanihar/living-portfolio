@@ -1,0 +1,17 @@
+{
+  "name": "living-instrument-portfolio",
+  "version": "4.2.0",
+  "description": "Interactive living portfolio for Nihar - Product & New Media Designer with AI consciousness",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {},
+  "keywords": ["portfolio", "design", "interactive", "particles", "ai", "gemini"],
+  "author": "Nihar",
+  "license": "MIT"
+}
