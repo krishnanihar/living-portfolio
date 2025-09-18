@@ -781,7 +781,7 @@ const Sections = {
         }
       });
 
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
         // Track deep dive
         if (window.State) {
           State.interactionPatterns.deep_diver++;
@@ -789,19 +789,28 @@ const Sections = {
 
         // Get project data and navigate
         const project = card.dataset.project;
+        console.log('Card clicked:', project); // Debug log
+
+        // Only handle project cards (skip other cards like experience, etc.)
+        if (!project) {
+          console.log('No project data found on card');
+          return;
+        }
 
         // Animate card feedback
         card.style.transform = 'scale(0.98)';
 
-        // Show project details instead of navigating to non-existent URLs
+        // Show project details or navigate
         setTimeout(() => {
           card.style.transform = '';
 
           if (project === 'latent-space') {
             alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
           } else if (project === 'air-india') {
+            console.log('Opening Air India page...');
             window.open('air-india.html', '_blank');
           } else if (project === 'metamorphic-fractal') {
+            console.log('Opening Metamorphic Fractal page...');
             window.open('psychedelic-journey.html', '_blank');
           } else if (project === 'pixel-radar') {
             alert('🎯 Pixel Radar - Figma QA Assistant\n\nFigma plugin that audits components against tokens/variables, flags drift, suggests fixes, and can comment directly on PRs via CI hook.\n\n[Project URL coming soon]');
