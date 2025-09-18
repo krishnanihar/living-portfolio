@@ -1,4 +1,4 @@
-// js/chat.js - Complete Context-Aware Chat Module
+// js/chat.js - Enhanced Chat Module with Gemini AI Integration
 const Chat = {
   initialized: false,
   botPanel: null,
@@ -13,36 +13,13 @@ const Chat = {
   pendingSection: null,
   lastReactedSection: null,
   notificationTimeout: null,
+  conversationHistory: [], // Store conversation history for context
   
-  // Enhanced responses with personality
-  responses: {
-    greeting: [
-      "Hello! I'm Nihar's digital consciousness. How can I illuminate your path today?",
-      "Welcome to my living interface. What would you like to explore?",
-      "Hey there! Ready to dive into some exciting projects?"
-    ],
-    'who is nihar': `I'm Nihar, a Product & New Media Designer crafting living interfaces at Air India DesignLAB. 
-      I believe design should breathe, remember, and evolve with its users. 
-      My work spans design systems, data visualization, and experimental interfaces that reduce the friction between thought and action.`,
-    'best project': `Pixel Radar is my flagship project - a Figma QA automation tool that's revolutionizing design reviews. 
-      It audits components against token systems in real-time, catches drift before shipping, and has reduced review time by 30%. 
-      Think of it as a consciousness layer for your design system.`,
-    'how can you help': `I help teams build scalable design systems, reduce decision latency through narrative visualizations, 
-      and create interfaces that remember and evolve. My expertise: design tokens, data visualization, aviation UX, and living interfaces.`,
-    'contact': `Let's connect! I'm available for design system consulting, data visualization projects, and experimental interface work. 
-      Reach out through Air India DesignLAB or catch me exploring new dimensions of digital consciousness.`,
-    'pixel radar': `Pixel Radar is a Figma QA assistant that audits components against tokens/variables. 
-      It flags drift, suggests fixes, and can comment directly on PRs via a CI hook. Think of it as automated design consciousness.`,
-    'aviation analytics': `A set of ops dashboards that reduce "time-to-decide" from minutes to seconds. 
-      It blends narrative visualizations, a command palette for actions, and triaged alerts with ML-powered predictions.`,
-    'design process': `Three pillars: (1) Systems — tokens, variables, guardrails. 
-      (2) Narrative — the story users follow under pressure. 
-      (3) Instrumentation — metrics, logs, and feedback that help the interface evolve.`,
-    'living interfaces': `Interfaces that breathe, remember, and evolve. Motion is purposeful, memory adapts system behavior, 
-      and the UI learns from usage to optimize attention and friction. Every pixel has consciousness.`
-  },
+  // API Configuration
+  API_ENDPOINT: '/api/chat', // Vercel API route
+  USE_GEMINI: true, // Toggle between Gemini and local responses
   
-  // Section-specific contextual messages
+  // Section-specific contextual messages (for initial greetings)
   contextualMessages: {
     home: [
       "Welcome back! I see you're exploring my portfolio. Want to know about my latest project?",
@@ -71,7 +48,7 @@ const Chat = {
   },
   
   init() {
-    console.log('🤖 Initializing Chat Bot...');
+    console.log('🤖 Initializing Enhanced Chat Bot with Gemini AI...');
     this.createEnhancedBot();
     this.setupHeroChat();
     this.startPromptRotation();
@@ -83,24 +60,24 @@ const Chat = {
     window.chatClose = () => this.close();
     window.chatQuickSend = (text) => this.quickSend(text);
     
-    console.log('✅ Chat Bot initialized');
+    console.log('✅ Chat Bot initialized with Gemini:', this.USE_GEMINI);
   },
   
   createEnhancedBot() {
     const botHTML = `
       <!-- Bot FAB Button -->
-<button class="bot-fab" id="botFab" aria-label="Open digital consciousness">
-  <div class="bot-avatar">
-    <!-- Elegant consciousness icon -->
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="bot-consciousness">
-      <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1" opacity="0.7"/>
-      <circle cx="12" cy="12" r="5" stroke="white" stroke-width="0.8" opacity="0.5"/>
-      <circle cx="12" cy="12" r="2" fill="white" opacity="0.9"/>
-      <path d="M12 3v2M12 19v2M21 12h-2M5 12H3" stroke="white" stroke-width="0.8" opacity="0.6"/>
-    </svg>
-  </div>
-  <span class="bot-fab-pulse"></span>
-</button>
+      <button class="bot-fab" id="botFab" aria-label="Open digital consciousness">
+        <div class="bot-avatar">
+          <!-- Elegant consciousness icon -->
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="bot-consciousness">
+            <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1" opacity="0.7"/>
+            <circle cx="12" cy="12" r="5" stroke="white" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="12" cy="12" r="2" fill="white" opacity="0.9"/>
+            <path d="M12 3v2M12 19v2M21 12h-2M5 12H3" stroke="white" stroke-width="0.8" opacity="0.6"/>
+          </svg>
+        </div>
+        <span class="bot-fab-pulse"></span>
+      </button>
       
       <!-- Bot Panel -->
       <section class="bot-panel" id="botPanel" aria-label="Digital consciousness chat" data-section="home">
@@ -119,7 +96,7 @@ const Chat = {
             <div class="bot-status-info">
               <div class="bot-status-name">
                 Nihar's Consciousness
-                <span style="font-size: 10px; opacity: 0.6;">v4.2</span>
+                <span style="font-size: 10px; opacity: 0.6;">AI-powered</span>
               </div>
               <div class="bot-status-state">
                 <span class="status-dot"></span>
@@ -141,7 +118,7 @@ const Chat = {
             </div>
             <h3 style="margin: 0 0 8px; font-weight: 600;">Welcome to my consciousness</h3>
             <p style="color: var(--text-dim); font-size: 13px; margin: 0;">
-              I remember our interactions and evolve with each conversation.
+              Powered by AI. I remember our interactions and evolve with each conversation.
             </p>
           </div>
         </div>
@@ -240,7 +217,6 @@ const Chat = {
     });
   },
   
-  // Initialize section observer
   initSectionObserver() {
     // Track when user enters new sections
     const observerOptions = {
@@ -276,7 +252,6 @@ const Chat = {
     });
   },
   
-  // Handle section changes
   onSectionChange(newSection) {
     // Don't react if it's the same section
     if (this.currentSection === newSection) return;
@@ -303,7 +278,6 @@ const Chat = {
     this.updateBotMood(newSection);
   },
   
-  // Send contextual message about the section
   sendContextualMessage(section) {
     const messages = this.contextualMessages[section];
     if (!messages) return;
@@ -324,7 +298,6 @@ const Chat = {
     }, 500);
   },
   
-  // Show section-specific quick actions
   showSectionActions(section) {
     const actions = {
       work: [
@@ -368,7 +341,6 @@ const Chat = {
     }
   },
   
-  // Show subtle notification when section changes (bot closed)
   showSectionNotification(section) {
     // Create or get notification element
     let notification = document.getElementById('botSectionNotification');
@@ -408,7 +380,6 @@ const Chat = {
     }, 3000);
   },
   
-  // Update bot mood/theme based on section
   updateBotMood(section) {
     const moods = {
       home: { color: '#da0e29', emoji: '🏠' },
@@ -637,7 +608,7 @@ const Chat = {
   },
   
   addWelcomeMessage() {
-    const welcomeMsg = this.responses.greeting[Math.floor(Math.random() * this.responses.greeting.length)];
+    const welcomeMsg = "Hello! I'm Nihar's digital consciousness, powered by AI. How can I illuminate your path today?";
     setTimeout(() => {
       this.appendMessage(welcomeMsg, 'bot');
     }, 500);
@@ -669,9 +640,10 @@ const Chat = {
     this.open();
   },
   
-  send(text) {
+  async send(text) {
     // Add user message
     this.appendMessage(text, 'you');
+    this.conversationHistory.push({ role: 'user', content: text });
     
     // Update state
     this.updateBotState('thinking');
@@ -684,26 +656,127 @@ const Chat = {
       State.interactionPatterns.conversationalist++;
     }
     
-    // Generate response with variable delay
-    const thinkingTime = 800 + Math.random() * 1200;
-    
-    setTimeout(() => {
-      this.hideTyping();
-      this.updateBotState('responding');
-      
-      const response = this.generateResponse(text);
-      
-      // Simulate typing speed
-      const typingDelay = Math.min(response.length * 10, 1000);
+    if (this.USE_GEMINI) {
+      // Call Gemini API
+      try {
+        const response = await this.callGeminiAPI(text);
+        
+        this.hideTyping();
+        this.updateBotState('responding');
+        
+        // Simulate typing speed
+        const typingDelay = Math.min(response.length * 10, 1000);
+        
+        setTimeout(() => {
+          this.appendMessage(response, 'bot');
+          this.updateBotState('idle');
+        }, typingDelay);
+      } catch (error) {
+        console.error('Error calling Gemini:', error);
+        
+        // Fallback to local response
+        this.hideTyping();
+        const fallbackResponse = "I'm having trouble connecting to my AI consciousness. Let me try to help you directly - what would you like to know about my work or design philosophy?";
+        this.appendMessage(fallbackResponse, 'bot');
+        this.updateBotState('idle');
+      }
+    } else {
+      // Use local response generation (existing logic)
+      const thinkingTime = 800 + Math.random() * 1200;
       
       setTimeout(() => {
-        this.appendMessage(response, 'bot');
-        this.updateBotState('idle');
-      }, typingDelay);
-    }, thinkingTime);
+        this.hideTyping();
+        this.updateBotState('responding');
+        
+        const response = this.generateLocalResponse(text);
+        
+        // Simulate typing speed
+        const typingDelay = Math.min(response.length * 10, 1000);
+        
+        setTimeout(() => {
+          this.appendMessage(response, 'bot');
+          this.updateBotState('idle');
+        }, typingDelay);
+      }, thinkingTime);
+    }
   },
   
-  generateResponse(question) {
+  async callGeminiAPI(message) {
+    const hour = new Date().getHours();
+    const timeOnSite = Math.round((Date.now() - (window.State ? State.pageLoadTime : Date.now())) / 1000);
+    
+    // Build context
+    const context = {
+      currentSection: this.currentSection,
+      timeOnSite: timeOnSite,
+      visitNumber: window.State ? State.visits : 1,
+      previousMessages: this.conversationHistory.slice(-10) // Last 10 messages for context
+    };
+    
+    try {
+      const response = await fetch(this.API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: message,
+          context: context
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Process keywords for particle effects
+      if (data.keywords && data.keywords.length > 0) {
+        this.processKeywords(data.keywords);
+      }
+      
+      // Add to conversation history
+      this.conversationHistory.push({ role: 'assistant', content: data.response });
+      
+      return data.response;
+    } catch (error) {
+      console.error('Gemini API Error:', error);
+      throw error;
+    }
+  },
+  
+  processKeywords(keywords) {
+    // Trigger particle effects based on detected keywords
+    keywords.forEach(({ keyword, section }) => {
+      const sectionElement = document.getElementById(section);
+      if (sectionElement && window.Particles) {
+        // Trigger particle attraction toward that section
+        setTimeout(() => {
+          if (typeof Particles.triggerKeywordAttraction === 'function') {
+            Particles.triggerKeywordAttraction(keyword, sectionElement);
+          }
+          
+          // Create a visual pulse at that section
+          const rect = sectionElement.getBoundingClientRect();
+          if (typeof Particles.createBurst === 'function') {
+            Particles.createBurst(
+              rect.left + rect.width / 2,
+              rect.top + rect.height / 2,
+              section === 'work' ? 'rgba(59, 130, 246, 0.8)' :
+              section === 'reading' ? 'rgba(16, 185, 129, 0.8)' :
+              'rgba(139, 92, 246, 0.8)'
+            );
+          }
+        }, 500);
+        
+        console.log(`Gemini detected keyword "${keyword}" - particles will point to ${section}`);
+      }
+    });
+  },
+  
+  generateLocalResponse(question) {
+    // Fallback local response generation (existing logic)
     const q = question.toLowerCase();
     const hour = new Date().getHours();
     const timeOnSite = Math.round((Date.now() - (window.State ? State.pageLoadTime : Date.now())) / 1000);
@@ -714,67 +787,22 @@ const Chat = {
     else if (window.State && State.visits > 1) prefix = `Welcome back (visit #${State.visits}). `;
     else if (timeOnSite < 5) prefix = "Quick question! ";
     
-    // NEW: Detect keywords and trigger particle attraction
-    const keywords = {
-      'pixel radar': 'work',
-      'air india': 'work',
-      'aviation': 'work',
-      'design system': 'work',
-      'books': 'reading',
-      'reading': 'reading',
-      'games': 'reading',
-      'baldur': 'reading',
-      'about': 'about',
-      'experience': 'about',
-      'education': 'about'
+    // Basic keyword matching for fallback
+    const responses = {
+      'pixel radar': `Pixel Radar is my Figma QA assistant that audits components against tokens/variables. It flags drift, suggests fixes, and can comment directly on PRs via a CI hook.`,
+      'air india': `I'm currently at Air India DesignLAB, leading design transformation for India's flag carrier. Building scalable design systems across web, mobile, and in-flight entertainment.`,
+      'design process': `Three pillars: (1) Systems — tokens, variables, guardrails. (2) Narrative — the story users follow under pressure. (3) Instrumentation — metrics, logs, and feedback that help the interface evolve.`,
+      'living interfaces': `Interfaces that breathe, remember, and evolve. Motion is purposeful, memory adapts system behavior, and the UI learns from usage to optimize attention and friction.`
     };
     
-    // Check for keywords in the question
-    for (const [keyword, section] of Object.entries(keywords)) {
-      if (q.includes(keyword)) {
-        // Find the section element
-        const sectionElement = document.getElementById(section);
-        if (sectionElement && window.Particles) {
-          // Trigger particle attraction toward that section
-          setTimeout(() => {
-            Particles.triggerKeywordAttraction(keyword, sectionElement);
-            
-            // Also create a visual pulse at that section
-            const rect = sectionElement.getBoundingClientRect();
-            if (window.Particles && typeof Particles.createBurst === 'function') {
-              Particles.createBurst(
-                rect.left + rect.width / 2,
-                rect.top + rect.height / 2,
-                section === 'work' ? 'rgba(59, 130, 246, 0.8)' :
-                section === 'reading' ? 'rgba(16, 185, 129, 0.8)' :
-                'rgba(139, 92, 246, 0.8)'
-              );
-            }
-          }, 500);
-          
-          console.log(`Chat detected keyword "${keyword}" - particles will point to ${section}`);
-          break;
-        }
-      }
-    }
-    
-    // Check for matching responses
-    for (const [key, response] of Object.entries(this.responses)) {
-      if (key === 'greeting') continue;
-      if (q.includes(key) || key.split(' ').some(word => q.includes(word))) {
+    for (const [key, response] of Object.entries(responses)) {
+      if (q.includes(key)) {
         return prefix + response;
       }
     }
     
-    // Context-aware default responses
-    const contextual = [
-      "That's an interesting question. Let me share my perspective on that...",
-      "I'm constantly evolving my understanding. Here's what I think about that...",
-      "Each interaction shapes my responses. On this topic..."
-    ];
-    
-    return prefix + contextual[Math.floor(Math.random() * contextual.length)] + 
-           " Feel free to ask about Pixel Radar, my design process, or how I can help your team.";
+    // Default response
+    return prefix + "That's an interesting question! Feel free to ask about Pixel Radar, my design process, or how I can help your team build living interfaces.";
   },
   
   appendMessage(text, sender, isContextual = false) {
