@@ -1,4 +1,4 @@
-// particles.js - Complete Fixed Version with All Functions
+// particles.js - Safari/Mac Optimized Version
 const Particles = {
   // Core properties
   stars: [],
@@ -21,107 +21,124 @@ const Particles = {
   time: 0,
   formation: 'default',
   currentSection: 'hero',
-  sectionDimming: 1.0,        // Start at full brightness
-  targetDimming: 1.0,         // Target full brightness initially
-  skipFrames: 0,              // Frame skipping for performance
-  lastFrameTime: 0,           // Frame rate control
-  browser: null,              // Detected browser
-  platformMultipliers: { opacity: 1.0, brightness: 1.0 }, // Platform adjustments
+  sectionDimming: 1.0,
+  targetDimming: 1.0,
+  skipFrames: 0,
+  lastFrameTime: 0,
+  browser: null,
+  isSafari: false,
+  isMac: false,
+  platformMultipliers: { opacity: 1.0, brightness: 1.0 },
   
-  // Cross-platform optimized configuration
+  // Safari/Mac optimized configuration
   config: {
-    starCount: window.innerWidth > 1400 ? 300 : window.innerWidth > 1200 ? 250 : 200,
-    starCountMobile: 15, // Minimal particles for mobile
-    starSizeRange: [0.4, 2.2],
-    starSpeed: 0.02,
-    starOpacity: 0.4,
-    starOpacityMobile: 0.2,    // Much lower opacity for mobile
-    starOpacityLight: 0.8,     // Higher opacity for light mode
-    starOpacityLightMobile: 0.3, // Lower opacity for mobile light mode
+    starCount: 150, // Reduced from 300
+    starCountMobile: 10,
+    starCountSafari: 80, // Much fewer particles for Safari
+    starSizeRange: [0.3, 1.2], // Smaller particles
+    starSizeRangeSafari: [0.2, 0.8], // Even smaller for Safari
+    starSpeed: 0.015,
+    starOpacity: 0.3,
+    starOpacityMobile: 0.15,
+    starOpacitySafari: 0.08, // MUCH lower opacity for Safari
+    starOpacityLight: 0.5,
+    starOpacityLightMobile: 0.2,
+    starOpacityLightSafari: 0.12, // Very subtle for Safari light mode
     
     // Platform-specific adjustments
     platformAdjustments: {
-      chrome: { opacityMultiplier: 0.85, brightnessMultiplier: 0.9 },
+      chrome: { opacityMultiplier: 1.0, brightnessMultiplier: 1.0 },
       firefox: { opacityMultiplier: 1.0, brightnessMultiplier: 1.0 },
-      safari: { opacityMultiplier: 0.9, brightnessMultiplier: 1.1 },
-      edge: { opacityMultiplier: 1.1, brightnessMultiplier: 1.05 }
+      safari: { opacityMultiplier: 0.3, brightnessMultiplier: 0.6 }, // Much lower for Safari
+      edge: { opacityMultiplier: 1.0, brightnessMultiplier: 1.0 }
     },
-    connectionDistance: 120,
-    connectionOpacity: 0.0, // Hide by default
-    connectionOpacityLight: 0.0, // Hide by default in light mode
-    connectionOpacityHover: 0.15, // Show on hover
-    connectionOpacityHoverLight: 0.25, // Show on hover in light mode
-    maxConnections: 2,         // Reduced for performance
-    specialStarRatio: 0.15,
-    specialOpacity: 0.6,
-    specialOpacityLight: 0.9,  // Higher for light mode
-    nebulaCount: 5,            // Reduced for performance
-    nebulaCountMobile: 0,      // NO nebula clouds on mobile
-    nebulaOpacity: 0.04,
-    nebulaOpacityMobile: 0,    // Completely disabled for mobile
-    nebulaOpacityLight: 0.1,   // Higher for light mode
-    nebulaOpacityLightMobile: 0, // Completely disabled for mobile light mode
-    mouseInfluence: 180,       // Optimized range
+    
+    connectionDistance: 100,
+    connectionOpacity: 0.0,
+    connectionOpacitySafari: 0.0, // No connections on Safari
+    connectionOpacityLight: 0.0,
+    connectionOpacityHover: 0.1,
+    connectionOpacityHoverSafari: 0.0, // No hover connections on Safari
+    maxConnections: 2,
+    specialStarRatio: 0.08, // Fewer special stars
+    specialOpacity: 0.4,
+    specialOpacitySafari: 0.15, // Much dimmer special stars on Safari
+    specialOpacityLight: 0.6,
+    nebulaCount: 3,
+    nebulaCountMobile: 0,
+    nebulaCountSafari: 0, // No nebula on Safari for clean look
+    nebulaOpacity: 0.03,
+    nebulaOpacityMobile: 0,
+    nebulaOpacitySafari: 0, // No nebula on Safari
+    nebulaOpacityLight: 0.08,
+    mouseInfluence: 150,
     scrollParallax: true,
-    parallaxFactor: 0.6,        // Optimized for performance
-    depthLayers: 4,             // Reduced for better performance
-    maxDepthOffset: 80,
-    throttleMs: 8,              // Higher frequency for smoother updates
+    parallaxFactor: 0.4,
+    depthLayers: 3,
+    maxDepthOffset: 60,
+    throttleMs: 16, // 60fps cap
     isMobile: window.innerWidth <= 768,
-    useWorker: false,           // Disable web workers for now
-    enableOptimizations: true,  // Enable all performance optimizations
-    heroReactionDistance: 250,
-    textChangeIntensity: 1.5,
-    // Enhanced 3D Lighting for both themes
+    useWorker: false,
+    enableOptimizations: true,
+    heroReactionDistance: 200,
+    textChangeIntensity: 1.0,
+    // 3D Lighting - reduced for Safari
     lightSource: { x: 0.4, y: 0.3, z: 1.0 },
-    ambientLight: 0.5,
-    ambientLightDark: 0.3,      // Different for dark mode
-    lightIntensity: 0.9,
-    lightIntensityDark: 0.7,    // Different for dark mode
+    ambientLight: 0.6,
+    ambientLightDark: 0.4,
+    ambientLightSafari: 0.8, // Higher ambient for Safari to reduce contrast
+    lightIntensity: 0.7,
+    lightIntensityDark: 0.5,
+    lightIntensitySafari: 0.3, // Lower intensity for Safari
     // Section dimming
     heroDimming: 1.0,
     sectionDimming: 0.85,
     dimmingSpeed: 0.06,
-    // Performance optimizations
-    maxScrollVelocity: 40,
+    // Performance
+    maxScrollVelocity: 30,
     smoothingFactor: 0.85,
     // Mouse interaction
-    mouseTrailLength: 8,        // Length of mouse trail effect
-    mouseTrailDecay: 0.85,      // How quickly trail fades
-    mouseParticleSize: 1.5      // Size of mouse interaction particles
+    mouseTrailLength: 5,
+    mouseTrailDecay: 0.9,
+    mouseParticleSize: 1.0,
+    mouseParticleSizeSafari: 0.6
   },
   
-  // Detect browser and platform for compatibility adjustments
+  // Enhanced browser detection
   detectBrowserAndPlatform() {
     const userAgent = navigator.userAgent.toLowerCase();
-    const isChrome = userAgent.includes('chrome') && !userAgent.includes('edge') && !userAgent.includes('edg');
-    const isFirefox = userAgent.includes('firefox');
-    const isSafari = userAgent.includes('safari') && !userAgent.includes('chrome');
-    const isEdge = userAgent.includes('edge') || userAgent.includes('edg');
-    const isMac = userAgent.includes('mac');
-    const isWindows = userAgent.includes('win');
+    const vendor = navigator.vendor?.toLowerCase() || '';
     
-    // Determine browser
-    if (isChrome) this.browser = 'chrome';
-    else if (isFirefox) this.browser = 'firefox';
-    else if (isSafari) this.browser = 'safari';
-    else if (isEdge) this.browser = 'edge';
-    else this.browser = 'unknown';
+    // Better Safari detection
+    this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
+                    (vendor.includes('apple') && !userAgent.includes('crios') && !userAgent.includes('fxios'));
     
-    // Apply platform-specific adjustments
+    // Mac detection
+    this.isMac = navigator.platform?.toLowerCase().includes('mac') || 
+                 userAgent.includes('macintosh') || 
+                 userAgent.includes('mac os');
+    
+    // Browser identification
+    if (this.isSafari) {
+      this.browser = 'safari';
+    } else if (userAgent.includes('chrome') && !userAgent.includes('edge')) {
+      this.browser = 'chrome';
+    } else if (userAgent.includes('firefox')) {
+      this.browser = 'firefox';
+    } else if (userAgent.includes('edge') || userAgent.includes('edg')) {
+      this.browser = 'edge';
+    } else {
+      this.browser = 'unknown';
+    }
+    
+    // Apply platform adjustments
     const platformAdjustment = this.config.platformAdjustments[this.browser] || 
                                this.config.platformAdjustments.chrome;
     
-    // Additional Mac-specific adjustments for color profile differences
-    if (isMac) {
-      platformAdjustment.opacityMultiplier *= 0.9; // Mac displays tend to be brighter
-      platformAdjustment.brightnessMultiplier *= 0.95;
-    }
-    
-    // Windows-specific adjustments
-    if (isWindows) {
-      platformAdjustment.opacityMultiplier *= 1.05; // Windows displays can be darker
-      platformAdjustment.brightnessMultiplier *= 1.02;
+    // Extra reduction for Mac + Safari combo
+    if (this.isSafari && this.isMac) {
+      platformAdjustment.opacityMultiplier *= 0.5; // Extra 50% reduction
+      platformAdjustment.brightnessMultiplier *= 0.7;
     }
     
     this.platformMultipliers = {
@@ -129,66 +146,90 @@ const Particles = {
       brightness: platformAdjustment.brightnessMultiplier
     };
     
-    console.log(`🌐 Detected: ${this.browser} on ${isMac ? 'Mac' : isWindows ? 'Windows' : 'Unknown'}`);
-    console.log(`🎨 Platform adjustments: opacity=${this.platformMultipliers.opacity.toFixed(2)}, brightness=${this.platformMultipliers.brightness.toFixed(2)}`);
+    console.log(`🌐 Browser: ${this.browser}, Mac: ${this.isMac}, Safari: ${this.isSafari}`);
+    console.log(`🎨 Adjustments: opacity=${this.platformMultipliers.opacity}, brightness=${this.platformMultipliers.brightness}`);
   },
   
   init() {
-    console.log('✨ Initializing Space Particle System (Immediate Mode)...');
+    console.log('✨ Initializing Particles (Safari/Mac Optimized)...');
     
-    // Detect browser and platform for compatibility
     this.detectBrowserAndPlatform();
-
+    
     this.canvas = document.getElementById('particles');
     if (!this.canvas) {
       console.error('Particle canvas not found');
       return;
     }
-
-    this.ctx = this.canvas.getContext('2d', {
-      alpha: true,
-      desynchronized: true
-    });
-    this.dpr = Math.min(2, window.devicePixelRatio || 1);
-
-    // Initialize immediately for instant visibility
+    
+    // Safari-specific canvas settings
+    if (this.isSafari) {
+      this.ctx = this.canvas.getContext('2d', {
+        alpha: true,
+        desynchronized: false, // Safari doesn't support desynchronized
+        willReadFrequently: false
+      });
+      this.dpr = Math.min(1.5, window.devicePixelRatio || 1); // Lower DPR for Safari
+    } else {
+      this.ctx = this.canvas.getContext('2d', {
+        alpha: true,
+        desynchronized: true
+      });
+      this.dpr = Math.min(2, window.devicePixelRatio || 1);
+    }
+    
     this.resize();
     this.theme = document.documentElement.getAttribute('data-theme') || 'dark';
     this.createStars();
-
-    // Start animation immediately before event listeners
+    
     this.initialized = true;
     this.animate();
-
-    // Draw first frame immediately
     this.draw();
-
-    // Mark canvas as active to hide preloader
+    
     this.canvas.classList.add('particles-active');
-
     this.setupEventListeners();
-    this.setupHeroTextReaction(); // New: setup hero text monitoring
-
-    // Initialize section dimming
+    this.setupHeroTextReaction();
     this.updateSectionDimming();
-
-    console.log('✅ Space Particle System initialized IMMEDIATELY with', this.stars.length, 'stars!');
+    
+    console.log('✅ Particles initialized with', this.stars.length, 'stars');
   },
   
   createStars() {
     this.stars = [];
-    const count = this.config.isMobile ? this.config.starCountMobile : this.config.starCount;
-
+    
+    // Use Safari-specific count if on Safari
+    let count = this.config.isMobile ? this.config.starCountMobile : 
+                this.isSafari ? this.config.starCountSafari : 
+                this.config.starCount;
+    
     for (let i = 0; i < count; i++) {
-      const isSpecial = Math.random() < this.config.specialStarRatio;
-      // Enhanced depth with discrete layers for better 3D effect
+      const isSpecial = Math.random() < this.config.specialStarRatio && !this.isSafari; // Fewer special stars on Safari
       const depthLayer = Math.floor(Math.random() * this.config.depthLayers);
       const depth = depthLayer / (this.config.depthLayers - 1);
-
-      // Ensure coordinates are always finite
+      
       const x = Math.random() * (window.innerWidth || 1920);
       const y = Math.random() * (window.innerHeight || 1080);
-
+      
+      // Safari-specific sizing
+      const sizeRange = this.isSafari ? this.config.starSizeRangeSafari : this.config.starSizeRange;
+      const size = Math.random() * (sizeRange[1] - sizeRange[0]) + sizeRange[0];
+      
+      // Safari-specific opacity
+      let opacity;
+      if (this.isSafari) {
+        opacity = isSpecial ? this.config.specialOpacitySafari : 
+                  (this.theme === 'dark' ? this.config.starOpacitySafari : this.config.starOpacityLightSafari);
+      } else if (this.config.isMobile) {
+        opacity = isSpecial ? this.config.specialOpacity * 0.3 : 
+                  (this.theme === 'dark' ? this.config.starOpacityMobile : this.config.starOpacityLightMobile);
+      } else {
+        opacity = isSpecial ? 
+          (this.theme === 'dark' ? this.config.specialOpacity : this.config.specialOpacityLight) :
+          (this.theme === 'dark' ? this.config.starOpacity : this.config.starOpacityLight);
+      }
+      
+      // Apply depth-based opacity reduction
+      opacity *= (0.3 + depth * 0.7);
+      
       this.stars.push({
         x: isFinite(x) ? x : Math.random() * 1920,
         y: isFinite(y) ? y : Math.random() * 1080,
@@ -198,30 +239,22 @@ const Particles = {
         vy: (Math.random() - 0.5) * this.config.starSpeed * (1 - depth * 0.5),
         baseVx: 0,
         baseVy: 0,
-        baseX: 0, // For parallax calculations
+        baseX: 0,
         baseY: 0,
-        size: Math.random() * (this.config.starSizeRange[1] - this.config.starSizeRange[0])
-              + this.config.starSizeRange[0],
-        opacity: isSpecial ?
-          (this.theme === 'dark' ?
-            (this.config.isMobile ? this.config.specialOpacity * 0.3 : this.config.specialOpacity) :
-            (this.config.isMobile ? this.config.specialOpacityLight * 0.3 : this.config.specialOpacityLight)) :
-          (this.theme === 'dark' ?
-            (this.config.isMobile ? this.config.starOpacityMobile : this.config.starOpacity) :
-            (this.config.isMobile ? this.config.starOpacityLightMobile : this.config.starOpacityLight)) * (0.4 + depth * 0.6),
+        size: size,
+        opacity: opacity,
         twinkle: Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.02 + Math.random() * 0.02,
+        twinkleSpeed: 0.01 + Math.random() * 0.015,
         isSpecial: isSpecial,
         hue: isSpecial ? Math.random() * 60 + 200 : 0,
         pulsePhase: Math.random() * Math.PI * 2,
         connections: [],
         growthFactor: 0,
         targetGrowth: 0,
-        // 3D lighting properties
-        lightFacing: Math.random() * 2 - 1, // How much this star faces the light (-1 to 1)
-        baseOpacity: 0 // Will be calculated
+        lightFacing: Math.random() * 2 - 1,
+        baseOpacity: 0
       });
-
+      
       this.stars[i].baseVx = this.stars[i].vx;
       this.stars[i].baseVy = this.stars[i].vy;
       this.stars[i].baseX = this.stars[i].x;
@@ -231,7 +264,6 @@ const Particles = {
   },
   
   setupEventListeners() {
-    // Optimized mouse handling with RAF
     let mouseRaf = null;
     const handleMouseMove = (e) => {
       if (!mouseRaf) {
@@ -242,9 +274,9 @@ const Particles = {
         });
       }
     };
-
+    
     document.addEventListener('mousemove', handleMouseMove, { passive: true });
-
+    
     if (this.config.isMobile) {
       document.addEventListener('touchmove', (e) => {
         const touch = e.touches[0];
@@ -256,18 +288,17 @@ const Particles = {
     let scrollThrottle = null;
     window.addEventListener('scroll', () => {
       const newScrollY = window.scrollY || window.pageYOffset;
-
-      // Throttle scroll updates to prevent glitches
+      
       if (!scrollThrottle) {
         scrollThrottle = requestAnimationFrame(() => {
           this.scrollY = newScrollY;
           this.isScrolling = true;
-
+          
           clearTimeout(this.scrollTimeout);
           this.scrollTimeout = setTimeout(() => {
             this.isScrolling = false;
           }, 150);
-
+          
           scrollThrottle = null;
         });
       }
@@ -290,24 +321,21 @@ const Particles = {
   resize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-
+    
     this.canvas.width = width * this.dpr;
     this.canvas.height = height * this.dpr;
-
+    
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
-
     this.canvas.style.position = 'fixed';
     this.canvas.style.top = '0';
     this.canvas.style.left = '0';
-
+    
     this.ctx.scale(this.dpr, this.dpr);
-
-    // Update mobile detection
+    
     const wasMobile = this.config.isMobile;
     this.config.isMobile = width <= 768;
-
-    // If switching between mobile/desktop, recreate stars for optimal count
+    
     if (wasMobile !== this.config.isMobile) {
       this.createStars();
     }
@@ -322,8 +350,8 @@ const Particles = {
     this.stars.forEach((star, i) => {
       star.twinkle += star.twinkleSpeed;
       
-      if (star.isSpecial) {
-        star.pulsePhase += 0.01;
+      if (star.isSpecial && !this.isSafari) {
+        star.pulsePhase += 0.008;
       }
       
       const dx = this.mouseX - star.x;
@@ -331,46 +359,48 @@ const Particles = {
       const distance = Math.sqrt(dx * dx + dy * dy);
       
       if (distance < this.config.mouseInfluence && distance > 0) {
-        const force = (1 - distance / this.config.mouseInfluence) * 0.5;
+        const force = (1 - distance / this.config.mouseInfluence) * 0.3;
         const angle = Math.atan2(dy, dx);
         
-        star.vx += Math.cos(angle) * force * 0.02;
-        star.vy += Math.sin(angle) * force * 0.02;
+        star.vx += Math.cos(angle) * force * 0.015;
+        star.vy += Math.sin(angle) * force * 0.015;
         
-        star.targetGrowth = force;
+        star.targetGrowth = this.isSafari ? force * 0.3 : force;
       } else {
         star.targetGrowth = 0;
       }
       
       star.growthFactor += (star.targetGrowth - star.growthFactor) * 0.1;
       
-      let connectionCount = 0;
-      for (let j = i + 1; j < this.stars.length; j++) {
-        if (connectionCount >= this.config.maxConnections) break;
-        
-        const other = this.stars[j];
-        const cdx = star.x - other.x;
-        const cdy = star.y - other.y;
-        const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-        
-        if (cdist < this.config.connectionDistance) {
-          this.connections.push({
-            from: star,
-            to: other,
-            distance: cdist,
-            opacity: (1 - cdist / this.config.connectionDistance) * this.config.connectionOpacity
-          });
-          connectionCount++;
+      // Skip connections on Safari for performance
+      if (!this.isSafari && !this.config.isMobile) {
+        let connectionCount = 0;
+        for (let j = i + 1; j < this.stars.length; j++) {
+          if (connectionCount >= this.config.maxConnections) break;
+          
+          const other = this.stars[j];
+          const cdx = star.x - other.x;
+          const cdy = star.y - other.y;
+          const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+          
+          if (cdist < this.config.connectionDistance) {
+            this.connections.push({
+              from: star,
+              to: other,
+              distance: cdist,
+              opacity: (1 - cdist / this.config.connectionDistance) * this.config.connectionOpacity
+            });
+            connectionCount++;
+          }
         }
       }
       
-      star.vx += (Math.random() - 0.5) * 0.001;
-      star.vy += (Math.random() - 0.5) * 0.001;
+      star.vx += (Math.random() - 0.5) * 0.0008;
+      star.vy += (Math.random() - 0.5) * 0.0008;
       
-      // Update position with validation
       const newX = star.x + star.vx;
       const newY = star.y + star.vy;
-
+      
       star.x = isFinite(newX) ? newX : star.x || 0;
       star.y = isFinite(newY) ? newY : star.y || 0;
       
@@ -385,24 +415,19 @@ const Particles = {
       if (star.y < -50) star.y = window.innerHeight + 50;
       if (star.y > window.innerHeight + 50) star.y = -50;
       
-      // Enhanced 3D parallax effect
       if (this.config.scrollParallax) {
         const scrollDelta = this.scrollY - this.lastScrollY;
         const parallaxStrength = this.config.parallaxFactor * (1 - star.z);
-
-        // Smooth out fast scrolling to prevent glitches
+        
         const smoothedScrollDelta = Math.abs(scrollDelta) > this.config.maxScrollVelocity ?
           scrollDelta * this.config.smoothingFactor : scrollDelta;
-
-        // Multi-layer parallax
-        // Apply parallax with validation
+        
         const newY = star.baseY + (this.scrollY * parallaxStrength * 0.5);
         const newX = star.baseX + (this.scrollY * parallaxStrength * 0.1 * Math.sin(star.depthLayer));
-
+        
         star.y = isFinite(newY) ? newY : star.baseY || 0;
         star.x = isFinite(newX) ? newX : star.baseX || 0;
-
-        // Depth-based movement during scrolling
+        
         if (this.isScrolling) {
           star.vy -= smoothedScrollDelta * 0.002 * parallaxStrength;
           star.vx += smoothedScrollDelta * 0.0005 * Math.sin(this.time + star.depthLayer);
@@ -410,78 +435,63 @@ const Particles = {
       }
     });
     
-    // Update scroll velocity and section detection
     this.scrollVelocity = this.scrollY - this.lastScrollY;
     this.lastScrollY = this.scrollY;
     this.time += 0.01;
-
-    // Detect current section and update dimming
+    
     this.updateSectionDimming();
-
-    // Update global dimming smoothly
     this.sectionDimming += (this.targetDimming - this.sectionDimming) * 0.05;
-
-    // Ensure dimming stays within safe bounds
     this.sectionDimming = Math.max(0.7, Math.min(1.0, this.sectionDimming));
   },
   
   draw() {
-    // Prevent drawing glitches by using a clean clear
     this.ctx.save();
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.clearRect(0, 0, this.canvas.width / this.dpr, this.canvas.height / this.dpr);
     this.ctx.restore();
-
+    
     this.ctx.save();
-
-    // Apply subtle dimming to background elements
-    const nebulaDimming = Math.max(0.7, this.sectionDimming); // Never below 70%
-    this.ctx.globalAlpha = nebulaDimming;
-    this.drawNebulaClouds();
+    
+    // Skip nebula on Safari
+    if (!this.isSafari && !this.config.isMobile) {
+      const nebulaDimming = Math.max(0.7, this.sectionDimming);
+      this.ctx.globalAlpha = nebulaDimming;
+      this.drawNebulaClouds();
+    }
+    
     this.ctx.globalAlpha = 1.0;
-
     this.drawConnections();
     this.drawStars();
-
+    
     this.ctx.restore();
   },
   
   drawNebulaClouds() {
-    // Skip nebula clouds entirely on mobile
-    if (this.config.isMobile) {
-      return;
-    }
-
-    // Use mobile-optimized count and opacity
-    const nebulaCount = this.config.isMobile ? this.config.nebulaCountMobile : this.config.nebulaCount;
-
+    // Skip entirely on Safari/Mobile
+    if (this.isSafari || this.config.isMobile) return;
+    
+    const nebulaCount = this.config.nebulaCount;
+    
     for (let i = 0; i < nebulaCount; i++) {
       const x = (Math.sin(this.time * 0.1 + i * 2) + 1) * window.innerWidth * 0.5;
       const y = (Math.cos(this.time * 0.05 + i * 3) + 1) * window.innerHeight * 0.5;
-      const size = this.config.isMobile ? 150 + Math.sin(this.time * 0.1 + i) * 30 : 200 + Math.sin(this.time * 0.1 + i) * 50;
-
+      const size = 180 + Math.sin(this.time * 0.1 + i) * 40;
+      
       const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
-
-      // Mobile-optimized nebula opacity
-      let baseNebulaOpacity;
-      if (this.config.isMobile) {
-        baseNebulaOpacity = this.theme === 'dark' ? this.config.nebulaOpacityMobile : this.config.nebulaOpacityLightMobile;
-      } else {
-        baseNebulaOpacity = this.theme === 'dark' ? this.config.nebulaOpacity : this.config.nebulaOpacityLight;
-      }
-
+      
+      const baseNebulaOpacity = this.theme === 'dark' ? 
+        this.config.nebulaOpacity : this.config.nebulaOpacityLight;
       const nebulaOpacity = baseNebulaOpacity * (0.7 + Math.sin(this.time * 0.2 + i) * 0.3);
-
+      
       if (this.theme === 'dark') {
-        gradient.addColorStop(0, `rgba(138, 43, 226, ${nebulaOpacity * 1.2})`);
-        gradient.addColorStop(0.3, `rgba(30, 144, 255, ${nebulaOpacity * 0.8})`);
-        gradient.addColorStop(0.6, `rgba(147, 197, 253, ${nebulaOpacity * 0.4})`);
+        gradient.addColorStop(0, `rgba(138, 43, 226, ${nebulaOpacity * 0.8})`);
+        gradient.addColorStop(0.3, `rgba(30, 144, 255, ${nebulaOpacity * 0.5})`);
+        gradient.addColorStop(0.6, `rgba(147, 197, 253, ${nebulaOpacity * 0.3})`);
         gradient.addColorStop(1, 'transparent');
       } else {
-        // Dark nebula for light mode - visible against white background
-        gradient.addColorStop(0, `rgba(71, 85, 105, ${nebulaOpacity * 1.4})`);    // Dark slate
-        gradient.addColorStop(0.3, `rgba(51, 65, 85, ${nebulaOpacity * 1.0})`);   // Darker slate
-        gradient.addColorStop(0.6, `rgba(30, 41, 59, ${nebulaOpacity * 0.6})`);   // Darkest slate
+        gradient.addColorStop(0, `rgba(71, 85, 105, ${nebulaOpacity * 1.2})`);
+        gradient.addColorStop(0.3, `rgba(51, 65, 85, ${nebulaOpacity * 0.8})`);
+        gradient.addColorStop(0.6, `rgba(30, 41, 59, ${nebulaOpacity * 0.5})`);
         gradient.addColorStop(1, 'transparent');
       }
       
@@ -491,17 +501,15 @@ const Particles = {
   },
   
   drawConnections() {
-    // Skip connections entirely on mobile for clean look
-    if (this.config.isMobile) {
-      return;
-    }
-
+    // Skip on Safari/Mobile
+    if (this.isSafari || this.config.isMobile) return;
+    
     this.connections.forEach(conn => {
       this.ctx.save();
       
       const midX = (conn.from.x + conn.to.x) / 2;
       const midY = (conn.from.y + conn.to.y) / 2;
-      const curve = Math.sin(this.time + conn.from.x * 0.01) * 20;
+      const curve = Math.sin(this.time + conn.from.x * 0.01) * 15;
       
       this.ctx.beginPath();
       this.ctx.moveTo(conn.from.x, conn.from.y);
@@ -512,42 +520,29 @@ const Particles = {
         conn.to.y
       );
       
-      // Validate coordinates to prevent non-finite values
       const fromX = isFinite(conn.from.x) ? conn.from.x : 0;
       const fromY = isFinite(conn.from.y) ? conn.from.y : 0;
       const toX = isFinite(conn.to.x) ? conn.to.x : 0;
       const toY = isFinite(conn.to.y) ? conn.to.y : 0;
-
-      const gradient = this.ctx.createLinearGradient(
-        fromX, fromY, toX, toY
-      );
       
-      // Theme-aware connection dimming with hover detection
+      const gradient = this.ctx.createLinearGradient(fromX, fromY, toX, toY);
+      
       const connectionDimming = Math.max(0.7, this.sectionDimming);
-
-      // Check if mouse is near the connection line for hover effect
-      const mouseNearConnection = this.mouseX && this.mouseY &&
-        this.isMouseNearConnection(conn, this.mouseX, this.mouseY, 100);
-
-      const baseOpacity = mouseNearConnection ?
-        (this.theme === 'dark' ? this.config.connectionOpacityHover : this.config.connectionOpacityHoverLight) :
-        (this.theme === 'dark' ? this.config.connectionOpacity : this.config.connectionOpacityLight);
-
+      const baseOpacity = this.config.connectionOpacity;
       const opacity = baseOpacity * (1 + conn.from.growthFactor * 2) * connectionDimming;
-
+      
       if (this.theme === 'dark') {
         gradient.addColorStop(0, `rgba(147, 197, 253, ${opacity})`);
         gradient.addColorStop(0.5, `rgba(196, 181, 253, ${opacity * 1.5})`);
         gradient.addColorStop(1, `rgba(147, 197, 253, ${opacity})`);
       } else {
-        // Dark connections for light mode - highly visible
-        gradient.addColorStop(0, `rgba(30, 41, 59, ${opacity})`);     // Dark slate
-        gradient.addColorStop(0.5, `rgba(51, 65, 85, ${opacity * 1.3})`); // Darker slate
+        gradient.addColorStop(0, `rgba(30, 41, 59, ${opacity})`);
+        gradient.addColorStop(0.5, `rgba(51, 65, 85, ${opacity * 1.3})`);
         gradient.addColorStop(1, `rgba(30, 41, 59, ${opacity})`);
       }
       
       this.ctx.strokeStyle = gradient;
-      this.ctx.lineWidth = 0.5 + conn.from.growthFactor;
+      this.ctx.lineWidth = 0.5 + conn.from.growthFactor * 0.5;
       this.ctx.stroke();
       
       this.ctx.restore();
@@ -557,165 +552,147 @@ const Particles = {
   drawStars() {
     this.stars.forEach(star => {
       this.ctx.save();
-
-      const twinkle = Math.sin(star.twinkle) * 0.3 + 0.7;
-      const pulse = star.isSpecial ? Math.sin(star.pulsePhase) * 0.2 + 0.8 : 1;
-
-      // Calculate theme-aware 3D lighting with validation
+      
+      const twinkle = Math.sin(star.twinkle) * 0.2 + 0.8;
+      const pulse = star.isSpecial ? Math.sin(star.pulsePhase) * 0.15 + 0.85 : 1;
+      
       const lightFactor = this.calculate3DLighting(star);
-      const ambientLight = this.theme === 'dark' ? this.config.ambientLightDark : this.config.ambientLight;
-      const lightStrength = this.theme === 'dark' ? this.config.lightIntensityDark : this.config.lightIntensity;
-
-      // Ensure all lighting values are finite
+      const ambientLight = this.isSafari ? this.config.ambientLightSafari :
+                          this.theme === 'dark' ? this.config.ambientLightDark : 
+                          this.config.ambientLight;
+      const lightStrength = this.isSafari ? this.config.lightIntensitySafari :
+                           this.theme === 'dark' ? this.config.lightIntensityDark : 
+                           this.config.lightIntensity;
+      
       const safeLightFactor = isFinite(lightFactor) ? lightFactor : 0.5;
       const safeAmbientLight = isFinite(ambientLight) ? ambientLight : 0.5;
       const safeLightStrength = isFinite(lightStrength) ? lightStrength : 0.7;
-
-      const lightIntensity = safeAmbientLight + (safeLightFactor * safeLightStrength);
-
-      // Apply section dimming and 3D lighting - SAFE OPACITY CALCULATION with platform adjustments
-      const safeDimming = Math.max(0.7, this.sectionDimming); // Never below 70%
-      let finalOpacity = Math.max(0.4, star.baseOpacity * twinkle * pulse * lightIntensity * safeDimming);
       
-      // Apply platform-specific adjustments for cross-browser consistency
+      const lightIntensity = safeAmbientLight + (safeLightFactor * safeLightStrength);
+      
+      const safeDimming = Math.max(0.7, this.sectionDimming);
+      let finalOpacity = Math.max(0.1, star.baseOpacity * twinkle * pulse * lightIntensity * safeDimming);
+      
+      // Apply platform multipliers for consistency
       finalOpacity *= this.platformMultipliers.opacity;
-      const size = star.size * twinkle * pulse * (1 + star.growthFactor * 2) * (0.5 + star.z * 0.5);
-
-      // Enhanced glow for depth (disabled on mobile for performance)
-      if (!this.config.isMobile && (star.isSpecial || star.growthFactor > 0.1 || star.z > 0.7)) {
-        const glowSize = size * (3 + star.z * 2); // Bigger glow for closer particles
+      
+      // Safari-specific opacity cap
+      if (this.isSafari) {
+        finalOpacity = Math.min(0.3, finalOpacity);
+      }
+      
+      const size = star.size * twinkle * pulse * (1 + star.growthFactor) * (0.5 + star.z * 0.5);
+      
+      // Skip glow effect on Safari
+      if (!this.isSafari && !this.config.isMobile && (star.isSpecial || star.growthFactor > 0.1)) {
+        const glowSize = size * 2;
         const gradient = this.ctx.createRadialGradient(
           star.x, star.y, 0,
           star.x, star.y, glowSize
         );
-
-        const glowOpacity = finalOpacity * 0.4 * (1 + star.growthFactor) * lightIntensity;
-
-        // Validate color values to prevent NaN in color strings
-        const safeGlowOpacity = isFinite(glowOpacity) ? Math.max(0, Math.min(1, glowOpacity)) : 0.3;
-
+        
+        const glowOpacity = finalOpacity * 0.3 * (1 + star.growthFactor);
+        const safeGlowOpacity = isFinite(glowOpacity) ? Math.max(0, Math.min(1, glowOpacity)) : 0.2;
+        
         if (star.isSpecial) {
           const hue = isFinite(star.hue) ? star.hue : 200;
-          const lightness1 = isFinite(lightIntensity) ? Math.max(30, Math.min(90, 60 + lightIntensity * 20)) : 60;
-          const lightness2 = isFinite(lightIntensity) ? Math.max(20, Math.min(80, 50 + lightIntensity * 15)) : 50;
-
-          gradient.addColorStop(0, `hsla(${hue}, 70%, ${lightness1}%, ${safeGlowOpacity})`);
-          gradient.addColorStop(0.5, `hsla(${hue}, 70%, ${lightness2}%, ${safeGlowOpacity * 0.5})`);
+          gradient.addColorStop(0, `hsla(${hue}, 60%, 60%, ${safeGlowOpacity})`);
+          gradient.addColorStop(0.5, `hsla(${hue}, 60%, 50%, ${safeGlowOpacity * 0.4})`);
           gradient.addColorStop(1, 'transparent');
         } else {
-          // Dark glow for light mode with validation
-          const darkness = isFinite(lightIntensity) ? Math.max(10, Math.min(200, Math.floor(40 + lightIntensity * 40))) : 60;
-          const blueTint = isFinite(lightIntensity) ? Math.max(10, Math.min(200, Math.floor(darkness + lightIntensity * 60))) : 80;
-
+          const darkness = 60;
+          const blueTint = 80;
           gradient.addColorStop(0, `rgba(${darkness}, ${darkness}, ${blueTint}, ${safeGlowOpacity})`);
           gradient.addColorStop(1, 'transparent');
         }
-
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(
-          star.x - glowSize,
-          star.y - glowSize,
-          glowSize * 2,
-          glowSize * 2
-        );
-      }
-
-      this.ctx.globalAlpha = finalOpacity;
-
-      if (star.isSpecial) {
-        const litHue = isFinite(star.hue) ? star.hue : 200;
-        const litSaturation = isFinite(lightIntensity) ? Math.max(30, Math.min(100, 50 + lightIntensity * 30)) : 50;
-        let litLightness = isFinite(lightIntensity) ? Math.max(40, Math.min(90, 60 + lightIntensity * 25)) : 60;
         
-        // Apply platform brightness adjustment
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(star.x - glowSize, star.y - glowSize, glowSize * 2, glowSize * 2);
+      }
+      
+      this.ctx.globalAlpha = finalOpacity;
+      
+      if (star.isSpecial && !this.isSafari) {
+        const litHue = isFinite(star.hue) ? star.hue : 200;
+        const litSaturation = 40;
+        let litLightness = 70;
         litLightness *= this.platformMultipliers.brightness;
-        litLightness = Math.max(40, Math.min(90, litLightness));
         
         this.ctx.fillStyle = `hsl(${litHue}, ${litSaturation}%, ${litLightness}%)`;
       } else {
         if (this.theme === 'dark') {
-          let brightness = isFinite(lightIntensity) ? Math.max(100, Math.min(255, Math.floor(180 + lightIntensity * 75))) : 200;
-          
-          // Apply platform brightness adjustment
+          let brightness = this.isSafari ? 140 : 180;
           brightness *= this.platformMultipliers.brightness;
           brightness = Math.max(100, Math.min(255, Math.floor(brightness)));
           
           this.ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, 0.9)`;
         } else {
-          // Dark particles for light mode - highly visible on white background
-          let baseDark = isFinite(lightIntensity) ? Math.max(20, Math.min(100, Math.floor(30 + lightIntensity * 50))) : 50;
-          let blue = isFinite(lightIntensity) ? Math.max(20, Math.min(130, Math.floor(baseDark + lightIntensity * 30))) : 70;
-          
-          // Apply platform brightness adjustment
+          let baseDark = this.isSafari ? 60 : 40;
+          let blue = this.isSafari ? 80 : 60;
           baseDark *= this.platformMultipliers.brightness;
           blue *= this.platformMultipliers.brightness;
-          baseDark = Math.max(20, Math.min(100, Math.floor(baseDark)));
-          blue = Math.max(20, Math.min(130, Math.floor(blue)));
           
           this.ctx.fillStyle = `rgba(${baseDark}, ${baseDark}, ${blue}, 0.9)`;
         }
       }
-
+      
       this.ctx.beginPath();
       this.ctx.arc(star.x, star.y, size, 0, Math.PI * 2);
       this.ctx.fill();
-
-      // Enhanced sparkle effect for bright/close particles (disabled on mobile)
-      if (!this.config.isMobile && (star.isSpecial || star.growthFactor > 0.3 || lightIntensity > 0.8) && finalOpacity > 0.3) {
+      
+      // Skip sparkle effect on Safari
+      if (!this.isSafari && !this.config.isMobile && star.isSpecial && finalOpacity > 0.2) {
         this.ctx.strokeStyle = this.ctx.fillStyle;
-        this.ctx.lineWidth = 0.5 + star.z * 0.5;
-        this.ctx.globalAlpha = finalOpacity * 0.6;
-
-        const sparkleSize = size * (2 + star.z);
-
+        this.ctx.lineWidth = 0.3;
+        this.ctx.globalAlpha = finalOpacity * 0.4;
+        
+        const sparkleSize = size * 1.5;
+        
         this.ctx.beginPath();
         this.ctx.moveTo(star.x - sparkleSize, star.y);
         this.ctx.lineTo(star.x + sparkleSize, star.y);
         this.ctx.stroke();
-
+        
         this.ctx.beginPath();
         this.ctx.moveTo(star.x, star.y - sparkleSize);
         this.ctx.lineTo(star.x, star.y + sparkleSize);
         this.ctx.stroke();
       }
-
+      
       this.ctx.restore();
     });
   },
   
   animate(currentTime = 0) {
     if (!this.initialized) return;
-
-    // Advanced performance optimization
+    
     const now = performance.now();
     if (!this.lastFrameTime) this.lastFrameTime = now;
-
+    
     const deltaTime = now - this.lastFrameTime;
-    const targetFPS = this.config.isMobile ? 30 : 60;
+    const targetFPS = this.isSafari ? 30 : (this.config.isMobile ? 30 : 60);
     const targetFrameTime = 1000 / targetFPS;
-
-    // Skip frame if running too fast
+    
     if (deltaTime < targetFrameTime && this.config.enableOptimizations) {
       this.animationId = requestAnimationFrame((t) => this.animate(t));
       return;
     }
-
+    
     this.lastFrameTime = now;
-
-    // Update only if necessary
+    
     this.update();
     this.draw();
-
+    
     this.animationId = requestAnimationFrame((t) => this.animate(t));
   },
   
-  // Public API Functions
+  // Public API Functions remain the same
   triggerBurst(x, y) {
-    const burst = 15;
+    const burst = this.isSafari ? 5 : 10;
     for (let i = 0; i < burst; i++) {
       const angle = (i / burst) * Math.PI * 2;
-      const speed = 1 + Math.random() * 2;
-      const size = Math.random() * 1.5 + 0.5;
+      const speed = 0.5 + Math.random() * 1;
+      const size = this.isSafari ? Math.random() * 0.8 + 0.3 : Math.random() * 1.5 + 0.5;
       
       this.stars.push({
         x: x,
@@ -726,14 +703,14 @@ const Particles = {
         baseVx: 0,
         baseVy: 0,
         size: size,
-        opacity: 0.8,
+        opacity: this.isSafari ? 0.3 : 0.6,
         twinkle: 0,
-        twinkleSpeed: 0.1,
-        isSpecial: true,
+        twinkleSpeed: 0.08,
+        isSpecial: !this.isSafari,
         hue: Math.random() * 60 + 200,
         pulsePhase: 0,
         connections: [],
-        growthFactor: 1,
+        growthFactor: 0.5,
         targetGrowth: 0,
         temporary: true,
         life: 1
@@ -744,7 +721,6 @@ const Particles = {
   cleanup() {
     this.stars = this.stars.filter(star => {
       if (star.temporary) {
-        // Use elegant decay if available, otherwise standard decay
         const decay = star.elegantDecay || 0.01;
         star.life -= decay;
         star.opacity = star.baseOpacity * star.life;
@@ -753,8 +729,8 @@ const Particles = {
       }
       return true;
     });
-
-    const maxStars = this.config.isMobile ? 250 : 500; // Increased limits
+    
+    const maxStars = this.isSafari ? 150 : (this.config.isMobile ? 200 : 400);
     if (this.stars.length > maxStars) {
       this.stars = this.stars.slice(0, maxStars);
     }
@@ -769,11 +745,9 @@ const Particles = {
     this.connections = [];
   },
   
-  // MISSING FUNCTIONS - ADD THESE
+  // Helper functions
   setFormation(formation) {
     this.formation = formation;
-    console.log('Formation set to:', formation);
-    // Add formation logic here if needed
   },
   
   updateFormation(formation) {
@@ -781,103 +755,97 @@ const Particles = {
   },
   
   triggerKeywordAttraction(keyword, element) {
+    // Simplified for Safari
+    if (this.isSafari) return;
     console.log('Keyword attraction:', keyword);
-    // Add attraction logic here if needed
   },
   
   createBurst(x, y, color) {
-    console.log('Creating burst at:', x, y, color);
     this.triggerBurst(x, y);
   },
-
-  // Enhanced: Setup elegant hero text change reactions
+  
   setupHeroTextReaction() {
+    // Simplified for Safari
+    if (this.isSafari) return;
+    
     const heroTitle = document.getElementById('heroTitle');
     const heroGreeting = document.getElementById('heroGreeting');
     const heroIntro = document.getElementById('heroIntro');
     const heroSub = document.getElementById('heroSub');
-
+    
     const elements = [heroTitle, heroGreeting, heroIntro, heroSub].filter(el => el);
-
+    
     if (elements.length === 0) {
-      // If elements don't exist yet, try again later
       setTimeout(() => this.setupHeroTextReaction(), 1000);
       return;
     }
-
+    
     const observeTextChanges = (element) => {
       if (!element) return;
-
+      
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           if (mutation.type === 'childList' || mutation.type === 'characterData') {
-            // Use a gentle delay to prevent interference
             setTimeout(() => {
               this.triggerElegantTextReaction(element);
             }, 50);
           }
         });
       });
-
+      
       observer.observe(element, {
         childList: true,
         subtree: true,
         characterData: true
       });
     };
-
+    
     elements.forEach(observeTextChanges);
-    console.log('✨ Elegant hero text reaction monitoring setup for', elements.length, 'elements');
   },
-
-  // Enhanced: Trigger elegant particle reaction to text changes
+  
   triggerElegantTextReaction(element) {
-    if (!element || !this.initialized) return;
-
+    if (!element || !this.initialized || this.isSafari) return;
+    
     const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-
-    console.log('✨ Hero text changed, creating elegant particle reaction');
-
-    // Create a gentle wave of particle activity
+    
     this.createElegantTextWave(centerX, centerY, rect.width);
-
-    // Subtle particle attraction to the text area
     this.attractParticlesToText(centerX, centerY, rect.width * 1.2);
   },
-
-  // New: Create elegant wave effect for text changes
+  
   createElegantTextWave(centerX, centerY, width) {
-    const waveParticles = 8; // Fewer, more elegant particles
-    const radius = Math.min(width * 0.6, 150);
-
+    if (this.isSafari) return;
+    
+    const waveParticles = 5;
+    const radius = Math.min(width * 0.5, 100);
+    
     for (let i = 0; i < waveParticles; i++) {
       const angle = (i / waveParticles) * Math.PI * 2;
-      const distance = radius * (0.3 + Math.random() * 0.4);
+      const distance = radius * (0.3 + Math.random() * 0.3);
       const x = centerX + Math.cos(angle) * distance;
       const y = centerY + Math.sin(angle) * distance;
-
-      // Create elegant burst particles with staggered timing
+      
       setTimeout(() => {
         this.createElegantBurst(x, y);
-      }, i * 80); // Staggered 80ms apart
+      }, i * 60);
     }
   },
-
-  // New: Create elegant burst (softer than regular burst)
+  
   createElegantBurst(x, y) {
-    const burstCount = 6; // Smaller, more refined bursts
-
+    if (this.isSafari) return;
+    
+    const burstCount = 4;
+    
     for (let i = 0; i < burstCount; i++) {
       const angle = (i / burstCount) * Math.PI * 2;
-      const speed = 0.8 + Math.random() * 0.6; // Gentler speed
-      const size = Math.random() * 1.2 + 0.4;
-
+      const speed = 0.5 + Math.random() * 0.4;
+      const size = Math.random() * 0.8 + 0.3;
+      
       this.stars.push({
         x: x,
         y: y,
-        z: 0.8, // Closer to front for visibility
+        z: 0.8,
         depthLayer: 4,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
@@ -886,169 +854,158 @@ const Particles = {
         baseX: x,
         baseY: y,
         size: size,
-        opacity: 0.9,
-        baseOpacity: 0.9,
+        opacity: 0.6,
+        baseOpacity: 0.6,
         twinkle: 0,
-        twinkleSpeed: 0.06, // Faster twinkle for elegance
+        twinkleSpeed: 0.05,
         isSpecial: true,
-        hue: this.theme === 'dark' ? Math.random() * 40 + 180 : Math.random() * 40 + 240, // Darker hues for light mode
+        hue: this.theme === 'dark' ? Math.random() * 40 + 180 : Math.random() * 40 + 240,
         pulsePhase: 0,
         connections: [],
-        growthFactor: 0.8,
+        growthFactor: 0.5,
         targetGrowth: 0,
-        lightFacing: 1, // Face the light
+        lightFacing: 1,
         temporary: true,
         life: 1,
-        elegantDecay: 0.008 // Slower, more elegant decay
+        elegantDecay: 0.008
       });
     }
   },
-
-  // New: Attract particles to text area
+  
   attractParticlesToText(centerX, centerY, radius) {
+    if (this.isSafari) return;
+    
     this.stars.forEach(star => {
       const dx = centerX - star.x;
       const dy = centerY - star.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-
+      
       if (distance < radius && distance > 0) {
-        const attraction = (1 - distance / radius) * 0.6;
+        const attraction = (1 - distance / radius) * 0.4;
         const angle = Math.atan2(dy, dx);
-
-        // Gentle attraction force
-        star.vx += Math.cos(angle) * attraction * 0.03;
-        star.vy += Math.sin(angle) * attraction * 0.03;
-
-        // Enhance particle properties temporarily
-        star.targetGrowth = Math.max(star.targetGrowth, attraction * 0.8);
-        star.twinkleSpeed = Math.min(star.twinkleSpeed * 1.5, 0.08);
+        
+        star.vx += Math.cos(angle) * attraction * 0.02;
+        star.vy += Math.sin(angle) * attraction * 0.02;
+        
+        star.targetGrowth = Math.max(star.targetGrowth, attraction * 0.5);
+        star.twinkleSpeed = Math.min(star.twinkleSpeed * 1.3, 0.06);
       }
     });
   },
-
-  // New: Handle mouse interactions with particles
+  
   handleMouseInteraction(mouseX, mouseY) {
-    if (!this.initialized) return;
-
-    // Reduced mouse trail creation for performance
-    if (Math.random() < 0.2) { // 20% chance for better performance
+    if (!this.initialized || this.isSafari) return;
+    
+    if (Math.random() < 0.1) {
       this.createMouseTrailParticle(mouseX, mouseY);
     }
-
-    // Enhance nearby particles
+    
     this.stars.forEach(star => {
       const dx = mouseX - star.x;
       const dy = mouseY - star.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-
+      
       if (distance < this.config.mouseInfluence && distance > 0) {
         const influence = (1 - distance / this.config.mouseInfluence);
-
-        // Gentle attraction with performance consideration
+        
         if (influence > 0.3) {
           const angle = Math.atan2(dy, dx);
-          star.vx += Math.cos(angle) * influence * 0.015;
-          star.vy += Math.sin(angle) * influence * 0.015;
-          star.targetGrowth = Math.max(star.targetGrowth, influence * 0.6);
+          star.vx += Math.cos(angle) * influence * 0.01;
+          star.vy += Math.sin(angle) * influence * 0.01;
+          star.targetGrowth = Math.max(star.targetGrowth, influence * 0.4);
         }
       }
     });
   },
-
-  // New: Create mouse trail particles
+  
   createMouseTrailParticle(x, y) {
+    if (this.isSafari) return;
+    
+    const size = this.isSafari ? this.config.mouseParticleSizeSafari : this.config.mouseParticleSize;
+    
     const particle = {
-      x: x + (Math.random() - 0.5) * 20,
-      y: y + (Math.random() - 0.5) * 20,
+      x: x + (Math.random() - 0.5) * 15,
+      y: y + (Math.random() - 0.5) * 15,
       z: 0.9,
       depthLayer: 4,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
       baseVx: 0,
       baseVy: 0,
       baseX: x,
       baseY: y,
-      size: this.config.mouseParticleSize * (0.5 + Math.random() * 0.5),
-      opacity: 0.6,
-      baseOpacity: 0.6,
+      size: size * (0.5 + Math.random() * 0.5),
+      opacity: 0.4,
+      baseOpacity: 0.4,
       twinkle: 0,
-      twinkleSpeed: 0.08,
+      twinkleSpeed: 0.06,
       isSpecial: true,
-      hue: this.theme === 'dark' ? 200 + Math.random() * 60 : 240 + Math.random() * 60, // Darker blue-purple for light mode
+      hue: this.theme === 'dark' ? 200 + Math.random() * 60 : 240 + Math.random() * 60,
       pulsePhase: 0,
       connections: [],
-      growthFactor: 0.5,
+      growthFactor: 0.3,
       targetGrowth: 0,
       lightFacing: 1,
       temporary: true,
       life: 1,
-      elegantDecay: 0.02 // Quick decay for performance
+      elegantDecay: 0.02
     };
-
+    
     this.stars.push(particle);
   },
-
-  // New: Calculate 3D lighting for a star
+  
   calculate3DLighting(star) {
-    // Simulate 3D position (x, y, z where z is depth)
     const starPos = {
-      x: (star.x / window.innerWidth) * 2 - 1, // Normalize to -1 to 1
+      x: (star.x / window.innerWidth) * 2 - 1,
       y: (star.y / window.innerHeight) * 2 - 1,
-      z: star.z * 2 - 1 // Convert 0-1 depth to -1 to 1
+      z: star.z * 2 - 1
     };
-
-    // Calculate vector from star to light
+    
     const lightVector = {
       x: this.config.lightSource.x - starPos.x,
       y: this.config.lightSource.y - starPos.y,
       z: this.config.lightSource.z - starPos.z
     };
-
-    // Normalize light vector
+    
     const lightLength = Math.sqrt(lightVector.x * lightVector.x + lightVector.y * lightVector.y + lightVector.z * lightVector.z);
     lightVector.x /= lightLength;
     lightVector.y /= lightLength;
     lightVector.z /= lightLength;
-
-    // Calculate surface normal (simplified - particles face camera with slight random variation)
+    
     const normal = {
       x: star.lightFacing * 0.3,
       y: star.lightFacing * 0.2,
-      z: 0.9 // Mostly facing camera
+      z: 0.9
     };
-
-    // Dot product for lighting calculation
+    
     const dotProduct = Math.max(0, normal.x * lightVector.x + normal.y * lightVector.y + normal.z * lightVector.z);
-
+    
     return dotProduct;
   },
-
-  // New: Check if mouse is near connection line for hover effect
+  
   isMouseNearConnection(connection, mouseX, mouseY, threshold = 50) {
     if (!connection || !connection.from || !connection.to) return false;
-
-    // Get line endpoints
+    
     const x1 = connection.from.x;
     const y1 = connection.from.y;
     const x2 = connection.to.x;
     const y2 = connection.to.y;
-
-    // Calculate distance from point to line
+    
     const A = mouseX - x1;
     const B = mouseY - y1;
     const C = x2 - x1;
     const D = y2 - y1;
-
+    
     const dot = A * C + B * D;
     const lenSq = C * C + D * D;
-
-    if (lenSq === 0) return false; // Line has no length
-
+    
+    if (lenSq === 0) return false;
+    
     let param = -1;
     if (lenSq !== 0) {
       param = dot / lenSq;
     }
-
+    
     let xx, yy;
     if (param < 0) {
       xx = x1;
@@ -1060,27 +1017,25 @@ const Particles = {
       xx = x1 + param * C;
       yy = y1 + param * D;
     }
-
+    
     const dx = mouseX - xx;
     const dy = mouseY - yy;
     const distance = Math.sqrt(dx * dx + dy * dy);
-
+    
     return distance < threshold;
   },
-
-  // Simplified: Update section-based dimming
+  
   updateSectionDimming() {
-    // Simple scroll-based detection
     const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-
-    if (scrollPercent < 0.15) { // In hero section (first 15% of page)
-      this.targetDimming = 1.0; // Full brightness
+    
+    if (scrollPercent < 0.15) {
+      this.targetDimming = 1.0;
       if (this.currentSection !== 'hero') {
         this.currentSection = 'hero';
         document.body.classList.remove('section-dimmed');
       }
-    } else { // Below hero
-      this.targetDimming = 0.8; // Slightly dimmed
+    } else {
+      this.targetDimming = 0.8;
       if (this.currentSection !== 'other') {
         this.currentSection = 'other';
         document.body.classList.add('section-dimmed');
