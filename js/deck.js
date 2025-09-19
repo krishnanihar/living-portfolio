@@ -318,56 +318,125 @@ const Deck = {
   },
   
   setupTouchControls() {
-    const stage = $('.deck-slide-content') || document.querySelector('.hero-inner');
-    if (!stage) return;
+    // Only attach to the specific deck slide content area
+    const stage = document.querySelector('.deck-slide-content');
+    if (!stage) {
+      console.log('Deck stage not found for touch controls');
+      return;
+    }
     
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchStartTime = 0;
-    let isSwipeInProgress = false;
+    let lastSwipeTime = 0;
     
-    stage.addEventListener('touchstart', (e) => {
+    // Remove any existing touch listeners first
+    const existingHandlers = stage._deckTouchHandlers;
+    if (existingHandlers) {
+      stage.removeEventListener('touchstart', existingHandlers.start);
+      stage.removeEventListener('touchend', existingHandlers.end);
+    }
+    
+    const handleTouchStart = (e) => {
+      // Only handle single finger touches
+      if (e.touches.length !== 1) return;
+      
       touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
-      isSwipeInProgress = false;
-    }, { passive: true });
+      
+      console.log(`Touch start: x=${touchStartX}, y=${touchStartY}`);
+    };
     
-    stage.addEventListener('touchend', (e) => {
-      if (isSwipeInProgress) return; // Prevent multiple swipes
+    const handleTouchEnd = (e) => {
+      // Prevent rapid successive swipes
+      const now = Date.now();
+      if (now - lastSwipeTime < 600) {
+        console.log('Swipe ignored - too recent');
+        return;
+      }
+      
+      // Only handle single finger touches
+      if (e.changedTouches.length !== 1) return;
       
       const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
       const touchEndTime = Date.now();
-      const diff = touchStartX - touchEndX;
+      
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
       const timeDiff = touchEndTime - touchStartTime;
       
-      // Only register swipe if:
-      // 1. Distance is > 50px
-      // 2. Time is reasonable (not too fast/slow)
-      // 3. No swipe is already in progress
-      if (Math.abs(diff) > 50 && timeDiff > 100 && timeDiff < 1000) {
-        isSwipeInProgress = true;
+      console.log(`Touch end: diffX=${diffX}, diffY=${diffY}, time=${timeDiff}`);
+      
+      // Only register as swipe if:
+      // 1. Horizontal movement > 80px (increased threshold)
+      // 2. Vertical movement < 50px (ensure horizontal swipe)
+      // 3. Time between 100ms-800ms
+      // 4. Horizontal movement is dominant
+      if (Math.abs(diffX) > 80 && 
+          Math.abs(diffY) < 50 && 
+          Math.abs(diffX) > Math.abs(diffY) &&
+          timeDiff > 100 && 
+          timeDiff < 800) {
         
-        console.log(`Swipe detected: diff=${diff}, currentSlide=${this.currentSlide}`);
+        // Prevent event propagation to other handlers
+        e.preventDefault();
+        e.stopPropagation();
         
-        if (diff > 0) {
-          console.log('Swipe left - calling next()');
+        lastSwipeTime = now;
+        
+        console.log(`Valid swipe: diffX=${diffX}, currentSlide=${this.currentSlide}`);
+        
+        if (diffX > 0) {
+          console.log('Horizontal swipe left → calling next()');
           this.next();
         } else {
-          console.log('Swipe right - calling prev()');
+          console.log('Horizontal swipe right → calling prev()');
           this.prev();
         }
-        
-        // Reset swipe flag after a delay
-        setTimeout(() => {
-          isSwipeInProgress = false;
-        }, 500);
+      } else {
+        console.log('Swipe rejected:', {
+          horizontal: Math.abs(diffX),
+          vertical: Math.abs(diffY),
+          time: timeDiff,
+          horizontalDominant: Math.abs(diffX) > Math.abs(diffY)
+        });
       }
-    }, { passive: true });
+    };
+    
+    // Store handlers for cleanup
+    stage._deckTouchHandlers = {
+      start: handleTouchStart,
+      end: handleTouchEnd
+    };
+    
+    // Attach with passive: false to allow preventDefault
+    stage.addEventListener('touchstart', handleTouchStart, { passive: true });
+    stage.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    console.log('Deck touch controls setup complete');
   },
   
   goToSlide(index) {
     if (index < 0 || index >= this.slides.length) return;
+    
+    // Prevent navigation if already transitioning
+    if (this.isTransitioning) {
+      console.log(`Navigation blocked - transition in progress`);
+      return;
+    }
+    
+    // Prevent navigating to the same slide
+    if (index === this.currentSlide) {
+      console.log(`Already on slide ${index}`);
+      return;
+    }
 
     console.log(`GoToSlide: index ${index}, slide title: ${this.slides[index].title}`);
+    
+    // Set transition flag
+    this.isTransitioning = true;
 
     // Performance: Use requestAnimationFrame for smooth transitions
     requestAnimationFrame(() => {
@@ -387,6 +456,11 @@ const Deck = {
       $$('.deck-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
       });
+      
+      // Clear transition flag after animation
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 400); // Match CSS transition duration
     });
     
     // Update counter
