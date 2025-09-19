@@ -15,11 +15,13 @@
   display: grid;
   place-items: center;
   
-  /* Glassmorphic background like hero card */
+  /* OLED Black glassmorphic background */
   backdrop-filter: blur(24px) saturate(1.5);
   -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   
   /* Enhanced 3D shadow layers */
   box-shadow: 
@@ -35,18 +37,20 @@
   will-change: transform, box-shadow, background;
 }
 
-/* FAB Hover - Enhanced glassmorphic interaction */
+/* FAB Hover - OLED black with glassmorphic enhancement */
 .bot-fab:hover {
   transform: scale(1.08) translateY(-2px);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(218, 14, 41, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(10, 10, 10, 0.95) 100%);
+  border-color: rgba(218, 14, 41, 0.4);
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.15),
-    0 12px 20px rgba(0, 0, 0, 0.2),
-    0 20px 40px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(218, 14, 41, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    inset 0 2px 0 rgba(255, 255, 255, 0.16);
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 12px 20px rgba(0, 0, 0, 0.4),
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(218, 14, 41, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* FAB Active state */
@@ -91,11 +95,13 @@
   overflow: hidden !important;
   z-index: 100 !important;
   
-  /* Glassmorphic background matching hero card */
+  /* OLED Black with glassmorphic overlay */
   backdrop-filter: blur(24px) saturate(1.5) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.95) 0%, 
+    rgba(0, 0, 0, 0.98) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   
   /* Enhanced 3D shadow layers like hero card */
   box-shadow: 
@@ -126,10 +132,12 @@
   transform: translateY(0) scale(1) !important;
 }
 
-/* Panel hover enhancement */
+/* Panel hover enhancement - OLED black */
 .bot-panel:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(5, 5, 5, 0.96) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 /* Section-specific bot panel accents */
@@ -166,10 +174,12 @@
    ============================================ */
 .bot-header {
   padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
   backdrop-filter: blur(12px) saturate(1.2) !important;
   -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -177,8 +187,8 @@
   min-height: 56px !important;
   flex-shrink: 0 !important;
   
-  /* Subtle inner shadow */
-  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08) !important;
+  /* Subtle inner shadow with OLED black */
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1) !important;
   
   /* Smooth transitions for micro-interactions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -244,7 +254,7 @@
   animation: pulse 2s infinite;
 }
 
-/* Glassmorphic close button */
+/* OLED black close button */
 .bot-close {
   width: clamp(32px, 7vw, 36px) !important;
   height: clamp(32px, 7vw, 36px) !important;
@@ -253,24 +263,28 @@
   display: grid !important;
   place-items: center !important;
   font-size: clamp(12px, 3vw, 14px) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   
-  /* Glassmorphic background */
+  /* OLED black glassmorphic background */
   backdrop-filter: blur(12px) saturate(1.2) !important;
   -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   
   /* Micro-interaction */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .bot-close:hover {
-  background: rgba(239, 68, 68, 0.15) !important;
-  border-color: rgba(239, 68, 68, 0.25) !important;
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.2) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
   color: rgba(255, 255, 255, 1) !important;
   transform: rotate(90deg) scale(1.05);
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.2) !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
 }
 
 .bot-close:active {
@@ -346,16 +360,18 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Bot messages - clean glassmorphic */
+/* Bot messages - OLED black glassmorphic */
 .msg.bot {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   align-self: flex-start !important;
   border-radius: clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(6px, 2vw, 8px) !important;
   
-  /* Subtle inner glow */
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  /* Enhanced inner glow for OLED */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Contextual message styling */
@@ -452,36 +468,40 @@
    ============================================ */
 .bot-footer {
   padding: clamp(12px, 3vw, 16px) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
   backdrop-filter: blur(12px) saturate(1.2) !important;
   -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   display: flex !important;
   gap: clamp(8px, 2vw, 12px) !important;
   flex-shrink: 0 !important;
   
-  /* Subtle top highlight */
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  /* Enhanced top highlight for OLED */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
 .bot-input-wrapper {
   flex: 1 !important;
 }
 
-/* Glassmorphic input field */
+/* OLED black input field */
 .bot-input {
   width: 100% !important;
   padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 18px) !important;
   font-size: clamp(13px, 3.5vw, 15px) !important;
   font-family: inherit !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   border-radius: clamp(18px, 5vw, 24px) !important;
   
-  /* Glassmorphic background */
-  background: rgba(255, 255, 255, 0.08) !important;
+  /* OLED black glassmorphic background */
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.7) 0%, 
+    rgba(0, 0, 0, 0.85) 100%) !important;
   backdrop-filter: blur(8px) saturate(1.1) !important;
   -webkit-backdrop-filter: blur(8px) saturate(1.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   
   /* Smooth micro-interactions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -489,11 +509,13 @@
 
 .bot-input:focus {
   outline: none !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: rgba(218, 14, 41, 0.4) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(5, 5, 5, 0.95) 100%) !important;
+  border-color: rgba(218, 14, 41, 0.5) !important;
   box-shadow: 
-    0 0 0 3px rgba(218, 14, 41, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 0 0 3px rgba(218, 14, 41, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   transform: translateY(-1px);
 }
 
@@ -502,7 +524,7 @@
   font-size: clamp(12px, 3vw, 14px) !important;
 }
 
-/* Glassmorphic send button */
+/* OLED black send button */
 .bot-send {
   width: clamp(40px, 9vw, 44px) !important;
   height: clamp(40px, 9vw, 44px) !important;
@@ -512,18 +534,20 @@
   place-items: center !important;
   flex-shrink: 0 !important;
   border: none !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   
-  /* Glassmorphic background with accent */
-  background: rgba(218, 14, 41, 0.2) !important;
+  /* OLED black background with accent */
+  background: linear-gradient(135deg, 
+    rgba(218, 14, 41, 0.3) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
   backdrop-filter: blur(12px) saturate(1.3) !important;
   -webkit-backdrop-filter: blur(12px) saturate(1.3) !important;
-  border: 1px solid rgba(218, 14, 41, 0.3) !important;
+  border: 1px solid rgba(218, 14, 41, 0.4) !important;
   
-  /* Enhanced shadow */
+  /* Enhanced shadow for OLED */
   box-shadow: 
-    0 4px 12px rgba(218, 14, 41, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 4px 12px rgba(218, 14, 41, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   
   /* Smooth micro-interactions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -531,11 +555,13 @@
 
 .bot-send:hover {
   transform: scale(1.08) translateY(-1px);
-  background: rgba(218, 14, 41, 0.3) !important;
-  border-color: rgba(218, 14, 41, 0.4) !important;
+  background: linear-gradient(135deg, 
+    rgba(218, 14, 41, 0.4) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  border-color: rgba(218, 14, 41, 0.5) !important;
   box-shadow: 
-    0 6px 16px rgba(218, 14, 41, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    0 6px 16px rgba(218, 14, 41, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .bot-send:active {
@@ -815,10 +841,12 @@
     width: clamp(56px, 12vw, 64px);
     height: clamp(56px, 12vw, 64px);
     
-    /* Enhanced mobile glassmorphic effect */
+    /* Enhanced mobile OLED glassmorphic effect */
     backdrop-filter: blur(20px) saturate(1.4);
     -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    background: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.92) 0%, 
+      rgba(0, 0, 0, 0.96) 100%);
     border-width: 1.5px;
   }
   
@@ -831,10 +859,12 @@
     height: clamp(420px, 70vh, 500px) !important;
     max-height: 75vh !important;
     
-    /* Enhanced mobile glassmorphic */
+    /* Enhanced mobile OLED glassmorphic */
     backdrop-filter: blur(20px) saturate(1.4) !important;
     -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.96) 0%, 
+      rgba(0, 0, 0, 0.98) 100%) !important;
     border-width: 1.5px !important;
   }
 }
