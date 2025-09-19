@@ -671,8 +671,13 @@ const Deck = {
       this.setupEventListeners();
     }, 50);
 
-    // Reset to first slide
+    // Reset to first slide and initialize counter immediately
     this.currentSlide = 0;
+    
+    // Initialize counter immediately
+    const counter = $('#currentSlide');
+    if (counter) counter.textContent = '1';
+    
     this.goToSlide(0);
 
     // Track event
