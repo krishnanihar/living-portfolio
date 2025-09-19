@@ -322,18 +322,44 @@ const Deck = {
     if (!stage) return;
     
     let touchStartX = 0;
+    let touchStartTime = 0;
+    let isSwipeInProgress = false;
     
     stage.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
+      touchStartTime = Date.now();
+      isSwipeInProgress = false;
     }, { passive: true });
     
     stage.addEventListener('touchend', (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const diff = touchStartX - touchEndX;
+      if (isSwipeInProgress) return; // Prevent multiple swipes
       
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) this.next();
-        else this.prev();
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndTime = Date.now();
+      const diff = touchStartX - touchEndX;
+      const timeDiff = touchEndTime - touchStartTime;
+      
+      // Only register swipe if:
+      // 1. Distance is > 50px
+      // 2. Time is reasonable (not too fast/slow)
+      // 3. No swipe is already in progress
+      if (Math.abs(diff) > 50 && timeDiff > 100 && timeDiff < 1000) {
+        isSwipeInProgress = true;
+        
+        console.log(`Swipe detected: diff=${diff}, currentSlide=${this.currentSlide}`);
+        
+        if (diff > 0) {
+          console.log('Swipe left - calling next()');
+          this.next();
+        } else {
+          console.log('Swipe right - calling prev()');
+          this.prev();
+        }
+        
+        // Reset swipe flag after a delay
+        setTimeout(() => {
+          isSwipeInProgress = false;
+        }, 500);
       }
     }, { passive: true });
   },
@@ -471,16 +497,30 @@ const Deck = {
   },
   
   next() {
-    const nextIndex = (this.currentSlide + 1) % this.slides.length;
-    console.log(`Next: from slide ${this.currentSlide} to slide ${nextIndex}`);
-    console.log(`Next slide title: ${this.slides[nextIndex].title}`);
+    const currentSlide = this.currentSlide;
+    const nextIndex = (currentSlide + 1) % this.slides.length;
+    console.log(`Next: from slide ${currentSlide} (${this.slides[currentSlide].title}) to slide ${nextIndex} (${this.slides[nextIndex].title})`);
+    
+    // Ensure the calculation is correct
+    if (nextIndex !== ((currentSlide + 1) % this.slides.length)) {
+      console.error('Next index calculation error!');
+      return;
+    }
+    
     this.goToSlide(nextIndex);
   },
   
   prev() {
-    const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-    console.log(`Prev: from slide ${this.currentSlide} to slide ${prevIndex}`);
-    console.log(`Prev slide title: ${this.slides[prevIndex].title}`);
+    const currentSlide = this.currentSlide;
+    const prevIndex = (currentSlide - 1 + this.slides.length) % this.slides.length;
+    console.log(`Prev: from slide ${currentSlide} (${this.slides[currentSlide].title}) to slide ${prevIndex} (${this.slides[prevIndex].title})`);
+    
+    // Ensure the calculation is correct
+    if (prevIndex !== ((currentSlide - 1 + this.slides.length) % this.slides.length)) {
+      console.error('Prev index calculation error!');
+      return;
+    }
+    
     this.goToSlide(prevIndex);
   },
   
