@@ -173,35 +173,107 @@ const Chat = {
   },
   
   setupBotEventListeners() {
-    // FAB button
+    // Enhanced FAB button with glassmorphic interactions
     const fab = document.getElementById('botFab');
     if (fab) {
       fab.addEventListener('click', () => this.open());
+      
+      // Add glassmorphic hover effects
+      fab.addEventListener('mouseenter', () => {
+        fab.style.transform = 'scale(1.08) translateY(-2px)';
+        fab.style.filter = 'brightness(1.1)';
+      });
+      
+      fab.addEventListener('mouseleave', () => {
+        fab.style.transform = 'scale(1) translateY(0px)';
+        fab.style.filter = 'brightness(1)';
+      });
+      
+      // Enhanced active state
+      fab.addEventListener('mousedown', () => {
+        fab.style.transform = 'scale(1.02) translateY(0px)';
+      });
+      
+      fab.addEventListener('mouseup', () => {
+        fab.style.transform = 'scale(1.08) translateY(-2px)';
+      });
     }
     
-    // Close button
+    // Enhanced close button with glassmorphic interactions
     const closeBtn = document.getElementById('botClose');
     if (closeBtn) {
       closeBtn.addEventListener('click', () => this.close());
+      
+      // Add glassmorphic hover effects
+      closeBtn.addEventListener('mouseenter', () => {
+        closeBtn.style.transform = 'rotate(90deg) scale(1.05)';
+        closeBtn.style.filter = 'brightness(1.2)';
+      });
+      
+      closeBtn.addEventListener('mouseleave', () => {
+        closeBtn.style.transform = 'rotate(0deg) scale(1)';
+        closeBtn.style.filter = 'brightness(1)';
+      });
     }
     
-    // Send button
+    // Enhanced send button with glassmorphic interactions
     const sendBtn = document.getElementById('botSend');
     if (sendBtn) {
       sendBtn.addEventListener('click', () => this.sendFromBot());
+      
+      // Add glassmorphic hover effects
+      sendBtn.addEventListener('mouseenter', () => {
+        sendBtn.style.transform = 'scale(1.08) translateY(-1px)';
+        sendBtn.style.filter = 'brightness(1.1) saturate(1.2)';
+      });
+      
+      sendBtn.addEventListener('mouseleave', () => {
+        sendBtn.style.transform = 'scale(1) translateY(0px)';
+        sendBtn.style.filter = 'brightness(1) saturate(1)';
+      });
+      
+      // Enhanced active state
+      sendBtn.addEventListener('mousedown', () => {
+        sendBtn.style.transform = 'scale(1.02) translateY(0px)';
+      });
+      
+      sendBtn.addEventListener('mouseup', () => {
+        sendBtn.style.transform = 'scale(1.08) translateY(-1px)';
+      });
     }
     
-    // Input enter key
+    // Enhanced input with glassmorphic interactions
     if (this.botInput) {
       this.botInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           this.sendFromBot();
+          
+          // Add send animation
+          const sendBtn = document.getElementById('botSend');
+          if (sendBtn) {
+            sendBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+              sendBtn.style.transform = 'scale(1)';
+            }, 150);
+          }
         }
       });
       
       this.botInput.addEventListener('input', () => {
         this.updateBotState('typing');
+        
+        // Add subtle glow while typing
+        this.botInput.style.boxShadow = '0 0 0 3px rgba(218, 14, 41, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+      });
+      
+      this.botInput.addEventListener('blur', () => {
+        this.botInput.style.boxShadow = '';
+      });
+      
+      // Enhanced focus interactions
+      this.botInput.addEventListener('focus', () => {
+        this.botInput.style.filter = 'brightness(1.05)';
       });
     }
     
@@ -545,10 +617,11 @@ const Chat = {
       this.addWelcomeMessage();
     }
     
-    // Show panel
+    // Enhanced glassmorphic entrance animation
     this.botPanel.style.display = 'block';
+    this.botPanel.style.animation = 'panelEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards';
     
-    // Trigger animation after display
+    // Trigger open state after display
     setTimeout(() => {
       this.botPanel.classList.add('open');
     }, 10);
