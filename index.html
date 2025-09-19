@@ -95,6 +95,18 @@
         display: none;
       }
     }
+
+    /* Safari-specific particle adjustments */
+    @supports (-webkit-backdrop-filter: blur()) {
+      #particles {
+        opacity: 0.4 !important; /* Much lower base opacity for Safari */
+      }
+      
+      /* Disable preloader on Safari */
+      #particles::before {
+        display: none !important;
+      }
+    }
     
     /* ============================================
        BODY & MAIN STRUCTURE - Enhanced with Section Dimming
@@ -243,6 +255,23 @@
         0 2px 8px rgba(0, 0, 0, 0.02),
         0 8px 16px rgba(0, 0, 0, 0.03),
         0 16px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Safari-specific hero adjustments */
+    @supports (-webkit-backdrop-filter: blur()) {
+      .hero-inner {
+        background: rgba(255, 255, 255, 0.02) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      [data-theme="light"] .hero-inner {
+        background: rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
     }
     
     /* ============================================
@@ -502,6 +531,34 @@
     [data-theme="light"] .uni-card:hover,
     [data-theme="light"] .card:hover {
       transform: rotateX(-10deg) rotateY(10deg) translateZ(50px);
+    }
+
+    /* Safari-specific card adjustments */
+    @supports (-webkit-backdrop-filter: blur()) {
+      .uni-card,
+      .card {
+        backdrop-filter: blur(16px) saturate(1.2);
+        -webkit-backdrop-filter: blur(16px) saturate(1.2);
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.08),
+          0 8px 16px rgba(0, 0, 0, 0.12),
+          0 16px 32px rgba(0, 0, 0, 0.15),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      }
+      
+      [data-theme="light"] .uni-card,
+      [data-theme="light"] .card {
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.02),
+          0 8px 16px rgba(0, 0, 0, 0.03),
+          0 16px 32px rgba(0, 0, 0, 0.04);
+      }
     }
 
     /* ============================================
