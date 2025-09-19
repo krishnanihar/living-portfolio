@@ -490,8 +490,8 @@ const Deck = {
       Canvas.onSlideChange(index, slide);
     }
     
-    // Animate metrics (always animate on first load or slide change)
-    if (index !== this.currentSlide || this.currentSlide === 0) {
+    // Animate metrics on slide change
+    if (index !== this.currentSlide) {
       setTimeout(() => this.animateMetrics(index), 100);
     }
     
@@ -672,7 +672,7 @@ const Deck = {
     }, 50);
 
     // Reset to first slide and initialize counter immediately
-    this.currentSlide = 0;
+    this.currentSlide = -1; // Set to -1 to ensure goToSlide(0) triggers animation
     
     // Initialize counter immediately
     const counter = $('#currentSlide');
