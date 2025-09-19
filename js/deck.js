@@ -341,13 +341,20 @@ const Deck = {
   goToSlide(index) {
     if (index < 0 || index >= this.slides.length) return;
 
+    console.log(`GoToSlide: index ${index}, slide title: ${this.slides[index].title}`);
+
     // Performance: Use requestAnimationFrame for smooth transitions
     requestAnimationFrame(() => {
       // Update slides
       $$('.deck-slide-hero').forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
+        const isActive = i === index;
+        slide.classList.toggle('active', isActive);
         slide.classList.toggle('prev', i < index);
         slide.classList.toggle('next', i > index);
+        
+        if (isActive) {
+          console.log(`Activated slide ${i}: ${slide.querySelector('.deck-slide-title')?.textContent}`);
+        }
       });
 
       // Update dots
@@ -464,11 +471,17 @@ const Deck = {
   },
   
   next() {
-    this.goToSlide((this.currentSlide + 1) % this.slides.length);
+    const nextIndex = (this.currentSlide + 1) % this.slides.length;
+    console.log(`Next: from slide ${this.currentSlide} to slide ${nextIndex}`);
+    console.log(`Next slide title: ${this.slides[nextIndex].title}`);
+    this.goToSlide(nextIndex);
   },
   
   prev() {
-    this.goToSlide((this.currentSlide - 1 + this.slides.length) % this.slides.length);
+    const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    console.log(`Prev: from slide ${this.currentSlide} to slide ${prevIndex}`);
+    console.log(`Prev slide title: ${this.slides[prevIndex].title}`);
+    this.goToSlide(prevIndex);
   },
   
   startAutoPlay() {
