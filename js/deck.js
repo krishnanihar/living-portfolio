@@ -490,8 +490,8 @@ const Deck = {
       Canvas.onSlideChange(index, slide);
     }
     
-    // Animate metrics
-    if (index !== this.currentSlide) {
+    // Animate metrics (always animate on first load or slide change)
+    if (index !== this.currentSlide || this.currentSlide === 0) {
       setTimeout(() => this.animateMetrics(index), 100);
     }
     
