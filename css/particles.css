@@ -123,17 +123,31 @@ body.scrolling #particles {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* Safari-specific optimizations */
+/* Mac-specific (all browsers) */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  #particles {
+    opacity: 0.15 !important; /* Much lower for all Mac browsers */
+  }
+}
+
+/* Force hide any nebula effects on Mac */
 @supports (-webkit-backdrop-filter: blur()) {
+  #particles {
+    /* Remove all filters that might create glow effects */
+    filter: none !important;
+    -webkit-filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+  
   [data-theme="dark"] #particles {
-    opacity: 0.4; /* Much lower opacity for Safari */
+    opacity: 0.2; /* Much lower opacity for Safari */
     mix-blend-mode: normal; /* Disable blend mode on Safari */
     filter: none; /* Remove filters on Safari */
     -webkit-filter: none;
   }
   
   [data-theme="light"] #particles {
-    opacity: 0.3; /* Even lower for light mode */
+    opacity: 0.15; /* Even lower for light mode */
     mix-blend-mode: normal;
   }
 }

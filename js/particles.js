@@ -38,12 +38,13 @@ const Particles = {
     starSizeRange: [0.3, 1.2], // Smaller particles
     starSizeRangeSafari: [0.2, 0.8], // Even smaller for Safari
     starSpeed: 0.015,
-    starOpacity: 0.3,
+    starOpacity: 0.15, // Reduced from 0.3 for Mac
     starOpacityMobile: 0.15,
-    starOpacitySafari: 0.08, // MUCH lower opacity for Safari
+    starOpacitySafari: 0.02, // Barely visible ambient texture for Safari
+    starOpacityMac: 0.02, // Almost invisible for Mac
     starOpacityLight: 0.5,
     starOpacityLightMobile: 0.2,
-    starOpacityLightSafari: 0.12, // Very subtle for Safari light mode
+    starOpacityLightSafari: 0.03, // Extremely subtle for Safari light mode
     
     // Platform-specific adjustments
     platformAdjustments: {
@@ -62,11 +63,12 @@ const Particles = {
     maxConnections: 2,
     specialStarRatio: 0.08, // Fewer special stars
     specialOpacity: 0.4,
-    specialOpacitySafari: 0.15, // Much dimmer special stars on Safari
+    specialOpacitySafari: 0.01, // Almost invisible special stars on Safari
     specialOpacityLight: 0.6,
-    nebulaCount: 3,
+    nebulaCount: 0, // Set to 0 for Mac
     nebulaCountMobile: 0,
     nebulaCountSafari: 0, // No nebula on Safari for clean look
+    nebulaCountMac: 0, // COMPLETELY DISABLE nebula on Mac
     nebulaOpacity: 0.03,
     nebulaOpacityMobile: 0,
     nebulaOpacitySafari: 0, // No nebula on Safari
@@ -106,17 +108,30 @@ const Particles = {
   
   // Enhanced browser detection
   detectBrowserAndPlatform() {
+    // Detect Mac FIRST
     const userAgent = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform?.toLowerCase() || '';
     const vendor = navigator.vendor?.toLowerCase() || '';
+    
+    this.isMac = platform.includes('mac') || 
+                 userAgent.includes('macintosh') || 
+                 userAgent.includes('mac os');
+    
+    // Force disable nebula for ALL Mac users
+    if (this.isMac) {
+      this.config.nebulaCount = 0;
+      this.config.nebulaCountMobile = 0;
+      this.config.nebulaCountSafari = 0;
+    }
     
     // Better Safari detection
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
                     (vendor.includes('apple') && !userAgent.includes('crios') && !userAgent.includes('fxios'));
     
-    // Mac detection
-    this.isMac = navigator.platform?.toLowerCase().includes('mac') || 
-                 userAgent.includes('macintosh') || 
-                 userAgent.includes('mac os');
+    // If on Mac, apply ALL Safari restrictions regardless of browser
+    if (this.isMac) {
+      this.isSafari = true; // Force Safari mode for ALL Mac browsers
+    }
     
     // Browser identification
     if (this.isSafari) {
@@ -135,10 +150,10 @@ const Particles = {
     const platformAdjustment = this.config.platformAdjustments[this.browser] || 
                                this.config.platformAdjustments.chrome;
     
-    // Extra reduction for Mac + Safari combo
-    if (this.isSafari && this.isMac) {
-      platformAdjustment.opacityMultiplier *= 0.5; // Extra 50% reduction
-      platformAdjustment.brightnessMultiplier *= 0.7;
+    // Extra reduction for ALL Mac browsers
+    if (this.isMac) {
+      platformAdjustment.opacityMultiplier *= 0.3; // Massive reduction for Mac
+      platformAdjustment.brightnessMultiplier *= 0.5;
     }
     
     this.platformMultipliers = {
@@ -213,9 +228,12 @@ const Particles = {
       const sizeRange = this.isSafari ? this.config.starSizeRangeSafari : this.config.starSizeRange;
       const size = Math.random() * (sizeRange[1] - sizeRange[0]) + sizeRange[0];
       
-      // Safari-specific opacity
+      // Mac/Safari-specific opacity
       let opacity;
-      if (this.isSafari) {
+      if (this.isMac) {
+        // For Mac, use minimal opacity (2% opacity)
+        opacity = 0.02; // Barely visible
+      } else if (this.isSafari) {
         opacity = isSpecial ? this.config.specialOpacitySafari : 
                   (this.theme === 'dark' ? this.config.starOpacitySafari : this.config.starOpacityLightSafari);
       } else if (this.config.isMobile) {
@@ -330,6 +348,8 @@ const Particles = {
     this.canvas.style.position = 'fixed';
     this.canvas.style.top = '0';
     this.canvas.style.left = '0';
+    this.canvas.style.zIndex = '1';
+    this.canvas.style.pointerEvents = 'none';
     
     this.ctx.scale(this.dpr, this.dpr);
     
@@ -452,8 +472,8 @@ const Particles = {
     
     this.ctx.save();
     
-    // Skip nebula on Safari
-    if (!this.isSafari && !this.config.isMobile) {
+    // ONLY draw nebula if NOT on Mac
+    if (!this.isMac && !this.isSafari && !this.config.isMobile) {
       const nebulaDimming = Math.max(0.7, this.sectionDimming);
       this.ctx.globalAlpha = nebulaDimming;
       this.drawNebulaClouds();
@@ -467,8 +487,15 @@ const Particles = {
   },
   
   drawNebulaClouds() {
-    // Skip entirely on Safari/Mobile
-    if (this.isSafari || this.config.isMobile) return;
+    // IMMEDIATE RETURN FOR MAC - NO NEBULA AT ALL
+    if (this.isMac) {
+      return; // EXIT IMMEDIATELY - DON'T DRAW ANY NEBULA
+    }
+    
+    // Skip for mobile/Safari too
+    if (this.config.isMobile || this.isSafari) {
+      return;
+    }
     
     const nebulaCount = this.config.nebulaCount;
     
