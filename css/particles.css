@@ -123,6 +123,21 @@ body.scrolling #particles {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+/* Safari-specific optimizations */
+@supports (-webkit-backdrop-filter: blur()) {
+  [data-theme="dark"] #particles {
+    opacity: 0.4; /* Much lower opacity for Safari */
+    mix-blend-mode: normal; /* Disable blend mode on Safari */
+    filter: none; /* Remove filters on Safari */
+    -webkit-filter: none;
+  }
+  
+  [data-theme="light"] #particles {
+    opacity: 0.3; /* Even lower for light mode */
+    mix-blend-mode: normal;
+  }
+}
+
 /* ============================================
    PARTICLE INTERACTION ZONES
    ============================================ */
