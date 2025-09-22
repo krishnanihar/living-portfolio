@@ -79,7 +79,38 @@
     /* Container */
     .wrap{width:min(100%, var(--max-width)); margin-inline:auto; padding: 0 var(--space-md);}
 
-    /* Use home page hero styles - no custom overrides needed */
+    /* Use home page hero styles with psychedelic journey typography */
+    .kicker {
+      display: block;
+      font-size: clamp(12px, 3vw, 15px);
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: clamp(6px, 1.5vw, 10px);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-size: clamp(24px, 7vw, 44px);
+      line-height: 1.15;
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      margin: 0 0 clamp(16px, 3vw, 24px) 0;
+      color: #ffffff;
+      text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.1);
+      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+    }
+
+    .sub {
+      color: rgba(255, 255, 255, 0.65);
+      margin: 0 0 clamp(20px, 4vw, 32px) 0;
+      font-weight: 300;
+      font-size: clamp(13px, 3.5vw, 16px);
+      line-height: 1.5;
+      max-width: 100%;
+    }
 
     /* Enhanced cursor glow for better Mac compatibility */
     .cursor-glow {
@@ -325,49 +356,25 @@
   <!-- Progress Bar -->
   <div class="progress-bar" id="progress-bar"></div>
 
-  <!-- Hero - Same as home page -->
+  <!-- Hero - Psychedelic Journey with glassmorphic styling -->
   <header id="home" class="hero" aria-label="Hero">
+    <div class="ribbon" aria-hidden="true"></div>
     <!-- Hero Card with 3D Effect -->
     <div class="hero-inner" id="heroCard">
-      <!-- Dynamic Title -->
-      <h1 class="hero-title kinetic" id="heroTitle">
-        <span class="hero-greeting" id="heroGreeting">Welcome.</span>
-        <span class="hero-intro" id="heroIntro">I create with consciousness</span>
-      </h1>
-
-      <!-- Chat Interface -->
-      <div class="chat-bar enhanced">
-        <input
-          id="heroInput"
-          class="chat-input"
-          type="text"
-          placeholder="What makes Pixel Radar revolutionary?"
-          autocomplete="off"
-        />
-        <button id="heroSend" class="btn-send">
-          <span class="send-text">Send</span>
-        </button>
+      <span class="kicker">Classroom Project · Immersive Installation</span>
+      <h1 class="title"><span class="aura" data-text="Metamorphic Fractal Reflections">Metamorphic Fractal Reflections</span><br/>A Psychedelic Journey towards Ego Death</h1>
+      <p class="sub">
+        The participant steps into a bathroom, turns on the tap, and watches their reflection dissolve. Pulled through the mirror, they traverse a trippy multiverse of liquid color, pattern‑creatures and structureless yet beautiful music, guided by a fading companion until reality calls them home.
+      </p>
+      <div class="meta" role="list">
+        <span class="pill" role="listitem">Duration: <strong>Two months</strong></span>
+        <span class="pill" role="listitem">Guide: Jignesh Khakar · Shoban Shah · Kaushal Sapre · Mochu · Suvani Suri · Arshad Pathan · Ravishekhar Aradhya</span>
+        <span class="pill" role="listitem">Based on: Timothy Leary's <em>The Psychedelic Experience</em> (after the Tibetan Book of the Dead)</span>
+        <span class="pill" role="listitem">Goal: Safe, accessible encounters with ego‑dissolution themes</span>
       </div>
-
-      <!-- Simplified Navigation -->
-      <div class="nav-pills" id="quickPills">
-        <button class="pill pill-primary" onclick="window.open('./psychedelic-journey.html', '_self')">
-          Psychedelic Journey
-        </button>
-        <button class="pill pill-work" data-section="work" onclick="window.location.href='./index.html#work'">
-          Show me work
-        </button>
-        <button class="pill pill-about" data-section="about" onclick="window.location.href='./index.html#about'">
-          About me
-        </button>
-      </div>
-
-      <!-- Trust Signals -->
-      <div class="hero-trust">
-        <span class="trust-item">Air India DesignLAB</span>
-        <span class="trust-item">National Institute of Design</span>
-        <span class="trust-item">Indian School of Business</span>
-        <span class="trust-item">Microsoft</span>
+      <div class="cta">
+        <a class="btn primary" href="#experience" aria-label="Jump to the video experience">Watch experience ▶</a>
+        <a class="btn" href="#process">See process</a>
       </div>
     </div>
   </header>
