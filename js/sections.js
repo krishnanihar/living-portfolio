@@ -808,10 +808,10 @@ const Sections = {
             alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
           } else if (project === 'air-india') {
             console.log('Opening Air India page...');
-            window.open('air-india.html', '_blank');
+            window.location.href = 'air-india.html';
           } else if (project === 'metamorphic-fractal') {
             console.log('Opening Metamorphic Fractal page...');
-            window.open('psychedelic-journey.html', '_blank');
+            window.location.href = 'psychedelic-journey.html';
           } else if (project === 'pixel-radar') {
             alert('🎯 Pixel Radar - Figma QA Assistant\n\nFigma plugin that audits components against tokens/variables, flags drift, suggests fixes, and can comment directly on PRs via CI hook.\n\n[Project URL coming soon]');
           } else {

@@ -285,7 +285,7 @@
     /* Progress Bar */
     .progress-bar {
       position: fixed;
-      top: 59px;
+      top: 0px;
       left: 0;
       height: 1px;
       background: var(--accent);
@@ -334,6 +334,562 @@
         align-items: stretch;
       }
     }
+
+    /* Floating Navigation Override - Always visible */
+    .nav {
+      position: fixed !important;
+      top: 20px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) translateY(0) !important;
+      width: min(90%, 600px) !important;
+      height: 56px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      opacity: 1 !important;
+      transition: all 400ms ease !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .nav.visible {
+      transform: translateX(-50%) translateY(0) !important;
+      opacity: 1 !important;
+    }
+
+    .nav .container {
+      justify-content: space-between !important;
+      height: 100% !important;
+      padding: 0 24px !important;
+    }
+
+    .nav-meta {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 6px 12px;
+      background: rgba(181, 131, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    /* Disable 3D effects on hero card */
+    .hero-inner {
+      transform: none !important;
+      transform-style: flat !important;
+      perspective: none !important;
+    }
+
+    /* Remove underline from process section */
+    #process {
+      border-top: none !important;
+    }
+
+    /* Enhanced step cards with smooth sequential expansion */
+    .step {
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+      z-index: 1;
+    }
+
+    .step.expanded {
+      transform: scale(1.02);
+      box-shadow: 0 20px 40px rgba(181, 131, 255, 0.1);
+      z-index: 10;
+    }
+
+    .step-expanded {
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0px solid var(--border);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .step.expanded .step-expanded {
+      max-height: 300px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top-width: 1px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step-image-placeholder {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, var(--surface), var(--surface-hover));
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: var(--font-small);
+      margin-bottom: 12px;
+    }
+
+    .step-details {
+      color: var(--text-secondary);
+      font-size: var(--font-small);
+      line-height: 1.5;
+    }
+
+    /* Clean meta information design */
+    .hero-inner .meta-clean {
+      margin: 32px 0 !important;
+      padding: 24px 0 !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+
+    .meta-row {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 24px !important;
+      margin-bottom: 16px !important;
+      padding: 0 !important;
+    }
+
+    .meta-row:last-child {
+      margin-bottom: 0 !important;
+    }
+
+    .meta-label {
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      color: rgba(181, 131, 255, 0.8) !important;
+      min-width: 80px !important;
+      flex-shrink: 0 !important;
+    }
+
+    .meta-value {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      line-height: 1.4 !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+      flex: 1 !important;
+    }
+
+    .meta-value em {
+      font-style: italic !important;
+      color: rgba(181, 131, 255, 0.9) !important;
+    }
+
+    .hero-inner .btn {
+      border-radius: 6px !important;
+      font-weight: 500 !important;
+      padding: 14px 24px !important;
+      font-size: 14px !important;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .meta-row {
+        flex-direction: column !important;
+        gap: 4px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .meta-label {
+        min-width: auto !important;
+      }
+    }
+
+    /* COMPREHENSIVE LIGHT MODE SUPPORT - EVERY ELEMENT */
+    [data-theme="light"] body {
+      background: #ffffff !important;
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    /* Navigation Light Mode */
+    [data-theme="light"] .nav {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border: 1px solid rgba(0, 0, 0, 0.05) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 8px 16px rgba(0, 0, 0, 0.03), 0 16px 32px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    }
+
+    [data-theme="light"] .logo {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .nav a {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .nav a:hover {
+      background: rgba(0, 0, 0, 0.04) !important;
+      color: #b583ff !important;
+    }
+
+    [data-theme="light"] .nav a.active {
+      color: #b583ff !important;
+    }
+
+    [data-theme="light"] .nav-meta {
+      color: rgba(0, 0, 0, 0.7) !important;
+      background: rgba(181, 131, 255, 0.1) !important;
+    }
+
+    /* Progress Bar */
+    [data-theme="light"] .progress-bar {
+      background: #b583ff !important;
+    }
+
+    /* Hero Section */
+    [data-theme="light"] .hero {
+      background: transparent !important;
+    }
+
+    [data-theme="light"] .hero-inner {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .kicker {
+      color: rgba(181, 131, 255, 0.8) !important;
+    }
+
+    [data-theme="light"] .title,
+    [data-theme="light"] .title .aura {
+      color: rgba(0, 0, 0, 0.9) !important;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      -webkit-text-fill-color: unset !important;
+      background-clip: unset !important;
+      text-shadow: none !important;
+    }
+
+    [data-theme="light"] .sub {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    [data-theme="light"] .meta-value {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .meta-label {
+      color: rgba(181, 131, 255, 0.8) !important;
+    }
+
+    [data-theme="light"] .meta-value em {
+      color: rgba(181, 131, 255, 0.9) !important;
+    }
+
+    [data-theme="light"] .btn {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      color: rgba(0, 0, 0, 0.9) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .btn:hover {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    [data-theme="light"] .btn.primary {
+      background: rgba(181, 131, 255, 0.1) !important;
+      border: 1px solid rgba(181, 131, 255, 0.3) !important;
+      color: rgba(181, 131, 255, 0.9) !important;
+    }
+
+    [data-theme="light"] .btn.primary:hover {
+      background: rgba(181, 131, 255, 0.15) !important;
+      border-color: rgba(181, 131, 255, 0.4) !important;
+    }
+
+    /* Main Content */
+    [data-theme="light"] main {
+      background: transparent !important;
+    }
+
+    [data-theme="light"] section {
+      background: transparent !important;
+      border-top-color: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] h2 {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .lead {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    [data-theme="light"] .wrap {
+      background: transparent !important;
+    }
+
+    /* Video Section */
+    [data-theme="light"] .video-wrap {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .caption {
+      color: rgba(0, 0, 0, 0.5) !important;
+    }
+
+    /* Process Timeline */
+    [data-theme="light"] .timeline .rail {
+      background: transparent !important;
+    }
+
+    [data-theme="light"] .progress {
+      background: rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .progress > i {
+      background: #b583ff !important;
+    }
+
+    [data-theme="light"] .step {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .step:hover {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] .step h3 {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .step p {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    [data-theme="light"] .step a {
+      color: #b583ff !important;
+    }
+
+    [data-theme="light"] .step a:hover {
+      color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    [data-theme="light"] .step-expanded {
+      border-top-color: rgba(0, 0, 0, 0.06) !important;
+    }
+
+    [data-theme="light"] .step-image-placeholder {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.06)) !important;
+      border: 1px dashed rgba(0, 0, 0, 0.08) !important;
+      color: rgba(0, 0, 0, 0.5) !important;
+    }
+
+    [data-theme="light"] .step-details {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    /* Cards */
+    [data-theme="light"] .card {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    [data-theme="light"] .card:hover {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] .card p {
+      color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    /* Gallery */
+    [data-theme="light"] .shot {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    }
+
+    [data-theme="light"] .shot:hover {
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Footer */
+    [data-theme="light"] footer {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] footer .lead {
+      color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    /* Other Elements */
+    [data-theme="light"] .grain {
+      opacity: 0.02 !important;
+    }
+
+    [data-theme="light"] .cursor {
+      opacity: 0.05 !important;
+    }
+
+    [data-theme="light"] .cursor-glow {
+      opacity: 0.3 !important;
+    }
+
+    /* FAB BUTTONS - EXACT COPY FROM HOME PAGE */
+    .bot-fab {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 9999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      /* Glassmorphism design to match hero card */
+      background: rgba(218, 14, 41, 0.1);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(218, 14, 41, 0.3);
+      box-shadow:
+        0 2px 8px rgba(218, 14, 41, 0.2),
+        0 8px 16px rgba(218, 14, 41, 0.15),
+        0 16px 32px rgba(218, 14, 41, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      color: rgba(218, 14, 41, 0.9);
+    }
+
+    .bot-fab:hover {
+      transform: scale(1.05) translateY(-2px);
+      background: rgba(218, 14, 41, 0.15);
+      border-color: rgba(218, 14, 41, 0.4);
+      box-shadow:
+        0 4px 16px rgba(218, 14, 41, 0.3),
+        0 16px 32px rgba(218, 14, 41, 0.2),
+        0 32px 64px rgba(218, 14, 41, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .bot-fab:active {
+      transform: scale(0.98);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      /* Glassmorphism design to match hero card */
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05) translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 1);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        0 32px 64px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] .theme-toggle {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      color: rgba(0, 0, 0, 0.7);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: rgba(0, 0, 0, 0.9);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        0 16px 32px rgba(0, 0, 0, 0.06),
+        0 32px 64px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Mobile adjustments for FABs */
+    @media (max-width: 768px) {
+      .bot-fab {
+        right: 16px !important;
+        bottom: 16px !important;
+        width: 56px !important;
+        height: 56px !important;
+      }
+
+      .theme-toggle {
+        left: 16px !important;
+        bottom: 16px !important;
+        width: 44px !important;
+        height: 44px !important;
+      }
+
+      /* iOS safe areas */
+      @supports (padding: max(0px)) {
+        .bot-fab {
+          right: max(16px, env(safe-area-inset-right)) !important;
+          bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        }
+
+        .theme-toggle {
+          left: max(16px, env(safe-area-inset-left)) !important;
+          bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        }
+      }
+    }
   </style>
 </head>
 <body>
@@ -344,12 +900,8 @@
   <!-- Navigation -->
   <nav class="nav" id="nav" aria-label="Primary">
     <div class="container">
-      <a href="./index.html#home" class="logo kinetic" id="logo" data-magnetic>NIHAR</a>
-      <ul role="list">
-        <li><a href="./index.html#work" class="nav-link" data-section="work" data-magnetic>Work</a></li>
-        <li><a href="./index.html#reading" class="nav-link" data-section="reading">Life</a></li>
-        <li><a href="./index.html#about" class="nav-link" data-section="about" data-magnetic>About</a></li>
-      </ul>
+      <a href="./index.html#work" class="logo kinetic" id="logo" data-magnetic>← Back</a>
+      <div class="nav-meta">Psychedelic Journey · 2024</div>
     </div>
   </nav>
 
@@ -366,11 +918,23 @@
       <p class="sub">
         The participant steps into a bathroom, turns on the tap, and watches their reflection dissolve. Pulled through the mirror, they traverse a trippy multiverse of liquid color, pattern‑creatures and structureless yet beautiful music, guided by a fading companion until reality calls them home.
       </p>
-      <div class="meta" role="list">
-        <span class="pill" role="listitem">Duration: <strong>Two months</strong></span>
-        <span class="pill" role="listitem">Guide: Jignesh Khakar · Shoban Shah · Kaushal Sapre · Mochu · Suvani Suri · Arshad Pathan · Ravishekhar Aradhya</span>
-        <span class="pill" role="listitem">Based on: Timothy Leary's <em>The Psychedelic Experience</em> (after the Tibetan Book of the Dead)</span>
-        <span class="pill" role="listitem">Goal: Safe, accessible encounters with ego‑dissolution themes</span>
+      <div class="meta-clean">
+        <div class="meta-row">
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">Two months</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Team</span>
+          <span class="meta-value">Jignesh Khakar · Shoban Shah · Kaushal Sapre · Mochu · Suvani Suri · Arshad Pathan · Ravishekhar Aradhya</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Based on</span>
+          <span class="meta-value">Timothy Leary's <em>The Psychedelic Experience</em> (after the Tibetan Book of the Dead)</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Goal</span>
+          <span class="meta-value">Safe, accessible encounters with ego‑dissolution themes</span>
+        </div>
       </div>
       <div class="cta">
         <a class="btn primary" href="#experience" aria-label="Jump to the video experience">Watch experience ▶</a>
@@ -381,6 +945,16 @@
 
   <!-- Glass cursor (OUTSIDE hero for proper positioning) -->
   <div class="glass-cursor" aria-hidden="true" id="glass"></div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span class="theme-icon">🌙</span>
+  </button>
+
+  <!-- Bot FAB -->
+  <button class="bot-fab" id="botFab" aria-label="Open chat">
+    <span class="bot-icon">💬</span>
+  </button>
 
   <main>
     <!-- Experience / Video -->
@@ -431,15 +1005,33 @@
             <div class="step reveal">
               <h3>Research</h3>
               <p>Reading Timothy Leary, Terence McKenna, and Ram Dass; exploring psychedelic subreddits; browsing Erowid for trip reports and safety learnings.</p>
+              <div class="step-expanded">
+                <div class="step-image-placeholder">Research Materials Preview</div>
+                <div class="step-details">
+                  Deep dive into psychedelic literature and trip reports. Key findings included optimal duration timing, safety protocols, and the importance of set and setting for meaningful experiences.
+                </div>
+              </div>
             </div>
             <div class="step reveal">
               <h3>Conceptualization</h3>
               <p>Ideating across mediums to distill a bathroom–mirror portal motif and an ego‑dissolution arc. Mapping sensory stages and consent guardrails.<br/>
                 <a href="#" id="miro" rel="noopener">MIRO LINK</a></p>
+              <div class="step-expanded">
+                <div class="step-image-placeholder">Concept Sketches & Mind Maps</div>
+                <div class="step-details">
+                  Initial wireframes exploring the bathroom-to-mirror transition. Documented the user journey from normal reflection to dissolution, including safety exit points and emotional checkpoints.
+                </div>
+              </div>
             </div>
             <div class="step reveal">
               <h3>3D Modelling</h3>
               <p>Blocking the environment in 3D and reviewing the flow in VR to validate spatial pacing before fabrication.</p>
+              <div class="step-expanded">
+                <div class="step-image-placeholder">3D Models & VR Testing</div>
+                <div class="step-details">
+                  Created detailed Blender models of the bathroom space with accurate dimensions. VR walkthroughs helped validate user flow and identify optimal trigger points for the mirror transition effect.
+                </div>
+              </div>
             </div>
             <div class="step reveal">
               <h3>Construction of Metal Frame</h3>
@@ -452,6 +1044,12 @@
             <div class="step reveal">
               <h3>Visuals</h3>
               <p>Generating video sequences using Deforum Stable Diffusion; comparing models, samplers, steps, prompt embeddings for the most organic motion feel.</p>
+              <div class="step-expanded">
+                <div class="step-image-placeholder">Generated Visual Sequences</div>
+                <div class="step-details">
+                  Tested various Stable Diffusion models including v1.5, v2.1, and custom dreambooth models. Fine-tuned prompts for smooth morphing between abstract patterns and recognizable forms, achieving seamless ego-dissolution visuals.
+                </div>
+              </div>
             </div>
             <div class="step reveal">
               <h3>TouchDesigner + Arduino</h3>
@@ -614,6 +1212,70 @@
       cursorGlow.style.opacity = '0';
     });
   }
+
+  // Sequential Step Expansion
+  const steps = document.querySelectorAll('.step');
+  let expandedStep = null;
+
+  steps.forEach((step, index) => {
+    step.addEventListener('mouseenter', () => {
+      // Collapse previous step if any
+      if (expandedStep && expandedStep !== step) {
+        expandedStep.classList.remove('expanded');
+      }
+
+      // Expand current step
+      step.classList.add('expanded');
+      expandedStep = step;
+    });
+
+    step.addEventListener('mouseleave', () => {
+      // Add a small delay before collapsing to prevent flickering
+      setTimeout(() => {
+        if (!step.matches(':hover')) {
+          step.classList.remove('expanded');
+          if (expandedStep === step) {
+            expandedStep = null;
+          }
+        }
+      }, 100);
+    });
+  });
+
+  // Theme Toggle Functionality
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.querySelector('.theme-icon');
+
+  // Initialize theme from localStorage or default to dark
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const newTheme = isLight ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+  });
+
+  // Bot FAB Functionality
+  const botFab = document.getElementById('botFab');
+  botFab.addEventListener('click', () => {
+    // Simple chatbot functionality - could be enhanced with actual chat interface
+    const message = prompt('Hi! I\'m a simple bot. What would you like to know about this project?');
+    if (message) {
+      const responses = [
+        'Thanks for your interest! This project explores psychedelic themes in digital art.',
+        'The installation uses TouchDesigner and Arduino for interactive experiences.',
+        'This was created as part of a classroom project over two months.',
+        'The project is inspired by Timothy Leary\'s "The Psychedelic Experience".'
+      ];
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      alert(`Bot: ${randomResponse}`);
+    }
+  });
   </script>
 </body>
 </html>
