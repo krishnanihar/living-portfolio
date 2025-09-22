@@ -28,7 +28,7 @@ body.scrolled .nav {
 }
 
 .logo {
-  font-weight: 800;
+  font-weight: 300;
   letter-spacing: 0.04em;
   position: relative;
 }
@@ -45,6 +45,7 @@ body.scrolled .nav {
   border-radius: 10px;
   position: relative;
   transition: all 250ms ease;
+  font-weight: 300;
 }
 
 .nav a.active,
