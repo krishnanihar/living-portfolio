@@ -93,18 +93,32 @@
             padding: 0 var(--space-md);
         }
 
-        /* Navigation with Progress - Always Visible */
+        /* Navigation - Glassmorphic like hero card */
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             height: 60px;
-            backdrop-filter: blur(20px) saturate(180%);
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-            transition: var(--transition);
+            z-index: 1000;
+            /* Glassmorphism - exactly like hero card */
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        /* Show nav on scroll */
+        .nav.visible,
+        body.scrolled .nav {
             transform: translateY(0);
             opacity: 1;
         }
@@ -1281,13 +1295,25 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Update progress bar on scroll
+        // Update progress bar and nav visibility on scroll
         window.addEventListener('scroll', () => {
             // Update progress bar
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('progress-bar').style.width = scrolled + '%';
+
+            // Show/hide nav based on scroll position
+            const nav = document.getElementById('nav');
+            const scrollY = window.scrollY || window.pageYOffset;
+
+            if (scrollY > 100) {
+                nav.classList.add('visible');
+                document.body.classList.add('scrolled');
+            } else if (scrollY === 0) {
+                nav.classList.remove('visible');
+                document.body.classList.remove('scrolled');
+            }
         });
 
         // Cursor glow effect
