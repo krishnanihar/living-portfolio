@@ -183,14 +183,65 @@
 
         /* Hero with Parallax */
         .hero {
-            padding: calc(60px + var(--space-2xl)) 0 var(--space-xl);
-            text-align: center;
             position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 5vw, 40px);
+            background: transparent !important;
+            z-index: 2;
+            overflow: hidden;
+            perspective: 1500px;
+            -webkit-perspective: 1500px;
+            transform-style: preserve-3d;
         }
 
         .hero-content {
+            position: relative;
+            width: 100%;
+            max-width: min(680px, 92vw);
+            padding: clamp(24px, 6vw, 48px);
+
+            /* Glassmorphism - exactly like home hero */
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: clamp(20px, 5vw, 32px);
+
+            /* Enhanced 3D shadow layers */
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.2),
+                0 24px 48px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 -20px 40px rgba(0, 0, 0, 0.05);
+
+            /* 3D transform setup */
+            transform-style: preserve-3d !important;
+            -webkit-transform-style: preserve-3d !important;
+            transform-origin: center center;
+            transition: transform 0.08s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: transform;
+            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+
+            z-index: 3;
             opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+            animation: heroEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes heroEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(40px) translateZ(-100px) rotateX(5deg) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0) rotateX(0) scale(1);
+            }
         }
 
         @keyframes fadeInUp {
@@ -201,32 +252,29 @@
         }
 
         .hero-meta {
-            font-size: var(--font-micro);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-tertiary);
-            margin-bottom: var(--space-md);
-            opacity: 0;
-            animation: fadeIn 1s ease 0.2s forwards;
+            display: block;
+            font-size: clamp(12px, 3vw, 15px);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: clamp(6px, 1.5vw, 10px);
+            letter-spacing: 0.03em;
         }
 
         .hero-title {
-            font-size: var(--font-display);
-            font-weight: 300;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-            margin-bottom: var(--space-md);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
+            font-size: clamp(24px, 7vw, 44px);
+            line-height: 1.15;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin: 0 0 clamp(16px, 3vw, 24px) 0;
+            color: #ffffff;
+            text-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .hero-title strong {
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 300;
+            color: var(--accent);
             background: linear-gradient(135deg, var(--accent), var(--purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -234,13 +282,11 @@
         }
 
         .hero-desc {
-            font-size: var(--font-body);
-            color: var(--text-secondary);
-            max-width: 540px;
-            margin: 0 auto var(--space-xl);
-            line-height: 1.7;
-            opacity: 0;
-            animation: fadeIn 1s ease 0.4s forwards;
+            color: rgba(255, 255, 255, 0.65);
+            margin: 0 0 clamp(20px, 4vw, 32px) 0;
+            font-weight: 300;
+            font-size: clamp(13px, 3.5vw, 16px);
+            line-height: 1.5;
         }
 
         @keyframes fadeIn {
@@ -936,8 +982,8 @@
 
     <!-- Hero -->
     <header class="hero">
-        <div class="container hero-content">
-            <div class="hero-meta">Available for New Opportunities</div>
+        <div class="hero-content" id="heroCard">
+            <span class="hero-meta">Available for New Opportunities</span>
             <h1 class="hero-title">
                 I build <strong>systems</strong> that help teams ship better products, faster.
             </h1>
