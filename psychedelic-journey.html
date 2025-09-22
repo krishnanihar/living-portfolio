@@ -192,26 +192,43 @@
       height: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 16px;
     }
 
-    .nav-brand {
-      font-size: var(--font-small);
+    .logo {
       font-weight: 300;
-      letter-spacing: -0.02em;
-      cursor: pointer;
-      transition: var(--transition);
+      letter-spacing: 0.04em;
+      position: relative;
+      color: var(--text-primary);
+      text-decoration: none;
     }
 
-    .nav-brand:hover {
+    .nav-content ul {
+      margin-left: auto;
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-content a {
+      padding: 8px 10px;
+      border-radius: 10px;
+      position: relative;
+      transition: all 250ms ease;
+      font-weight: 300;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-content a.active,
+    .nav-content a:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-content a.active {
       color: var(--accent);
-    }
-
-    .nav-meta {
-      font-size: var(--font-micro);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-tertiary);
     }
 
     /* Progress Bar */
@@ -273,10 +290,14 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <!-- Navigation -->
-  <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Primary">
     <div class="nav-content">
-      <div class="nav-brand" onclick="window.location.href='./index.html'">NIHAR</div>
-      <div class="nav-meta">Psychedelic Journey</div>
+      <a href="./index.html#home" class="logo kinetic" id="logo" data-magnetic>NIHAR</a>
+      <ul role="list">
+        <li><a href="./index.html#work" class="nav-link" data-section="work" data-magnetic>Work</a></li>
+        <li><a href="./index.html#reading" class="nav-link" data-section="reading">Life</a></li>
+        <li><a href="./index.html#about" class="nav-link" data-section="about" data-magnetic>About</a></li>
+      </ul>
     </div>
   </nav>
 
