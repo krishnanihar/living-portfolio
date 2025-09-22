@@ -157,8 +157,8 @@ const Sections = {
   },
   
   initGlassCursor() {
-    // Skip on touch devices
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+    // Skip only on actual touch devices (not trackpads)
+    if (navigator.maxTouchPoints > 1 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) return;
     
     const glass = document.getElementById('glass');
     if (!glass) return;

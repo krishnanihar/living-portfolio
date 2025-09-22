@@ -81,6 +81,21 @@
 
     /* Use home page hero styles - no custom overrides needed */
 
+    /* Enhanced cursor glow for better Mac compatibility */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(181, 131, 255, 0.2) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 9998;
+      mix-blend-mode: screen;
+      transform: translate(-50%, -50%);
+    }
+
     .meta{display:flex; flex-wrap:wrap; gap: var(--space-xs) var(--space-sm); margin-top: var(--space-md);}
     .pill{border:1px solid var(--border); background: var(--surface); padding: var(--space-xs) var(--space-sm); border-radius:999px; color:var(--text-secondary); transition: var(--transition);}
     .pill:hover{background: var(--surface-hover); border-color: var(--border-hover);}
@@ -293,6 +308,7 @@
 <body>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow"></div>
 
   <!-- Navigation -->
   <nav class="nav" id="nav" aria-label="Primary">
@@ -563,6 +579,34 @@
       document.body.classList.remove('scrolled');
     }
   });
+
+  // Enhanced cursor glow effect for Mac compatibility
+  const cursorGlow = document.getElementById('cursor-glow');
+  if (cursorGlow) {
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorGlow.style.opacity = '0.6';
+    });
+
+    // Smooth cursor follow
+    function animateCursor() {
+      glowX += (mouseX - glowX) * 0.1;
+      glowY += (mouseY - glowY) * 0.1;
+
+      cursorGlow.style.transform = `translate(${glowX - 200}px, ${glowY - 200}px)`;
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Hide cursor glow on mouse leave
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.style.opacity = '0';
+    });
+  }
   </script>
 </body>
 </html>
