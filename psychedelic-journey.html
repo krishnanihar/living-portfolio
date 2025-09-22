@@ -273,7 +273,7 @@
       opacity: 1;
     }
 
-    .nav-content {
+    .container {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 var(--space-md);
@@ -291,16 +291,16 @@
       text-decoration: none;
     }
 
-    .nav-content ul {
+    .nav ul {
       margin-left: auto;
       display: flex;
       gap: 20px;
       list-style: none;
-      margin: 0;
+      margin: 0 0 0 auto;
       padding: 0;
     }
 
-    .nav-content a {
+    .nav a {
       padding: 8px 10px;
       border-radius: 10px;
       position: relative;
@@ -310,12 +310,12 @@
       text-decoration: none;
     }
 
-    .nav-content a.active,
-    .nav-content a:hover {
+    .nav a.active,
+    .nav a:hover {
       background: rgba(255,255,255,0.04);
     }
 
-    .nav-content a.active {
+    .nav a.active {
       color: var(--accent);
     }
 
@@ -379,7 +379,7 @@
 
   <!-- Navigation -->
   <nav class="nav" id="nav" aria-label="Primary">
-    <div class="nav-content">
+    <div class="container">
       <a href="./index.html#home" class="logo kinetic" id="logo" data-magnetic>NIHAR</a>
       <ul role="list">
         <li><a href="./index.html#work" class="nav-link" data-section="work" data-magnetic>Work</a></li>
