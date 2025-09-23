@@ -198,21 +198,21 @@
             opacity: 1;
         }
 
-        /* Navigation - Exact copy from Air India */
+        /* Navigation - Centered floating with proper positioning */
         .nav {
             position: fixed;
             top: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%);
             width: min(90%, 600px);
             height: 56px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-xl);
-            z-index: 100;
-            transition: var(--transition-base);
+            border-radius: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
             opacity: 1;
             box-shadow:
                 0 10px 40px rgba(0, 0, 0, 0.2),
@@ -225,36 +225,37 @@
         }
 
         .nav-content {
-            padding: 0 var(--space-lg);
+            padding: 0 24px;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
         }
 
         .nav-back {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: var(--text-sm);
+            font-size: 14px;
             font-weight: 500;
             letter-spacing: -0.02em;
             cursor: pointer;
-            transition: var(--transition-base);
+            transition: all 0.3s ease;
             text-decoration: none;
             color: var(--text-primary);
+            flex-shrink: 0;
         }
 
         .nav-back:hover {
             color: var(--accent-primary);
-            text-shadow: 0 0 20px var(--accent-primary);
             transform: translateX(-2px);
         }
 
         .nav-back::before {
             content: '←';
             font-size: 16px;
-            transition: var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .nav-back:hover::before {
@@ -262,13 +263,14 @@
         }
 
         .nav-meta {
-            font-size: var(--text-xs);
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--text-secondary);
             padding: 6px 12px;
-            background: rgba(var(--accent-primary), 0.1);
-            border-radius: var(--radius-sm);
+            background: rgba(218, 27, 96, 0.1);
+            border-radius: 8px;
+            flex-shrink: 0;
         }
 
         /* Enhanced Section Styles */
@@ -473,7 +475,7 @@
             }
 
             .nav-content {
-                padding: 0 var(--space-md);
+                padding: 0 16px;
             }
 
             .grid-2,
@@ -490,7 +492,7 @@
             }
 
             .nav-content {
-                padding: 0 var(--space-sm);
+                padding: 0 12px;
             }
 
             .nav-meta {
@@ -1742,20 +1744,6 @@
     <!-- Particles Canvas -->
     <canvas id="particles" aria-hidden="true"></canvas>
 
-    <!-- Navigation Header -->
-    <nav class="nav" id="mainNav">
-        <div class="container">
-            <a href="index.html" class="logo">← Back to Portfolio</a>
-            <ul>
-                <li><a href="#hero">Overview</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#science">Science</a></li>
-                <li><a href="#concepts">Concepts</a></li>
-                <li><a href="#vision">Vision</a></li>
-                <li><a href="#team">Team</a></li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Dynamic Background -->
     <div class="bg-orbs">
