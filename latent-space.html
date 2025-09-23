@@ -552,12 +552,12 @@
             color-scheme: light;
         }
 
-        /* Theme Toggle - Exact copy from Air India */
+        /* Theme Toggle - Fixed positioning */
         .theme-toggle {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            z-index: 9999;
+            position: fixed !important;
+            bottom: 24px !important;
+            left: 24px !important;
+            z-index: 10000 !important;
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -626,6 +626,26 @@
                     bottom: max(16px, env(safe-area-inset-bottom)) !important;
                 }
             }
+        }
+
+        /* Bot Fix - Ensure bot is visible */
+        .bot-fab {
+            position: fixed !important;
+            bottom: 24px !important;
+            right: 24px !important;
+            z-index: 10001 !important;
+            display: grid !important;
+            place-items: center !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+        .bot-panel {
+            position: fixed !important;
+            z-index: 10002 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         .section-container {
@@ -4542,6 +4562,18 @@ void loop() {
 
             // Navigation is now just standard HTML, no JS needed
             // Bot will be initialized by external script
+
+            // Debug bot initialization
+            setTimeout(() => {
+                console.log('Checking for bot elements...');
+                const botFab = document.getElementById('botFab');
+                const botPanel = document.getElementById('botPanel');
+                console.log('Bot FAB:', botFab);
+                console.log('Bot Panel:', botPanel);
+                if (botFab) {
+                    console.log('Bot FAB styles:', getComputedStyle(botFab).position, getComputedStyle(botFab).display, getComputedStyle(botFab).opacity);
+                }
+            }, 2000);
 
             // Auto-start some animations
             setTimeout(() => {
