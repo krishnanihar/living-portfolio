@@ -302,12 +302,12 @@ const Sections = {
             <article class="uni-card" data-project="latent-space">
               <header class="uni-card-header">
                 <h3 class="uni-card-title">Latent Space</h3>
-                <span class="uni-card-badge">Multimodal AI</span>
+                <span class="uni-card-badge">Speculative Design</span>
               </header>
               
               <div class="uni-card-body">
                 <p class="uni-card-description">
-                  Personal dream-to-meaning engine using wearable EEG + multimodal AI. Bridges sleep physiology and narrative meaning through real-time brain signal processing.
+                  Speculative design exploration of dream technology ethics. Interactive prototype exploring the boundaries between consciousness, privacy, and AI through dream interface concepts.
                 </p>
                 
                 <div class="uni-metric">
@@ -318,9 +318,9 @@ const Sections = {
               
               <footer class="uni-card-footer">
                 <div class="uni-tags">
-                  <span class="uni-tag">EEG Processing</span>
-                  <span class="uni-tag">ML/AI</span>
-                  <span class="uni-tag">Privacy-First</span>
+                  <span class="uni-tag">Ethics</span>
+                  <span class="uni-tag">Consciousness</span>
+                  <span class="uni-tag">Future Concepts</span>
                 </div>
               </footer>
             </article>
@@ -805,7 +805,8 @@ const Sections = {
           card.style.transform = '';
 
           if (project === 'latent-space') {
-            alert('🧠 Latent Space - Dream-to-Meaning Engine\n\nPersonal project using wearable EEG + multimodal AI to bridge sleep physiology and narrative meaning through real-time brain signal processing.\n\n[Project in development - URL coming soon]');
+            console.log('Opening Latent Space page...');
+            window.location.href = 'latent-space.html';
           } else if (project === 'air-india') {
             console.log('Opening Air India page...');
             window.location.href = 'air-india.html';
