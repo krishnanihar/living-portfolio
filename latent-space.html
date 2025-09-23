@@ -3662,7 +3662,6 @@ void loop() {
     </section>
 
     <!-- Bot Script -->
-    <script src="js/bot-simple.js"></script>
 
     <script>
         // Theme will be handled by the standard theme.js file
@@ -4504,32 +4503,34 @@ void loop() {
             trackInteraction();
         }
 
-        // Theme Toggle - Exact copy from Air India
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.querySelector('.theme-icon');
-
-        // Initialize theme from localStorage or default to dark
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        if (themeIcon) {
-            themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
-        }
-
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-                const newTheme = isLight ? 'dark' : 'light';
-
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                if (themeIcon) {
-                    themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
-                }
-            });
-        }
+        // Theme Toggle - Fixed for latent-space
 
         // Initialize all systems on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.querySelector('.theme-icon');
+
+            // Initialize theme from localStorage or default to dark
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', currentTheme);
+            if (themeIcon) {
+                themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const isLight = document.body.getAttribute('data-theme') === 'light';
+                    const newTheme = isLight ? 'dark' : 'light';
+
+                    document.body.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    if (themeIcon) {
+                        themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+                    }
+                });
+            }
+
             // Add page entrance animation
             document.body.classList.add('page-enter');
             requestAnimationFrame(() => {
@@ -4845,5 +4846,8 @@ void loop() {
     <script src="js/chat.js"></script>
     <script src="js/particles.js"></script>
     <script src="js/navigation.js"></script>
+
+    <!-- Bot System - Must be last -->
+    <script src="js/bot-simple.js"></script>
 </body>
 </html>
