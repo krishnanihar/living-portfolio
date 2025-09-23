@@ -4532,6 +4532,7 @@ void loop() {
             // Initialize theme from localStorage or default to dark
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', currentTheme);
+            document.body.setAttribute('data-theme', currentTheme);
             if (themeIcon) {
                 themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
             }
@@ -4542,6 +4543,7 @@ void loop() {
                     const newTheme = isLight ? 'dark' : 'light';
 
                     document.documentElement.setAttribute('data-theme', newTheme);
+                    document.body.setAttribute('data-theme', newTheme);
                     localStorage.setItem('theme', newTheme);
                     if (themeIcon) {
                         themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
