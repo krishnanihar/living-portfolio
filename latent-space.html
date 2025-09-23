@@ -1749,10 +1749,6 @@
     </style>
 </head>
 <body class="latent-space-page" data-theme="dark">
-    <!-- Theme Toggle - Exact copy from Air India -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon">🌙</span>
-    </button>
 
     <!-- Navigation - Exact copy from Air India -->
     <nav class="nav" id="nav">
@@ -4527,29 +4523,7 @@ void loop() {
 
         // Initialize all systems on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Theme Toggle
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.querySelector('.theme-icon');
-
-            // Initialize theme from localStorage or default to dark
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            document.body.setAttribute('data-theme', currentTheme);
-            if (themeIcon) {
-                themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
-            }
-
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const isLight = document.body.getAttribute('data-theme') === 'light';
-                    const newTheme = isLight ? 'dark' : 'light';
-
-                    document.body.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    if (themeIcon) {
-                        themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
-                    }
-                });
-            }
+            // Theme will be handled by global theme.js
 
             // Add page entrance animation
             document.body.classList.add('page-enter');
