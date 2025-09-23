@@ -12,6 +12,7 @@ class ElegantBot {
     const path = window.location.pathname;
     if (path.includes('air-india')) return 'air-india';
     if (path.includes('psychedelic')) return 'psychedelic';
+    if (path.includes('latent-space')) return 'latent-space';
     if (path.includes('index') || path === '/') return 'home';
     return 'home';
   }
@@ -35,6 +36,12 @@ class ElegantBot {
         "Hi! This installation combines TouchDesigner, Arduino, and AI-generated visuals for a safe transformative experience.",
         "Hello! This project was inspired by Timothy Leary's work - it's art meets consciousness exploration.",
         "Great to see you! This bathroom-to-mirror portal represents 2 months of 3D modeling, VR testing, and ethical design."
+      ],
+      'latent-space': [
+        "Welcome to Latent Space! This speculative design explores the ethics of dream technology and consciousness interfaces.",
+        "Hi! This project examines the boundaries between privacy, consciousness, and AI through interactive dream interface concepts.",
+        "Hello! Latent Space is a thought-provoking exploration of future technology's impact on our most private thoughts - our dreams.",
+        "Great to see you! This speculative design asks: what happens when AI can read our dreams? Navigate through the ethical implications."
       ]
     };
     return responses[this.currentPage] || responses.home;

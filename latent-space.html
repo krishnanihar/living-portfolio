@@ -198,7 +198,7 @@
             opacity: 1;
         }
 
-        /* Air India Style Navigation */
+        /* Navigation - Exact copy from Air India */
         .nav {
             position: fixed;
             top: 20px;
@@ -213,13 +213,14 @@
             border-radius: var(--radius-xl);
             z-index: 100;
             transition: var(--transition-base);
-            opacity: 0;
+            opacity: 1;
             box-shadow:
                 0 10px 40px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .nav.visible {
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
@@ -261,12 +262,6 @@
         }
 
         .nav-meta {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .nav-meta-text {
             font-size: var(--text-xs);
             text-transform: uppercase;
             letter-spacing: 0.12em;
@@ -274,39 +269,6 @@
             padding: 6px 12px;
             background: rgba(var(--accent-primary), 0.1);
             border-radius: var(--radius-sm);
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .nav-control {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--surface-glass);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 14px;
-        }
-
-        .nav-control:hover {
-            color: var(--text-primary);
-            background: var(--surface-glass-hover);
-            border-color: var(--border-focus);
-        }
-
-        .nav-control.active {
-            color: var(--accent-primary);
-            background: var(--surface-glass-active);
-            border-color: var(--accent-primary);
         }
 
         /* Enhanced Section Styles */
@@ -318,7 +280,7 @@
         }
 
         .section:first-of-type {
-            padding-top: calc(var(--space-4xl) + 80px); /* Account for floating nav */
+            padding-top: calc(var(--space-4xl) + 40px); /* Account for floating nav */
         }
 
         /* Modern Card System */
@@ -497,6 +459,10 @@
                 padding: var(--space-3xl) var(--space-md);
             }
 
+            .section:first-of-type {
+                padding-top: calc(var(--space-3xl) + 40px);
+            }
+
             .section-heading {
                 font-size: var(--text-3xl);
             }
@@ -510,20 +476,6 @@
                 padding: 0 var(--space-md);
             }
 
-            .nav-back {
-                font-size: var(--text-xs);
-            }
-
-            .nav-meta-text {
-                font-size: 10px;
-            }
-
-            .nav-control {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-
             .grid-2,
             .grid-3,
             .grid-4 {
@@ -535,19 +487,14 @@
             .nav {
                 width: calc(100% - 32px);
                 height: 44px;
-                top: 16px;
             }
 
             .nav-content {
                 padding: 0 var(--space-sm);
             }
 
-            .nav-meta-text {
+            .nav-meta {
                 display: none;
-            }
-
-            .nav-controls {
-                gap: var(--space-xs);
             }
         }
 
@@ -601,6 +548,82 @@
 
         [data-theme="light"] {
             color-scheme: light;
+        }
+
+        /* Theme Toggle - Exact copy from Air India */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 9999;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            /* Glassmorphism design to match hero card */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                0 16px 32px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05) translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 1);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.1),
+                0 32px 64px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: rgba(0, 0, 0, 0.7);
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.02),
+                0 8px 16px rgba(0, 0, 0, 0.03),
+                0 16px 32px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="light"] .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.9);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.06),
+                0 32px 64px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Mobile adjustments for theme toggle */
+        @media (max-width: 768px) {
+            .theme-toggle {
+                left: 16px !important;
+                bottom: 16px !important;
+                width: 44px !important;
+                height: 44px !important;
+            }
+
+            /* iOS safe areas */
+            @supports (padding: max(0px)) {
+                .theme-toggle {
+                    left: max(16px, env(safe-area-inset-left)) !important;
+                    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+                }
+            }
         }
 
         .section-container {
@@ -1704,23 +1727,16 @@
     </style>
 </head>
 <body class="latent-space-page" data-theme="dark">
-    <!-- Air India Style Navigation -->
+    <!-- Theme Toggle - Exact copy from Air India -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <!-- Navigation - Exact copy from Air India -->
     <nav class="nav" id="nav">
         <div class="nav-content">
             <a href="./index.html" class="nav-back">Back</a>
-
-            <div class="nav-meta">
-                <div class="nav-meta-text">Latent Space · 2024</div>
-
-                <div class="nav-controls">
-                    <button class="nav-control" id="botToggle" title="Toggle Chat">
-                        🤖
-                    </button>
-                    <button class="nav-control" id="themeToggle" title="Toggle Theme">
-                        🌙
-                    </button>
-                </div>
-            </div>
+            <div class="nav-meta">Latent Space · 2024</div>
         </div>
     </nav>
     <!-- Particles Canvas -->
@@ -3661,104 +3677,10 @@ void loop() {
     <script src="js/bot-simple.js"></script>
 
     <script>
-        // Theme System
-        class ThemeManager {
-            constructor() {
-                this.currentTheme = 'dark';
-                this.init();
-            }
+        // Theme will be handled by the standard theme.js file
 
-            init() {
-                // Set initial theme
-                const savedTheme = localStorage.getItem('latent-space-theme') || 'dark';
-                this.setTheme(savedTheme);
-            }
-
-            setTheme(theme) {
-                this.currentTheme = theme;
-                document.body.setAttribute('data-theme', theme);
-                localStorage.setItem('latent-space-theme', theme);
-
-                // Update theme toggle button icon
-                const themeToggle = document.getElementById('themeToggle');
-                if (themeToggle) {
-                    themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
-                }
-
-                // Animate theme transition
-                document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
-                setTimeout(() => {
-                    document.body.style.transition = '';
-                }, 300);
-            }
-        }
-
-        // Air India Style Navigation
-        class Navigation {
-            constructor() {
-                this.nav = document.getElementById('nav');
-                this.botToggle = document.getElementById('botToggle');
-                this.themeToggle = document.getElementById('themeToggle');
-                this.init();
-            }
-
-            init() {
-                // Show navigation after a delay
-                setTimeout(() => {
-                    this.nav.classList.add('visible');
-                }, 500);
-
-                // Set up bot toggle
-                if (this.botToggle) {
-                    this.botToggle.addEventListener('click', () => {
-                        this.toggleBot();
-                    });
-                }
-
-                // Set up theme toggle
-                if (this.themeToggle) {
-                    this.themeToggle.addEventListener('click', () => {
-                        this.toggleTheme();
-                    });
-                }
-            }
-
-            toggleBot() {
-                const isActive = this.botToggle.classList.contains('active');
-
-                if (isActive) {
-                    // Close bot
-                    this.botToggle.classList.remove('active');
-                    if (window.hideBot) {
-                        window.hideBot();
-                    }
-                } else {
-                    // Open bot
-                    this.botToggle.classList.add('active');
-                    if (window.showBot) {
-                        window.showBot();
-                    }
-                }
-            }
-
-            toggleTheme() {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                // Update theme
-                document.body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('latent-space-theme', newTheme);
-
-                // Update button icon
-                this.themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-
-                // Animate theme transition
-                document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
-                setTimeout(() => {
-                    document.body.style.transition = '';
-                }, 300);
-            }
-        }
+        // Simple Navigation - No custom controls needed
+        // Bot and theme are handled by separate systems
 
         // Micro Interactions Manager
         class MicroInteractions {
@@ -4594,6 +4516,30 @@ void loop() {
             trackInteraction();
         }
 
+        // Theme Toggle - Exact copy from Air India
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.querySelector('.theme-icon');
+
+        // Initialize theme from localStorage or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (themeIcon) {
+            themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                const newTheme = isLight ? 'dark' : 'light';
+
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                if (themeIcon) {
+                    themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+                }
+            });
+        }
+
         // Initialize all systems on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Add page entrance animation
@@ -4602,10 +4548,11 @@ void loop() {
                 document.body.classList.add('page-enter-active');
             });
 
-            // Initialize new design systems
-            const themeManager = new ThemeManager();
-            const navigation = new Navigation();
+            // Initialize design systems
             const microInteractions = new MicroInteractions();
+
+            // Navigation is now just standard HTML, no JS needed
+            // Bot will be initialized by external script
 
             // Auto-start some animations
             setTimeout(() => {
