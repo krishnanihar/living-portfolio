@@ -4523,7 +4523,13 @@ void loop() {
 
         // Initialize all systems on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Theme will be handled by global theme.js
+            // Initialize global theme system
+            if (window.Theme) {
+                Theme.init();
+                console.log('✅ Theme system initialized on latent-space');
+            } else {
+                console.error('❌ Theme system not found');
+            }
 
             // Add page entrance animation
             document.body.classList.add('page-enter');
@@ -4535,7 +4541,15 @@ void loop() {
             const microInteractions = new MicroInteractions();
 
             // Navigation is now just standard HTML, no JS needed
-            // Bot will be initialized by external script
+            // Initialize bot system explicitly
+            setTimeout(() => {
+                if (window.ElegantBot) {
+                    new ElegantBot();
+                    console.log('✅ Bot system initialized on latent-space');
+                } else {
+                    console.error('❌ Bot system not found');
+                }
+            }, 500);
 
             // Debug bot initialization
             setTimeout(() => {
