@@ -1237,46 +1237,8 @@
             border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
         }
 
-        /* FAB BUTTONS - EXACT COPY FROM HOME PAGE */
-        .bot-fab {
-            position: fixed;
-            right: 24px;
-            bottom: 24px;
-            z-index: 9999;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            /* Glassmorphism design to match hero card */
-            background: rgba(218, 14, 41, 0.1);
-            backdrop-filter: blur(24px) saturate(1.5);
-            -webkit-backdrop-filter: blur(24px) saturate(1.5);
-            border: 1px solid rgba(218, 14, 41, 0.3);
-            box-shadow:
-                0 2px 8px rgba(218, 14, 41, 0.2),
-                0 8px 16px rgba(218, 14, 41, 0.15),
-                0 16px 32px rgba(218, 14, 41, 0.1),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            display: grid;
-            place-items: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            color: rgba(218, 14, 41, 0.9);
-        }
-
-        .bot-fab:hover {
-            transform: scale(1.05) translateY(-2px);
-            background: rgba(218, 14, 41, 0.15);
-            border-color: rgba(218, 14, 41, 0.4);
-            box-shadow:
-                0 4px 16px rgba(218, 14, 41, 0.3),
-                0 16px 32px rgba(218, 14, 41, 0.2),
-                0 32px 64px rgba(218, 14, 41, 0.15),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-
-        .bot-fab:active {
-            transform: scale(0.98);
-        }
+        /* THEME TOGGLE BUTTON */
+        /* Bot will use external CSS */
 
         .theme-toggle {
             position: fixed;
@@ -1335,15 +1297,8 @@
                 0 32px 64px rgba(0, 0, 0, 0.04);
         }
 
-        /* Mobile adjustments for FABs */
+        /* Mobile adjustments for theme toggle */
         @media (max-width: 768px) {
-            .bot-fab {
-                right: 16px !important;
-                bottom: 16px !important;
-                width: 56px !important;
-                height: 56px !important;
-            }
-
             .theme-toggle {
                 left: 16px !important;
                 bottom: 16px !important;
@@ -1353,11 +1308,6 @@
 
             /* iOS safe areas */
             @supports (padding: max(0px)) {
-                .bot-fab {
-                    right: max(16px, env(safe-area-inset-right)) !important;
-                    bottom: max(16px, env(safe-area-inset-bottom)) !important;
-                }
-
                 .theme-toggle {
                     left: max(16px, env(safe-area-inset-left)) !important;
                     bottom: max(16px, env(safe-area-inset-bottom)) !important;
@@ -1392,11 +1342,6 @@
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <span class="theme-icon">🌙</span>
-    </button>
-
-    <!-- Bot FAB -->
-    <button class="bot-fab" id="botFab" aria-label="Open chat">
-        <span class="bot-icon">💬</span>
     </button>
 
     <!-- Glass Navigation -->
@@ -1882,22 +1827,7 @@
             themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
         });
 
-        // Bot FAB Functionality
-        const botFab = document.getElementById('botFab');
-        botFab.addEventListener('click', () => {
-            // Simple chatbot functionality - could be enhanced with actual chat interface
-            const message = prompt('Hi! I\'m a simple bot. What would you like to know about the Air India project?');
-            if (message) {
-                const responses = [
-                    'Thanks for your interest! This project focuses on Air India\'s digital transformation.',
-                    'The project involved building scalable design systems for India\'s flag carrier.',
-                    'We reimagined digital experiences across web, mobile, and in-flight entertainment.',
-                    'The design system handles 450+ daily active users efficiently.'
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                alert(`Bot: ${randomResponse}`);
-            }
-        });
+        // Elegant bot will be initialized by external script
 
         // Enhanced cursor glow effect
         const cursorGlow = document.getElementById('cursor-glow');
@@ -2000,5 +1930,9 @@
         // Initialize scroll progress on load
         updateScrollProgress();
     </script>
+
+    <!-- Elegant Bot Styles and Script -->
+    <link rel="stylesheet" href="css/bot.css">
+    <script src="js/bot-simple.js"></script>
 </body>
 </html>

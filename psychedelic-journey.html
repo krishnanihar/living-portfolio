@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/bot.css">
 
   <style>
     /* Design System - Consistent with Air India page */
@@ -951,11 +952,6 @@
     <span class="theme-icon">🌙</span>
   </button>
 
-  <!-- Bot FAB -->
-  <button class="bot-fab" id="botFab" aria-label="Open chat">
-    <span class="bot-icon">💬</span>
-  </button>
-
   <main>
     <!-- Experience / Video -->
     <section id="experience">
@@ -1260,22 +1256,11 @@
     themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
   });
 
-  // Bot FAB Functionality
-  const botFab = document.getElementById('botFab');
-  botFab.addEventListener('click', () => {
-    // Simple chatbot functionality - could be enhanced with actual chat interface
-    const message = prompt('Hi! I\'m a simple bot. What would you like to know about this project?');
-    if (message) {
-      const responses = [
-        'Thanks for your interest! This project explores psychedelic themes in digital art.',
-        'The installation uses TouchDesigner and Arduino for interactive experiences.',
-        'This was created as part of a classroom project over two months.',
-        'The project is inspired by Timothy Leary\'s "The Psychedelic Experience".'
-      ];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      alert(`Bot: ${randomResponse}`);
-    }
-  });
+  // Initialize elegant bot
+  // Bot will be initialized by bot-simple.js
   </script>
+
+  <!-- Elegant Bot Script -->
+  <script src="js/bot-simple.js"></script>
 </body>
 </html>

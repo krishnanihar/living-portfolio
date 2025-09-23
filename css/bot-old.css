@@ -1,0 +1,1147 @@
+/* css/bot.css - Glassmorphic Chat Widget with Hero Card Styling */
+
+/* ============================================
+   GLASSMORPHIC BOT FAB BUTTON
+   ============================================ */
+.bot-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 99;
+  display: grid;
+  place-items: center;
+  
+  /* OLED Black glassmorphic background */
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  
+  /* Enhanced 3D shadow layers */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    0 16px 32px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  
+  /* Smooth micro-interactions */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform, box-shadow, background;
+}
+
+/* FAB Hover - OLED black with glassmorphic enhancement */
+.bot-fab:hover {
+  transform: scale(1.08) translateY(-2px);
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(10, 10, 10, 0.95) 100%);
+  border-color: rgba(218, 14, 41, 0.4);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 12px 20px rgba(0, 0, 0, 0.4),
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(218, 14, 41, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* FAB Active state */
+.bot-fab:active {
+  transform: scale(1.02) translateY(0px);
+  transition: all 0.15s ease;
+}
+
+.bot-fab-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(218, 14, 41, 0.4);
+  animation: fabPulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes fabPulse {
+  0% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(1.4); 
+    opacity: 0; 
+  }
+}
+
+/* ============================================
+   GLASSMORPHIC BOT PANEL - HERO CARD STYLE
+   ============================================ */
+#botPanel,
+.bot-panel {
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 100px !important;
+  width: clamp(320px, 28vw, 380px) !important;
+  height: clamp(420px, 65vh, 520px) !important;
+  max-width: calc(100vw - 48px) !important;
+  max-height: 75vh !important;
+  border-radius: clamp(20px, 4vw, 28px) !important;
+  overflow: hidden !important;
+  z-index: 100 !important;
+  
+  /* OLED Black with glassmorphic overlay */
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.95) 0%, 
+    rgba(0, 0, 0, 0.98) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  
+  /* Enhanced 3D shadow layers like hero card */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    0 16px 32px rgba(0, 0, 0, 0.2),
+    0 24px 48px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 -20px 40px rgba(0, 0, 0, 0.05) !important;
+  
+  /* Layout */
+  display: none;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  
+  /* Smooth entrance animation */
+  opacity: 0;
+  transform: translateY(20px) scale(0.94);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Panel open state */
+.bot-panel.open {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Panel hover enhancement - OLED black */
+.bot-panel:hover {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(5, 5, 5, 0.96) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Section-specific bot panel accents */
+.bot-panel[data-section="work"] .bot-header {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(59, 130, 246, 0.05) 100%) !important;
+  border-bottom-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.bot-panel[data-section="labs"] .bot-header {
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.1) 0%,
+    rgba(245, 158, 11, 0.05) 100%) !important;
+  border-bottom-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+.bot-panel[data-section="about"] .bot-header {
+  background: linear-gradient(135deg, 
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(139, 92, 246, 0.05) 100%) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+.bot-panel[data-section="reading"] .bot-header {
+  background: linear-gradient(135deg, 
+    rgba(16, 185, 129, 0.1) 0%,
+    rgba(16, 185, 129, 0.05) 100%) !important;
+  border-bottom-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+/* ============================================
+   GLASSMORPHIC HEADER
+   ============================================ */
+.bot-header {
+  padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  backdrop-filter: blur(12px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: clamp(56px, 12vh, 64px) !important;
+  min-height: 56px !important;
+  flex-shrink: 0 !important;
+  
+  /* Subtle inner shadow with OLED black */
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1) !important;
+  
+  /* Smooth transitions for micro-interactions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bot-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Glassmorphic avatar */
+.bot-status-avatar {
+  width: clamp(36px, 8vw, 40px) !important;
+  height: clamp(36px, 8vw, 40px) !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  
+  /* Glassmorphic background */
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+  background: rgba(218, 14, 41, 0.15) !important;
+  border: 1px solid rgba(218, 14, 41, 0.25) !important;
+  
+  /* Soft glow */
+  box-shadow: 
+    0 0 20px rgba(218, 14, 41, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bot-status-avatar svg {
+  width: 18px;
+  height: 18px;
+}
+
+.bot-status-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bot-status-name {
+  font-weight: 600;
+  font-size: 13px !important;
+  color: #ffffff;
+}
+
+.bot-status-state {
+  font-size: 10px !important;
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-dot {
+  width: 4px;
+  height: 4px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* OLED black close button */
+.bot-close {
+  width: clamp(32px, 7vw, 36px) !important;
+  height: clamp(32px, 7vw, 36px) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: clamp(12px, 3vw, 14px) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  
+  /* OLED black glassmorphic background */
+  backdrop-filter: blur(12px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  
+  /* Micro-interaction */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.bot-close:hover {
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.2) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: rgba(255, 255, 255, 1) !important;
+  transform: rotate(90deg) scale(1.05);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
+}
+
+.bot-close:active {
+  transform: rotate(90deg) scale(0.95);
+  transition: all 0.15s ease !important;
+}
+
+/* Message Body - Scrollable */
+.bot-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  padding: 12px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+/* Welcome Message - Compact */
+.bot-welcome {
+  text-align: center;
+  padding: 16px;
+  margin: auto 0;
+}
+
+.bot-welcome-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.bot-welcome h3 {
+  font-size: 14px !important;
+  font-weight: 600;
+  margin: 8px 0 4px !important;
+  color: #ffffff;
+}
+
+.bot-welcome p {
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* ============================================
+   GLASSMORPHIC MESSAGES
+   ============================================ */
+.msg {
+  max-width: 80%;
+  padding: clamp(10px, 3vw, 14px) clamp(12px, 4vw, 16px) !important;
+  border-radius: clamp(16px, 4vw, 20px) !important;
+  font-size: clamp(13px, 3.5vw, 15px) !important;
+  line-height: 1.5 !important;
+  margin-bottom: clamp(8px, 2vw, 12px) !important;
+  
+  /* Smooth entrance animation */
+  animation: messageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+/* User messages - glassmorphic accent */
+.msg.you {
+  background: rgba(218, 14, 41, 0.15) !important;
+  border: 1px solid rgba(218, 14, 41, 0.25) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  align-self: flex-end !important;
+  border-radius: clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(6px, 2vw, 8px) clamp(16px, 4vw, 20px) !important;
+  
+  /* Subtle glow */
+  box-shadow: 
+    0 0 20px rgba(218, 14, 41, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Bot messages - OLED black glassmorphic */
+.msg.bot {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  align-self: flex-start !important;
+  border-radius: clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(6px, 2vw, 8px) !important;
+  
+  /* Enhanced inner glow for OLED */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Contextual message styling */
+.msg.bot.contextual {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)) !important;
+  border-left: 2px solid rgba(218, 14, 41, 0.5) !important;
+}
+
+.msg-time {
+  font-size: 9px !important;
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
+/* Typing Indicator */
+.typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px 14px 14px 4px;
+  align-self: flex-start;
+}
+
+.typing div {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #da0e29;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing div:nth-child(1) { animation-delay: -0.32s; }
+.typing div:nth-child(2) { animation-delay: -0.16s; }
+
+/* Quick Actions inside messages */
+.quick-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.quick-action-btn {
+  padding: 5px 10px;
+  background: rgba(218, 14, 41, 0.1);
+  border: 1px solid rgba(218, 14, 41, 0.2);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.quick-action-btn:hover {
+  background: rgba(218, 14, 41, 0.2);
+  border-color: rgba(218, 14, 41, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Suggestions - Compact */
+.bot-suggestions {
+  display: flex !important;
+  gap: 6px !important;
+  padding: 8px 10px !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  flex-shrink: 0 !important;
+  flex-wrap: wrap !important;
+}
+
+.suggestion-pill {
+  padding: 6px 10px !important;
+  background: rgba(218, 14, 41, 0.1) !important;
+  border: 1px solid rgba(218, 14, 41, 0.2) !important;
+  border-radius: 14px !important;
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.suggestion-pill:hover {
+  background: rgba(218, 14, 41, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   GLASSMORPHIC INPUT FOOTER
+   ============================================ */
+.bot-footer {
+  padding: clamp(12px, 3vw, 16px) !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  backdrop-filter: blur(12px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  gap: clamp(8px, 2vw, 12px) !important;
+  flex-shrink: 0 !important;
+  
+  /* Enhanced top highlight for OLED */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.bot-input-wrapper {
+  flex: 1 !important;
+}
+
+/* OLED black input field */
+.bot-input {
+  width: 100% !important;
+  padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 18px) !important;
+  font-size: clamp(13px, 3.5vw, 15px) !important;
+  font-family: inherit !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  border-radius: clamp(18px, 5vw, 24px) !important;
+  
+  /* OLED black glassmorphic background */
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.7) 0%, 
+    rgba(0, 0, 0, 0.85) 100%) !important;
+  backdrop-filter: blur(8px) saturate(1.1) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  
+  /* Smooth micro-interactions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.bot-input:focus {
+  outline: none !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(5, 5, 5, 0.95) 100%) !important;
+  border-color: rgba(218, 14, 41, 0.5) !important;
+  box-shadow: 
+    0 0 0 3px rgba(218, 14, 41, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+.bot-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: clamp(12px, 3vw, 14px) !important;
+}
+
+/* OLED black send button */
+.bot-send {
+  width: clamp(40px, 9vw, 44px) !important;
+  height: clamp(40px, 9vw, 44px) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  
+  /* OLED black background with accent */
+  background: linear-gradient(135deg, 
+    rgba(218, 14, 41, 0.3) 0%, 
+    rgba(0, 0, 0, 0.9) 100%) !important;
+  backdrop-filter: blur(12px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.3) !important;
+  border: 1px solid rgba(218, 14, 41, 0.4) !important;
+  
+  /* Enhanced shadow for OLED */
+  box-shadow: 
+    0 4px 12px rgba(218, 14, 41, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  
+  /* Smooth micro-interactions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bot-send:hover {
+  transform: scale(1.08) translateY(-1px);
+  background: linear-gradient(135deg, 
+    rgba(218, 14, 41, 0.4) 0%, 
+    rgba(0, 0, 0, 0.95) 100%) !important;
+  border-color: rgba(218, 14, 41, 0.5) !important;
+  box-shadow: 
+    0 6px 16px rgba(218, 14, 41, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.bot-send:active {
+  transform: scale(1.02) translateY(0px);
+  transition: all 0.15s ease !important;
+}
+
+.bot-send svg {
+  width: clamp(16px, 4vw, 20px) !important;
+  height: clamp(16px, 4vw, 20px) !important;
+}
+
+/* ============================================
+   LIGHT/DARK MODE SUPPORT
+   ============================================ */
+
+/* Light mode overrides */
+[data-theme="light"] .bot-fab {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .bot-fab:hover {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(218, 14, 41, 0.3);
+}
+
+[data-theme="light"] .bot-panel {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    0 24px 48px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 -20px 40px rgba(0, 0, 0, 0.02) !important;
+}
+
+[data-theme="light"] .bot-header {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-status-avatar {
+  background: rgba(218, 14, 41, 0.1) !important;
+  border-color: rgba(218, 14, 41, 0.2) !important;
+  box-shadow: 
+    0 0 20px rgba(218, 14, 41, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-close {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="light"] .bot-close:hover {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+  color: rgba(239, 68, 68, 0.9) !important;
+}
+
+[data-theme="light"] .msg.you {
+  background: rgba(218, 14, 41, 0.1) !important;
+  border-color: rgba(218, 14, 41, 0.2) !important;
+  color: rgba(218, 14, 41, 0.9) !important;
+  box-shadow: 
+    0 0 20px rgba(218, 14, 41, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .msg.bot {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-footer {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-top-color: rgba(0, 0, 0, 0.06) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-input {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-theme="light"] .bot-input:focus {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(218, 14, 41, 0.3) !important;
+  box-shadow: 
+    0 0 0 3px rgba(218, 14, 41, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="light"] .bot-send {
+  background: rgba(218, 14, 41, 0.1) !important;
+  border-color: rgba(218, 14, 41, 0.2) !important;
+  color: rgba(218, 14, 41, 0.9) !important;
+  box-shadow: 
+    0 4px 12px rgba(218, 14, 41, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .bot-send:hover {
+  background: rgba(218, 14, 41, 0.15) !important;
+  border-color: rgba(218, 14, 41, 0.3) !important;
+  box-shadow: 
+    0 6px 16px rgba(218, 14, 41, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Section Notification Toast */
+.bot-section-notification {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 10, 15, 0.92));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(218, 14, 41, 0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transform: translateX(400px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 98;
+  max-width: 280px;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.bot-section-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.bot-section-notification:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.notification-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Hide particle canvas for cleaner look */
+.bot-particle-field {
+  display: none !important;
+}
+
+/* ============================================
+   ENHANCED ANIMATIONS
+   ============================================ */
+@keyframes messageSlideIn {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.95); 
+  }
+  60% { 
+    opacity: 0.8; 
+    transform: translateY(-2px) scale(1.02); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes panelEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(1.02);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes fabPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(1.15); 
+    opacity: 0.4; 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% { 
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scrollbar */
+.bot-body::-webkit-scrollbar {
+  width: 3px;
+}
+
+.bot-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bot-body::-webkit-scrollbar-thumb {
+  background: rgba(218, 14, 41, 0.2);
+  border-radius: 3px;
+}
+
+/* ============================================
+   MOBILE-OPTIMIZED RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet portrait (768px and below) */
+@media (max-width: 768px) {
+  .bot-fab {
+    right: 20px;
+    bottom: 20px;
+    width: clamp(56px, 12vw, 64px);
+    height: clamp(56px, 12vw, 64px);
+    
+    /* Enhanced mobile OLED glassmorphic effect */
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.92) 0%, 
+      rgba(0, 0, 0, 0.96) 100%);
+    border-width: 1.5px;
+  }
+  
+  #botPanel,
+  .bot-panel {
+    right: 16px !important;
+    left: 16px !important;
+    bottom: clamp(80px, 18vh, 100px) !important;
+    width: auto !important;
+    height: clamp(420px, 70vh, 500px) !important;
+    max-height: 75vh !important;
+    
+    /* Enhanced mobile OLED glassmorphic */
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.96) 0%, 
+      rgba(0, 0, 0, 0.98) 100%) !important;
+    border-width: 1.5px !important;
+  }
+}
+  
+/* Mobile portrait (480px and below) */
+@media (max-width: 480px) {
+  .bot-fab {
+    right: 16px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+    
+    /* Enhanced touch targets */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  #botPanel,
+  .bot-panel {
+    right: 12px !important;
+    left: 12px !important;
+    bottom: 75px !important;
+    height: clamp(380px, 65vh, 450px) !important;
+    max-height: 70vh !important;
+    border-radius: 20px !important;
+  }
+  
+  .bot-header {
+    padding: 12px 14px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+  }
+  
+  .bot-status-avatar {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  
+  .bot-status-name {
+    font-size: 13px !important;
+    line-height: 1.2;
+  }
+  
+  .bot-status-state {
+    font-size: 10px !important;
+  }
+  
+  .bot-close {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 13px !important;
+  }
+  
+  .bot-body {
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+  
+  .msg {
+    font-size: 14px !important;
+    padding: 10px 14px !important;
+    border-radius: 18px !important;
+    max-width: 85% !important;
+  }
+  
+  .msg.you {
+    border-radius: 18px 18px 6px 18px !important;
+  }
+  
+  .msg.bot {
+    border-radius: 18px 18px 18px 6px !important;
+  }
+  
+  .bot-footer {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+  
+  .bot-input {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    
+    /* Enhanced touch input */
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .bot-send {
+    width: 38px !important;
+    height: 38px !important;
+    
+    /* Enhanced touch targets */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Mobile-specific micro-interactions */
+  .bot-fab:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+  }
+  
+  .bot-input:focus {
+    transform: none; /* Remove translateY on mobile */
+  }
+}
+  
+  .bot-section-notification {
+    right: 12px;
+    bottom: 80px;
+    max-width: calc(100vw - 80px);
+    font-size: 11px;
+    padding: 10px 14px;
+  }
+  
+  .quick-actions {
+    gap: 4px;
+  }
+  
+  .quick-action-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & PERFORMANCE
+   ============================================ */
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bot-fab,
+  .bot-panel,
+  .msg,
+  .bot-input,
+  .bot-send,
+  .bot-close {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .bot-fab:hover,
+  .bot-send:hover,
+  .bot-close:hover {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bot-fab,
+  .bot-panel {
+    border-width: 2px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  .msg.you,
+  .msg.bot {
+    border-width: 2px !important;
+  }
+  
+  .bot-input {
+    border-width: 2px !important;
+  }
+}
+
+/* Performance optimizations */
+.bot-fab,
+.bot-panel,
+.bot-input,
+.bot-send,
+.bot-close,
+.msg {
+  will-change: transform, opacity, background;
+  contain: layout style paint;
+}
+
+/* Force hardware acceleration */
+.bot-fab,
+.bot-panel {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* ============================================
+   ENHANCED BOT SMILEY ICON
+   ============================================ */
+
+/* Bot FAB with elegant consciousness icon */
+.bot-fab {
+  background: linear-gradient(135deg,
+    rgba(10, 10, 10, 0.95) 0%,
+    rgba(20, 10, 15, 0.9) 100%) !important;
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  border: 1px solid rgba(218, 14, 41, 0.2) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(218, 14, 41, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.bot-avatar {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.bot-consciousness {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+  transition: all 0.3s ease;
+}
+
+.bot-fab:hover .bot-consciousness {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px rgba(218, 14, 41, 0.4));
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  .bot-fab {
+    width: 60px;
+    height: 60px;
+    box-shadow: 
+      0 6px 20px rgba(218, 14, 41, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bot-consciousness {
+    width: 34px;
+    height: 34px;
+  }
+  
+  /* Animate on page load */
+  @keyframes botFabEntrance {
+    0% {
+      transform: scale(0) rotate(-180deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+      transform: scale(1) rotate(0);
+      opacity: 1;
+    }
+  }
+  
+  .bot-fab {
+    animation: botFabEntrance 0.5s ease-out 0.5s backwards;
+  }
+  
+  /* Bounce animation */
+  @keyframes botBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  .bot-fab:not(:active) {
+    animation: botBounce 3s ease-in-out infinite 3s;
+  }
+}
+/* Ensure bot FAB is always visible */
+.bot-fab {
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  z-index: 9999 !important;
+  width: 60px !important;
+  height: 60px !important;
+}
+
+/* Bot panel must be on top */
+#botPanel,
+.bot-panel {
+  z-index: 10000 !important;
+}
