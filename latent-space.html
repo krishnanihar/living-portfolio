@@ -1749,6 +1749,10 @@
     </style>
 </head>
 <body class="latent-space-page" data-theme="dark">
+    <!-- Theme Toggle - Exact copy from Air India -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon">🌙</span>
+    </button>
 
     <!-- Navigation - Exact copy from Air India -->
     <nav class="nav" id="nav">
@@ -4523,12 +4527,28 @@ void loop() {
 
         // Initialize all systems on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize global theme system
-            if (window.Theme) {
-                Theme.init();
-                console.log('✅ Theme system initialized on latent-space');
-            } else {
-                console.error('❌ Theme system not found');
+            // Theme Toggle - Exact copy from Air India
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.querySelector('.theme-icon');
+
+            // Initialize theme from localStorage or default to dark
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (themeIcon) {
+                themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                    const newTheme = isLight ? 'dark' : 'light';
+
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    if (themeIcon) {
+                        themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+                    }
+                });
             }
 
             // Add page entrance animation
@@ -4541,15 +4561,7 @@ void loop() {
             const microInteractions = new MicroInteractions();
 
             // Navigation is now just standard HTML, no JS needed
-            // Initialize bot system explicitly
-            setTimeout(() => {
-                if (window.ElegantBot) {
-                    new ElegantBot();
-                    console.log('✅ Bot system initialized on latent-space');
-                } else {
-                    console.error('❌ Bot system not found');
-                }
-            }, 500);
+            // Bot will be initialized by external script
 
             // Debug bot initialization
             setTimeout(() => {
