@@ -63,10 +63,10 @@
   max-width: var(--hero-max-width);
   padding: var(--hero-inner-padding);
   
-  /* Pure glassmorphism - transparent background */
-  backdrop-filter: blur(24px) saturate(1.5);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  background: rgba(255, 255, 255, 0.02) !important; /* Very subtle glass */
+  /* VISUAL_TUNE_2025Q3: Crisp hero card with reduced surface alpha */
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  background: rgba(255, 255, 255, 0.01) !important; /* Reduced alpha for crispness */
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: clamp(20px, 5vw, 32px);
   
@@ -278,16 +278,17 @@
   transform: translateY(0) scale(0.98);
 }
 
-/* Primary button with shimmer effect */
+/* VISUAL_TUNE_2025Q3: Primary CTA with accent outline/fill per tokens */
 .pill.pill-primary {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1), 
-    rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg,
+    rgba(218, 14, 41, 0.12),
+    rgba(218, 14, 41, 0.06));
+  border: 1.5px solid rgba(218, 14, 41, 0.4);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(218, 14, 41, 0.2);
 }
 
 .pill.pill-primary::before {
@@ -299,7 +300,7 @@
   height: 300%;
   background: linear-gradient(45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.15) 50%,
+    rgba(218, 14, 41, 0.2) 50%,
     transparent 70%);
   animation: shimmer 3s infinite;
 }

@@ -124,11 +124,11 @@ canvas#fx { z-index: 2; }
   transition: background 120ms linear; 
 }
 
-/* Accessibility */
-:focus-visible { 
-  outline: 2px solid var(--mood); 
-  outline-offset: 3px; 
-  border-radius: 6px; 
+/* VISUAL_TUNE_2025Q3: Focus-visible with red ring */
+:focus-visible {
+  outline: 2px solid var(--brand-red, #da0e29);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* Performance Monitor */

@@ -124,8 +124,14 @@ const Theme = {
   },
   
   apply(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    document.body.setAttribute('data-theme', theme);
+    // VISUAL_TUNE_2025Q3: Set theme attributes before paint to eliminate flash
+    const html = document.documentElement;
+    const body = document.body;
+
+    // Batch DOM updates to prevent flash
+    html.style.colorScheme = theme;
+    html.setAttribute('data-theme', theme);
+    body.setAttribute('data-theme', theme);
 
     // Update meta theme-color for mobile browsers
     let metaTheme = document.querySelector('meta[name="theme-color"]');
@@ -135,9 +141,6 @@ const Theme = {
       document.head.appendChild(metaTheme);
     }
     metaTheme.content = theme === 'dark' ? '#0a0a0a' : '#ffffff';
-
-    // Update color-scheme for OS integration
-    document.documentElement.style.colorScheme = theme;
 
     console.log('Theme applied:', theme);
   },
