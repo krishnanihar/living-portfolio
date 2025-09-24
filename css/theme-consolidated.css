@@ -1,0 +1,202 @@
+/* theme-consolidated.css - Minimal Theme System Using Design Tokens */
+
+/* ============================================
+   THEME INTEGRATION WITH DESIGN TOKENS
+   ============================================ */
+
+/* Apply design tokens to body for cascading */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* Update navigation with theme tokens */
+.nav {
+  background: rgba(var(--bg-primary), 0.95);
+  border-bottom-color: var(--border-primary);
+}
+
+/* ============================================
+   UNIFIED CARD SYSTEM
+   ============================================ */
+
+/* Base card style - uses design tokens */
+.uni-card {
+  position: relative;
+  background: var(--surface-primary);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  overflow: hidden;
+
+  /* Consistent spacing */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+
+  /* Base shadow */
+  box-shadow: var(--card-shadow);
+}
+
+/* Hover state */
+.uni-card:hover {
+  transform: translateY(-4px);
+  background: var(--surface-secondary);
+  border-color: var(--border-secondary);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Active/pressed state */
+.uni-card:active {
+  transform: translateY(-2px);
+  transition: all var(--transition-fast);
+}
+
+/* Focus state for accessibility */
+.uni-card:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+}
+
+/* Card accent line - changes per section */
+.uni-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--card-accent, var(--accent-home)),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.uni-card:hover::before {
+  opacity: 1;
+}
+
+/* Section-specific card accents */
+#work-section .uni-card { --card-accent: var(--accent-work); }
+#reading-section .uni-card { --card-accent: var(--accent-life); }
+#about-section .uni-card { --card-accent: var(--accent-about); }
+
+/* ============================================
+   THEME TOGGLE STYLES
+   ============================================ */
+
+.theme-toggle {
+  position: fixed;
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+  z-index: 10000;
+
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+
+  background: var(--surface-primary);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--border-primary);
+
+  color: var(--text-primary);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all var(--transition-base);
+}
+
+.theme-toggle:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+  transition: all var(--transition-fast);
+}
+
+/* Theme icon states */
+.theme-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon svg {
+  position: absolute;
+  transition: all var(--transition-base);
+}
+
+/* Show/hide icons based on theme */
+[data-theme="dark"] .theme-icon-light {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+  opacity: 0;
+  transform: rotate(180deg);
+}
+
+[data-theme="light"] .theme-icon-light {
+  opacity: 0;
+  transform: rotate(-180deg);
+}
+
+[data-theme="light"] .theme-icon-dark {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .uni-card {
+    padding: var(--space-lg);
+    gap: var(--space-md);
+  }
+
+  .theme-toggle {
+    bottom: var(--space-md);
+    left: var(--space-md);
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .uni-card,
+  .theme-toggle,
+  .theme-icon svg,
+  body {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .uni-card:hover {
+    transform: none;
+  }
+
+  .theme-toggle:hover {
+    transform: none;
+  }
+}

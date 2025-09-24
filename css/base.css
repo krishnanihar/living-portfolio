@@ -1,51 +1,55 @@
 /* Reset & Base Styles */
-*, *::before, *::after { 
-  box-sizing: border-box; 
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-html { 
-  scroll-behavior: smooth; 
+html {
+  scroll-behavior: smooth;
 }
 
-html, body { 
-  height: 100%; 
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+html, body {
+  height: 100%;
   margin: 0;
 }
 
-body { 
+body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  background: var(--bg); 
-  color: var(--text); 
-  overflow-x: hidden; 
+  background: var(--bg-primary, #0a0a0a);
+  color: var(--text-primary, #fff);
+  overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* CSS Variables */
+/* Legacy CSS Variables - DEPRECATED - Use design-tokens.css */
+/* These are kept for backwards compatibility during transition */
 :root {
-  /* Colors */
-  --primary: #da0e29;
-  --bg: #0a0a0a;
-  --surface: rgba(255,255,255,0.03);
-  --text: #fff;
-  --text-dim: #9aa3ab;
+  /* Deprecated - use design tokens */
+  --primary: var(--brand-red);
+  --bg: var(--bg-primary);
+  --surface: var(--surface-primary);
+  --text: var(--text-primary);
+  --text-dim: var(--text-secondary);
 
-  /* Mood colors for sections */
-  --mood-home: #da0e29;
-  --mood-work: #3b82f6;
-  --mood-labs: #f59e0b;
-  --mood-about: #8b5cf6;
-  --mood-reading: #10b981;
-  --mood: var(--mood-home);
+  /* Section mood colors - migrated to design tokens */
+  --mood-home: var(--accent-home);
+  --mood-work: var(--accent-work);
+  --mood-labs: var(--accent-labs);
+  --mood-about: var(--accent-about);
+  --mood-reading: var(--accent-life);
+  --mood: var(--accent-home);
 
-  /* Aurora lights */
-  --light-key: rgba(218,14,41,0.24);
-  --light-fill: rgba(59,130,246,0.18);
-  --light-rim: rgba(139,92,246,0.18);
-
-  /* Sizing */
-  --blur-sm: 6px;
-  --blur-md: 12px;
-  --blur-lg: 24px;
-  --radius: 16px;
+  /* Legacy blur values - use design tokens */
+  --blur-sm: var(--blur-sm);
+  --blur-md: var(--blur-md);
+  --blur-lg: var(--blur-lg);
+  --radius: var(--radius-lg);
   --maxw: 1200px;
   --nav-h: 64px;
 

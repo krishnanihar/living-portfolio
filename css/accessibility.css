@@ -1,0 +1,390 @@
+/* accessibility.css - Enhanced A11y Support */
+
+/* ============================================
+   SCREEN READER UTILITIES
+   ============================================ */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: inherit !important;
+  border: inherit !important;
+}
+
+/* ============================================
+   FOCUS MANAGEMENT
+   ============================================ */
+
+/* Enhanced focus ring using design tokens */
+*:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+  transition: outline var(--transition-fast);
+}
+
+/* Custom focus for interactive elements */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--brand-red-rgb), 0.2);
+}
+
+/* Remove default focus for mouse users, keep for keyboard */
+.js-focus-visible *:focus:not(.focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.js-focus-visible *:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--brand-red-rgb), 0.2);
+}
+
+/* Focus for theme toggle */
+.theme-toggle:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(var(--brand-red-rgb), 0.2);
+  border-radius: var(--radius-full);
+}
+
+/* Focus for bot elements */
+.bot-fab:focus,
+.bot-send:focus,
+.bot-input:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--brand-red-rgb), 0.2);
+}
+
+/* ============================================
+   LANDMARKS & SEMANTIC STRUCTURE
+   ============================================ */
+
+/* Ensure main content is identifiable */
+main {
+  display: block;
+}
+
+/* Navigation landmarks */
+nav {
+  display: block;
+}
+
+nav[aria-label] {
+  /* Already properly labeled */
+}
+
+/* Section landmarks */
+section {
+  display: block;
+}
+
+/* Ensure headings have proper hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: inherit;
+  line-height: 1.2;
+}
+
+/* ============================================
+   SKIP LINKS
+   ============================================ */
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  z-index: 100000;
+  padding: 8px 16px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--brand-red);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* ============================================
+   HIGH CONTRAST SUPPORT
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  /* Enhance all borders and outlines */
+  *:focus {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+
+  /* Stronger text contrast */
+  body {
+    font-weight: 500;
+  }
+
+  /* Enhanced button contrast */
+  button, .btn {
+    border: 2px solid var(--border-focus);
+    font-weight: 600;
+  }
+
+  /* Enhanced card borders */
+  .card, .glass-card, [class*="card"] {
+    border: 2px solid var(--border-secondary);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Specific elements that should have minimal motion */
+  .theme-toggle,
+  .bot-fab,
+  .particle,
+  .hero-card {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Keep essential state changes but make them instant */
+  .theme-toggle .theme-icon,
+  .bot-panel.open,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    transition: opacity 0.1s ease !important;
+  }
+}
+
+/* Reduced motion class for JavaScript control */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ============================================
+   KEYBOARD NAVIGATION
+   ============================================ */
+
+/* Ensure all interactive elements are keyboard accessible */
+[role="button"],
+[onclick] {
+  cursor: pointer;
+}
+
+[role="button"]:not(button):not(input):not(a) {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+[role="button"]:not(button):not(input):not(a):hover,
+[role="button"]:not(button):not(input):not(a):focus {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+/* ============================================
+   COLOR CONTRAST HELPERS
+   ============================================ */
+
+/* Ensure sufficient contrast for both themes */
+[data-theme="light"] {
+  /* Light theme gets darker text for better contrast */
+  --text-contrast-aa: rgba(0, 0, 0, 0.87); /* 4.5:1 ratio */
+  --text-contrast-aaa: rgba(0, 0, 0, 0.95); /* 7:1 ratio */
+}
+
+[data-theme="dark"] {
+  /* Dark theme gets lighter text for better contrast */
+  --text-contrast-aa: rgba(255, 255, 255, 0.87); /* 4.5:1 ratio */
+  --text-contrast-aaa: rgba(255, 255, 255, 0.95); /* 7:1 ratio */
+}
+
+/* Apply high contrast text to important elements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-contrast-aaa, var(--text-primary));
+}
+
+.important-text,
+.primary-text,
+.hero-title,
+.card-title {
+  color: var(--text-contrast-aaa, var(--text-primary));
+}
+
+/* ============================================
+   ARIA LIVE REGIONS
+   ============================================ */
+
+[aria-live] {
+  /* Ensure live regions are available but not intrusive */
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.sr-live-region {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* ============================================
+   TOUCH TARGET SIZES
+   ============================================ */
+
+/* Ensure minimum 44x44px touch targets (WCAG 2.5.5) */
+button,
+a,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"],
+.theme-toggle,
+.bot-fab {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px;
+}
+
+/* Exception for inline links */
+a:not(.button):not(.btn):not([role="button"]) {
+  min-height: auto;
+  min-width: auto;
+  padding: 0;
+}
+
+/* ============================================
+   ERROR STATES & VALIDATION
+   ============================================ */
+
+[aria-invalid="true"] {
+  border-color: #dc2626;
+  outline-color: #dc2626;
+}
+
+[aria-invalid="true"]:focus {
+  outline: 2px solid #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+[data-theme="light"] .error-message {
+  color: #b91c1c;
+}
+
+/* ============================================
+   RESPONSIVE TEXT & ZOOM SUPPORT
+   ============================================ */
+
+/* Support up to 200% zoom without horizontal scrolling */
+@media (min-width: 1200px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1400px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+/* Ensure text doesn't become too small on mobile */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  /* Hide decorative elements */
+  .particles-canvas,
+  #particles,
+  .theme-toggle,
+  .bot-fab,
+  .bot-panel,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  /* Ensure good contrast for printing */
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Show URLs for links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}

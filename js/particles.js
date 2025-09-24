@@ -1,4 +1,4 @@
-// particles.js - Safari/Mac Optimized Version
+// particles.js - Enhanced Performance & Accessibility Version
 const Particles = {
   // Core properties
   stars: [],
@@ -29,6 +29,12 @@ const Particles = {
   isSafari: false,
   isMac: false,
   platformMultipliers: { opacity: 1.0, brightness: 1.0 },
+
+  // Enhanced accessibility and performance
+  isPaused: false,
+  isVisible: true,
+  reducedMotion: false,
+  adaptiveCount: 0,
   
   // Safari/Mac optimized configuration
   config: {
@@ -166,16 +172,26 @@ const Particles = {
   },
   
   init() {
-    console.log('✨ Initializing Particles (Safari/Mac Optimized)...');
-    
+    console.log('✨ Initializing Enhanced Particles System...');
+
+    // Check for reduced motion preference
+    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (this.reducedMotion) {
+      console.log('Reduced motion detected - using minimal particles');
+    }
+
     this.detectBrowserAndPlatform();
-    
+
     this.canvas = document.getElementById('particles');
     if (!this.canvas) {
       console.error('Particle canvas not found');
       return;
     }
-    
+
+    // Add ARIA attributes for accessibility
+    this.canvas.setAttribute('aria-hidden', 'true');
+    this.canvas.setAttribute('role', 'presentation');
+
     // Safari-specific canvas settings
     if (this.isSafari) {
       this.ctx = this.canvas.getContext('2d', {
@@ -191,21 +207,90 @@ const Particles = {
       });
       this.dpr = Math.min(2, window.devicePixelRatio || 1);
     }
-    
+
     this.resize();
     this.theme = document.documentElement.getAttribute('data-theme') || 'dark';
+
+    // Apply adaptive settings before creating stars
+    this.applyAdaptiveSettings();
     this.createStars();
-    
+
     this.initialized = true;
-    this.animate();
-    this.draw();
-    
     this.canvas.classList.add('particles-active');
     this.setupEventListeners();
     this.setupHeroTextReaction();
     this.updateSectionDimming();
-    
-    console.log('✅ Particles initialized with', this.stars.length, 'stars');
+
+    // Start animation only if not paused
+    if (!this.isPaused) {
+      this.animate();
+    }
+
+    console.log(`✅ Particles initialized with ${this.stars.length} stars (adaptive: ${this.adaptiveCount})`);
+  },
+
+  applyAdaptiveSettings() {
+    // Get adaptive count from LazyLoader or calculate here
+    let baseCount = this.config.starCount;
+
+    if (this.config.isMobile) {
+      baseCount = this.config.starCountMobile;
+    } else if (this.isSafari) {
+      baseCount = this.config.starCountSafari;
+    }
+
+    // Apply reduced motion adjustments
+    if (this.reducedMotion) {
+      baseCount = Math.floor(baseCount * 0.3);
+      this.config.starSpeed *= 0.5;
+      this.config.mouseInfluence *= 0.5;
+    }
+
+    // Apply performance-based adjustments
+    const isLowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+    const isSlowConnection = navigator.connection && (
+      navigator.connection.effectiveType === 'slow-2g' ||
+      navigator.connection.effectiveType === '2g'
+    );
+
+    if (isLowMemory || isSlowConnection) {
+      baseCount = Math.floor(baseCount * 0.5);
+    }
+
+    this.adaptiveCount = Math.max(10, baseCount); // Minimum 10 particles
+    this.config.starCount = this.adaptiveCount;
+
+    console.log(`Adaptive particle count: ${this.adaptiveCount} (reduced motion: ${this.reducedMotion})`);
+  },
+
+  // Pause/resume methods for performance
+  pause() {
+    if (this.isPaused) return;
+    this.isPaused = true;
+
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+    }
+
+    console.log('Particles paused');
+  },
+
+  resume() {
+    if (!this.isPaused || !this.initialized) return;
+    this.isPaused = false;
+
+    this.animate();
+    console.log('Particles resumed');
+  },
+
+  // Theme update method
+  updateTheme() {
+    const newTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    if (newTheme !== this.theme) {
+      this.theme = newTheme;
+      console.log(`Particles theme updated to: ${this.theme}`);
+    }
   },
   
   createStars() {

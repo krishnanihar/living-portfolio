@@ -1,81 +1,132 @@
-// js/theme.js - Complete Theme Management System
+// js/theme.js - Enhanced Theme Management System
 const Theme = {
   current: 'dark',
-  
+
   init() {
-    console.log('🎨 Initializing Theme System...');
-    
-    // Check saved preference or system preference
-    const saved = localStorage.getItem('theme');
+    console.log('🎨 Initializing Enhanced Theme System...');
+
+    // Check saved preference or default to system preference
+    const saved = localStorage.getItem('living-portfolio-theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    this.current = saved || (systemPrefersDark ? 'dark' : 'light');
+
+    // Only use saved preference if it exists, otherwise follow OS
+    if (saved) {
+      this.current = saved;
+    } else {
+      this.current = systemPrefersDark ? 'dark' : 'light';
+      // Don't save to localStorage yet - only after manual toggle
+    }
+
     this.apply(this.current);
-    
-    // Add theme toggle button
     this.createToggle();
-    
-    // Initialize mobile snap scrolling
     this.initMobileSnapScroll();
-    
-    // Listen for system theme changes
+
+    // Listen for system theme changes (only if user hasn't set manual preference)
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) {
+      if (!localStorage.getItem('living-portfolio-theme')) {
         this.current = e.matches ? 'dark' : 'light';
         this.apply(this.current);
+        this.updateParticleTheme();
       }
     });
-    
-    console.log('✅ Theme System initialized:', this.current);
+
+    // Listen for reduced motion changes
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+      this.handleReducedMotion(e.matches);
+    });
+
+    // Initial reduced motion check
+    this.handleReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    console.log('✅ Enhanced Theme System initialized:', this.current);
   },
   
   createToggle() {
+    const currentThemeLabel = this.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+
     const toggleHTML = `
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon">
+      <button class="theme-toggle" id="themeToggle"
+              aria-label="${currentThemeLabel}"
+              role="switch"
+              aria-checked="${this.current === 'light'}">
+        <span class="theme-icon" aria-hidden="true">
           <svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="white" stroke-width="1.5" fill="white" opacity="0.9"/>
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                  stroke="currentColor" stroke-width="1.5" fill="currentColor" opacity="0.9"/>
           </svg>
           <svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.5" fill="white" opacity="0.9"/>
-            <path d="m12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="white" stroke-width="1.5" opacity="0.7"/>
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5" fill="currentColor" opacity="0.9"/>
+            <path d="m12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                  stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
           </svg>
         </span>
+        <span class="sr-only">${currentThemeLabel}</span>
       </button>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', toggleHTML);
-    
+
     const toggle = document.getElementById('themeToggle');
     if (toggle) {
-      toggle.addEventListener('click', () => {
-        this.toggle();
-      });
+      // Enhanced keyboard support
+      toggle.addEventListener('click', this.handleToggleClick.bind(this));
+      toggle.addEventListener('keydown', this.handleToggleKeydown.bind(this));
+    }
+  },
+
+  handleToggleClick(e) {
+    e.preventDefault();
+    this.toggle();
+  },
+
+  handleToggleKeydown(e) {
+    // Support Enter and Space for activation
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      this.toggle();
     }
   },
   
   toggle() {
     this.current = this.current === 'dark' ? 'light' : 'dark';
     this.apply(this.current);
-    localStorage.setItem('theme', this.current);
-    
-    // Optional: trigger particle color adjustment
+
+    // Save to localStorage (user has made manual choice)
+    localStorage.setItem('living-portfolio-theme', this.current);
+
+    // Update toggle button attributes
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      const newLabel = this.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+      toggle.setAttribute('aria-label', newLabel);
+      toggle.setAttribute('aria-checked', this.current === 'light');
+
+      const srOnly = toggle.querySelector('.sr-only');
+      if (srOnly) {
+        srOnly.textContent = newLabel;
+      }
+    }
+
+    // Update particle system
+    this.updateParticleTheme();
+
+    // Update state
     if (window.State) {
       State.theme = this.current;
     }
-    
+
     // Haptic feedback on mobile
     if (window.navigator && navigator.vibrate) {
       navigator.vibrate(10);
     }
-    
+
     console.log('Theme toggled to:', this.current);
   },
   
   apply(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
-    
+
     // Update meta theme-color for mobile browsers
     let metaTheme = document.querySelector('meta[name="theme-color"]');
     if (!metaTheme) {
@@ -84,6 +135,45 @@ const Theme = {
       document.head.appendChild(metaTheme);
     }
     metaTheme.content = theme === 'dark' ? '#0a0a0a' : '#ffffff';
+
+    // Update color-scheme for OS integration
+    document.documentElement.style.colorScheme = theme;
+
+    console.log('Theme applied:', theme);
+  },
+
+  updateParticleTheme() {
+    // Update particles if system is loaded
+    if (window.Particles && window.Particles.initialized) {
+      window.Particles.theme = this.current;
+      // Force particle color recalculation
+      if (window.Particles.updateTheme) {
+        window.Particles.updateTheme();
+      }
+    }
+  },
+
+  handleReducedMotion(isReduced) {
+    if (isReduced) {
+      console.log('Reduced motion detected - adjusting animations');
+
+      // Add reduced motion class
+      document.documentElement.classList.add('reduce-motion');
+
+      // Adjust particle system
+      if (window.Particles) {
+        window.Particles.reducedMotion = true;
+        if (window.Particles.config) {
+          window.Particles.config.starCount = Math.min(window.Particles.config.starCount, 50);
+          window.Particles.config.connectionRadius = 60;
+        }
+      }
+    } else {
+      document.documentElement.classList.remove('reduce-motion');
+      if (window.Particles) {
+        window.Particles.reducedMotion = false;
+      }
+    }
   },
   
   initMobileSnapScroll() {

@@ -1,53 +1,21 @@
-/* css/theme.css - Unified Theme System */
+/* css/theme.css - Theme System with Design Token Integration */
+/* NOTE: Core tokens now defined in design-tokens.css */
 
 /* ============================================
-   THEME VARIABLES
+   THEME INTEGRATION
    ============================================ */
-:root {
-  /* Base colors that switch between modes */
-  --theme-mode: 'dark'; /* or 'light' */
-  
-  /* Dark mode (default) */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #0f0f0f;
-  --bg-tertiary: #141414;
-  
-  --surface-primary: rgba(255, 255, 255, 0.04);
-  --surface-secondary: rgba(255, 255, 255, 0.06);
-  --surface-hover: rgba(255, 255, 255, 0.08);
-  
-  --border-primary: rgba(255, 255, 255, 0.08);
-  --border-secondary: rgba(255, 255, 255, 0.12);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --text-tertiary: rgba(255, 255, 255, 0.6);
-  --text-muted: rgba(255, 255, 255, 0.4);
-  
-  /* Section accent colors (same for both modes) */
-  --accent-home: #da0e29;
-  --accent-work: #3b82f6;
-  --accent-labs: #f59e0b;
-  --accent-about: #8b5cf6;
-  --accent-life: #10b981;
-  
-  /* Card properties */
-  --card-radius: 20px;
-  --card-padding: 32px;
-  --card-gap: 24px;
-  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.4);
-  
-  /* Transitions */
-  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Glassmorphism */
-  --blur-sm: 8px;
-  --blur-md: 16px;
-  --blur-lg: 24px;
+
+/* Apply design tokens to body for cascading */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* ============================================
+   LEGACY THEME OVERRIDES - DEPRECATED
+   ============================================ */
+/* These will be removed once all components use design tokens */
   --blur-xl: 32px;
 }
 
