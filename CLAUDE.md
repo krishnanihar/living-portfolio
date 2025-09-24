@@ -69,7 +69,7 @@ The project follows a modular JavaScript architecture with global objects:
 ├── index.html          # Main HTML with critical inline styles
 ├── css/               # Modular CSS files
 │   ├── base.css       # Base styles and resets
-│   ├── theme.css      # Theme system (dark/light)
+│   ├── theme-consolidated.css # Theme system (dark/light)
 │   ├── hero.css       # Hero section and 3D effects
 │   ├── particles.css  # Particle system styles
 │   ├── sections.css   # General section styles
