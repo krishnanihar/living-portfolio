@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Nihar's Portfolio</title>
+  <meta name="description" content="Page not found. Explore Nihar's portfolio of design systems, aviation UX, and consciousness-aware interfaces.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/theme-consolidated.css">
+  <link rel="stylesheet" href="css/responsive-polish.css">
+
+  <style>
+    /* 404 Page Specific Styles */
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background */
+    .error-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .error-particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--brand-red);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.3;
+      }
+    }
+
+    /* Main Content */
+    .error-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+    }
+
+    .error-content {
+      max-width: 600px;
+      background: var(--surface-primary);
+      backdrop-filter: blur(var(--blur-md));
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-3xl) var(--space-2xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .error-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg,
+        transparent,
+        var(--brand-red),
+        transparent
+      );
+      opacity: 0.8;
+    }
+
+    .error-code {
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 900;
+      color: var(--brand-red);
+      line-height: 0.9;
+      margin-bottom: var(--space-md);
+      background: linear-gradient(135deg, var(--brand-red), #ff4757);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(218, 14, 41, 0.3);
+    }
+
+    .error-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .error-message {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Actions */
+    .error-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      align-items: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .error-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg) var(--space-xl);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition-base);
+      min-height: 52px;
+      min-width: 160px;
+    }
+
+    .error-action:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    .error-action.primary {
+      background: var(--brand-red);
+      color: white;
+      border: 1px solid var(--brand-red);
+    }
+
+    .error-action.primary:hover {
+      background: #c50d26;
+      border-color: #c50d26;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(218, 14, 41, 0.3);
+    }
+
+    .error-action.secondary {
+      background: var(--surface-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-primary);
+    }
+
+    .error-action.secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .error-action:active {
+      transform: translateY(0);
+      transition: all var(--transition-fast);
+    }
+
+    .error-action-icon {
+      font-size: 1.25rem;
+    }
+
+    /* Suggestions */
+    .error-suggestions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .suggestion-card {
+      background: var(--surface-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      text-align: left;
+      transition: all var(--transition-base);
+      text-decoration: none;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .suggestion-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .suggestion-card:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    .suggestion-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .suggestion-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-primary);
+      backdrop-filter: blur(var(--blur-lg));
+      border-bottom: 1px solid var(--border-primary);
+      padding: var(--space-lg) 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+
+    .nav-link:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    /* Footer */
+    .error-footer {
+      text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+      color: var(--text-tertiary);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border-primary);
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      .error-container {
+        padding: var(--space-lg);
+      }
+
+      .error-content {
+        padding: var(--space-2xl) var(--space-lg);
+      }
+
+      .error-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .error-action {
+        width: 100%;
+      }
+
+      .error-suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        gap: var(--space-md);
+      }
+
+      .nav-link {
+        padding: var(--space-xs) var(--space-sm);
+      }
+    }
+
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      .error-particle {
+        animation: none;
+      }
+
+      .error-action,
+      .suggestion-card {
+        transition: none !important;
+      }
+
+      .error-action:hover,
+      .suggestion-card:hover {
+        transform: none;
+      }
+
+      .error-code {
+        text-shadow: none;
+      }
+    }
+
+    /* High Contrast Support */
+    @media (prefers-contrast: high) {
+      .error-content,
+      .suggestion-card {
+        border-width: 2px;
+      }
+
+      .error-action {
+        border-width: 2px;
+      }
+    }
+
+    /* Dark Theme Adjustments */
+    [data-theme="dark"] .error-code {
+      text-shadow: 0 0 30px rgba(218, 14, 41, 0.4);
+    }
+
+    [data-theme="light"] .error-code {
+      text-shadow: 0 0 20px rgba(218, 14, 41, 0.2);
+    }
+
+    /* Print Styles */
+    @media print {
+      .error-bg,
+      .nav,
+      #theme-toggle-container,
+      #bot-container {
+        display: none !important;
+      }
+
+      .error-content {
+        background: white;
+        border: 1px solid black;
+        box-shadow: none;
+      }
+
+      .error-code {
+        color: black;
+        text-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Skip to main content -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Animated Background -->
+  <div class="error-bg" aria-hidden="true" id="errorBg"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" aria-label="Nihar - Home">NIHAR</a>
+      <ul class="nav-links" role="list">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/work.html" class="nav-link">Work</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main" role="main">
+    <div class="error-container">
+      <div class="error-content">
+        <div class="error-code" aria-label="Error code 404">404</div>
+        <h1 class="error-title">Interface Not Found</h1>
+        <p class="error-message">
+          This page seems to have dissolved into the digital void.
+          Like consciousness itself, sometimes interfaces exist in states we can't quite locate.
+        </p>
+
+        <div class="error-actions">
+          <a href="/" class="error-action primary" aria-label="Go to homepage">
+            <span class="error-action-icon" aria-hidden="true">🏠</span>
+            Return Home
+          </a>
+          <button onclick="history.back()" class="error-action secondary" aria-label="Go back to previous page">
+            <span class="error-action-icon" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
+
+        <div class="error-suggestions">
+          <a href="/work.html" class="suggestion-card" aria-label="Explore work portfolio">
+            <div class="suggestion-title">Explore Work</div>
+            <div class="suggestion-desc">Design systems, aviation UX, and hackathon wins</div>
+          </a>
+
+          <a href="/about.html" class="suggestion-card" aria-label="Learn about Nihar">
+            <div class="suggestion-title">About Nihar</div>
+            <div class="suggestion-desc">Interactive mind-map of skills and philosophy</div>
+          </a>
+
+          <a href="/contact.html" class="suggestion-card" aria-label="Get in touch">
+            <div class="suggestion-title">Get in Touch</div>
+            <div class="suggestion-desc">Let's discuss your next interface challenge</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="error-footer">
+    "Every error is a doorway to understanding." — Unknown Interface Philosopher
+  </footer>
+
+  <!-- Theme Toggle & Bot -->
+  <div id="theme-toggle-container"></div>
+  <div id="bot-container"></div>
+
+  <!-- JavaScript -->
+  <script src="js/design-tokens.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/lazy-loader.js"></script>
+  <script src="js/bot-simple.js"></script>
+
+  <script>
+    // 404 Page Enhancements
+    class Error404 {
+      constructor() {
+        this.particleContainer = document.getElementById('errorBg');
+        this.particles = [];
+        this.animationId = null;
+        this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        this.init();
+      }
+
+      init() {
+        // Initialize theme
+        if (window.Theme) {
+          Theme.init();
+        }
+
+        // Create animated background (if motion is allowed)
+        if (!this.isReducedMotion) {
+          this.createParticles();
+          this.animateParticles();
+        }
+
+        // Add keyboard shortcuts
+        this.addKeyboardShortcuts();
+
+        // Track 404 occurrence
+        this.trackError();
+
+        // Auto-redirect after long inactivity (optional)
+        this.setupAutoRedirect();
+
+        console.log('✅ 404 page enhanced');
+      }
+
+      createParticles() {
+        const particleCount = 20;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'error-particle';
+
+          // Random positioning
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+
+          // Random animation delay
+          particle.style.animationDelay = Math.random() * 6 + 's';
+
+          // Random opacity
+          particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+          this.particleContainer.appendChild(particle);
+          this.particles.push(particle);
+        }
+      }
+
+      animateParticles() {
+        // Additional JavaScript animation for more complex movement
+        this.particles.forEach((particle, index) => {
+          const baseDelay = index * 200;
+
+          setTimeout(() => {
+            this.animateParticle(particle);
+          }, baseDelay);
+        });
+      }
+
+      animateParticle(particle) {
+        let position = 0;
+        const speed = 0.5 + Math.random() * 1;
+        const amplitude = 20 + Math.random() * 30;
+
+        const animate = () => {
+          if (this.isReducedMotion) return;
+
+          position += speed;
+          const x = Math.sin(position * 0.02) * amplitude;
+          const y = Math.cos(position * 0.015) * amplitude;
+
+          particle.style.transform = `translate(${x}px, ${y}px)`;
+
+          this.animationId = requestAnimationFrame(animate);
+        };
+
+        animate();
+      }
+
+      addKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+          // Press 'H' to go home
+          if (e.key.toLowerCase() === 'h' && !e.ctrlKey && !e.metaKey) {
+            window.location.href = '/';
+          }
+
+          // Press 'B' to go back
+          if (e.key.toLowerCase() === 'b' && !e.ctrlKey && !e.metaKey) {
+            history.back();
+          }
+
+          // Press 'W' to go to work
+          if (e.key.toLowerCase() === 'w' && !e.ctrlKey && !e.metaKey) {
+            window.location.href = '/work.html';
+          }
+
+          // Press 'C' to go to contact
+          if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
+            window.location.href = '/contact.html';
+          }
+        });
+      }
+
+      trackError() {
+        // Log the 404 error for analytics
+        const errorData = {
+          url: window.location.href,
+          referrer: document.referrer || 'direct',
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        };
+
+        console.log('404 Error tracked:', errorData);
+
+        // Could send to analytics service
+        // analytics.track('404_error', errorData);
+      }
+
+      setupAutoRedirect() {
+        // Auto-redirect to home after 5 minutes of inactivity
+        let inactivityTimer;
+
+        const resetTimer = () => {
+          clearTimeout(inactivityTimer);
+          inactivityTimer = setTimeout(() => {
+            this.showRedirectNotification();
+          }, 5 * 60 * 1000); // 5 minutes
+        };
+
+        // Reset timer on any user interaction
+        ['click', 'keydown', 'mousemove', 'scroll'].forEach(event => {
+          document.addEventListener(event, resetTimer, { passive: true });
+        });
+
+        resetTimer();
+      }
+
+      showRedirectNotification() {
+        // Show a subtle notification before redirecting
+        const notification = document.createElement('div');
+        notification.innerHTML = `
+          <div style="
+            position: fixed;
+            bottom: var(--space-xl);
+            right: var(--space-xl);
+            background: var(--surface-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            color: var(--text-primary);
+            z-index: 10000;
+            max-width: 300px;
+            backdrop-filter: blur(var(--blur-md));
+          ">
+            <div style="font-weight: 600; margin-bottom: var(--space-xs);">
+              Redirecting soon...
+            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+              Taking you back to the main portfolio
+            </div>
+            <button onclick="this.closest('div').remove()" style="
+              background: transparent;
+              border: none;
+              color: var(--text-secondary);
+              cursor: pointer;
+              font-size: 0.75rem;
+              float: right;
+            ">Cancel</button>
+          </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Redirect after 10 seconds unless cancelled
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            window.location.href = '/';
+          }
+        }, 10000);
+      }
+
+      cleanup() {
+        if (this.animationId) {
+          cancelAnimationFrame(this.animationId);
+        }
+      }
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new Error404();
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (window.error404Instance) {
+        window.error404Instance.cleanup();
+      }
+    });
+  </script>
+</body>
+</html>

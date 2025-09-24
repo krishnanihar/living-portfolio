@@ -1,0 +1,529 @@
+/* responsive-polish.css - Enhanced Responsive Design */
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+/*
+   xs: 0-479px (mobile portrait)
+   sm: 480-767px (mobile landscape)
+   md: 768-1023px (tablet)
+   lg: 1024-1279px (desktop)
+   xl: 1280-1535px (large desktop)
+   2xl: 1536px+ (ultra-wide)
+*/
+
+/* ============================================
+   SAFE AREAS & VIEWPORT HANDLING
+   ============================================ */
+
+/* iOS Safe Area Support */
+body {
+  /* Handle iPhone X+ notch and home indicator */
+  padding-top: max(var(--nav-h, 80px), env(safe-area-inset-top));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Ensure navigation respects safe areas */
+.nav {
+  padding-left: max(var(--space-lg), env(safe-area-inset-left));
+  padding-right: max(var(--space-lg), env(safe-area-inset-right));
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Theme toggle positioning with safe areas */
+.theme-toggle {
+  bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  left: max(var(--space-lg), env(safe-area-inset-left));
+}
+
+/* Bot positioning with safe areas */
+.bot-fab {
+  bottom: max(var(--space-lg), env(safe-area-inset-bottom)) !important;
+  right: max(var(--space-lg), env(safe-area-inset-right)) !important;
+}
+
+/* ============================================
+   MINIMUM TAP TARGET SIZES (44px+)
+   ============================================ */
+
+/* Ensure all interactive elements meet WCAG 2.5.5 */
+button,
+a,
+input[type="button"],
+input[type="submit"],
+[role="button"],
+.nav-link,
+.filter-tab,
+.mind-node,
+.control-btn,
+.contact-method,
+.social-link,
+.work-card,
+.suggestion-card,
+.error-action {
+  min-height: 44px;
+  min-width: 44px;
+  padding: max(var(--space-sm), 8px) max(var(--space-md), 12px);
+}
+
+/* Special handling for inline links */
+a:not(.nav-link):not(.filter-tab):not(.contact-method):not(.social-link):not(.work-card):not(.suggestion-card):not(.error-action):not([role="button"]) {
+  min-height: auto;
+  min-width: auto;
+  padding: 0;
+}
+
+/* ============================================
+   LAYOUT THRASH PREVENTION
+   ============================================ */
+
+/* Prevent layout shifts during loading */
+.work-grid,
+.mind-map-container,
+.contact-container,
+.error-container {
+  contain: layout style;
+  transform: translateZ(0); /* Force GPU layer */
+}
+
+/* Reserve space for dynamic content */
+.work-card {
+  min-height: 280px; /* Prevent height jumping */
+}
+
+.contact-method {
+  min-height: 64px; /* Consistent height */
+}
+
+.mind-map-svg {
+  min-height: 400px; /* Prevent collapse */
+}
+
+/* ============================================
+   XS BREAKPOINT (0-479px) - Mobile Portrait
+   ============================================ */
+
+@media (max-width: 479px) {
+  /* Tighter spacing on very small screens */
+  .work-header,
+  .about-header,
+  .contact-container {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  /* Single column layouts */
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .error-suggestions {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  /* Smaller font sizes for very small screens */
+  .work-title,
+  .about-title,
+  .error-code {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  /* Stack navigation vertically on very small screens */
+  .nav-container {
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  /* Ensure filter tabs remain usable */
+  .filter-tabs {
+    padding: var(--space-xs);
+    gap: var(--space-xs);
+  }
+
+  .filter-tab {
+    min-width: auto;
+    padding: var(--space-sm);
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   SM BREAKPOINT (480-767px) - Mobile Landscape
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 767px) {
+  /* Optimize for landscape mobile */
+  .work-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .error-suggestions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Better navigation spacing */
+  .nav-links {
+    gap: var(--space-md);
+  }
+
+  /* Horizontal filter scrolling */
+  .filter-container {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .filter-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ============================================
+   MD BREAKPOINT (768-1023px) - Tablet
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet-optimized layouts */
+  .work-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .error-suggestions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Better spacing for tablets */
+  .work-header,
+  .about-header {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  /* Mind map optimizations */
+  .mind-map-svg {
+    height: 500px;
+  }
+
+  /* Contact layout improvements */
+  .contact-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .primary-email {
+    grid-column: 1 / -1; /* Full width */
+  }
+}
+
+/* ============================================
+   LG BREAKPOINT (1024-1279px) - Desktop
+   ============================================ */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* Desktop optimizations */
+  .work-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    max-width: 1200px;
+  }
+
+  /* Full mind map experience */
+  .mind-map-svg {
+    height: 600px;
+  }
+
+  .mind-map-container {
+    min-height: 600px;
+  }
+
+  /* Better error page layout */
+  .error-suggestions {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+/* ============================================
+   XL BREAKPOINT (1280-1535px) - Large Desktop
+   ============================================ */
+
+@media (min-width: 1280px) and (max-width: 1535px) {
+  /* Larger desktop optimizations */
+  .work-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1400px;
+  }
+
+  /* Enhanced mind map */
+  .mind-map-svg {
+    height: 700px;
+  }
+
+  .mind-map-container {
+    min-height: 700px;
+  }
+
+  /* Better spacing */
+  .work-header,
+  .about-header {
+    max-width: 900px;
+  }
+}
+
+/* ============================================
+   2XL BREAKPOINT (1536px+) - Ultra-wide
+   ============================================ */
+
+@media (min-width: 1536px) {
+  /* Ultra-wide optimizations */
+  .work-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1600px;
+  }
+
+  /* Massive mind map for ultra-wide */
+  .mind-map-svg {
+    height: 800px;
+  }
+
+  .mind-map-container {
+    min-height: 800px;
+  }
+
+  /* Prevent excessive line lengths */
+  .work-header,
+  .about-header,
+  .bio-content {
+    max-width: 1000px;
+  }
+
+  /* Limit error content width */
+  .error-content {
+    max-width: 700px;
+  }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION HANDLING
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Short landscape screens (like phones in landscape) */
+  .work-header,
+  .about-header {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+  }
+
+  .mind-map-svg {
+    height: 400px; /* Shorter to fit viewport */
+  }
+
+  /* Compact navigation */
+  .nav {
+    padding: var(--space-md) 0;
+  }
+}
+
+/* ============================================
+   HIGH DPI / RETINA DISPLAYS
+   ============================================ */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders and shadows for high DPI */
+  .work-card,
+  .contact-method,
+  .mind-map-container,
+  .error-content {
+    border-width: 0.5px; /* Thinner borders on retina */
+  }
+
+  /* Better text rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ============================================
+   POINTER TYPE OPTIMIZATIONS
+   ============================================ */
+
+/* Touch-optimized hover states */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .work-card:hover,
+  .contact-method:hover,
+  .social-link:hover,
+  .suggestion-card:hover {
+    transform: none;
+  }
+
+  /* Larger touch targets */
+  button,
+  a,
+  [role="button"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Better focus states for touch */
+  .work-card:focus,
+  .contact-method:focus,
+  .mind-node:focus {
+    outline-width: 3px;
+    outline-offset: 4px;
+  }
+}
+
+/* Fine pointer optimizations (mouse) */
+@media (hover: hover) and (pointer: fine) {
+  /* Enhanced hover effects for mouse users */
+  .work-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .contact-method:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Cursor changes */
+  .work-card,
+  .contact-method,
+  .mind-node,
+  .suggestion-card {
+    cursor: pointer;
+  }
+}
+
+/* ============================================
+   REDUCED DATA / SLOW CONNECTIONS
+   ============================================ */
+
+@media (prefers-reduced-data: reduce) {
+  /* Disable non-essential animations */
+  .error-particle {
+    display: none;
+  }
+
+  /* Simpler shadows */
+  .work-card,
+  .contact-method,
+  .mind-map-container {
+    box-shadow: none;
+    border: 2px solid var(--border-primary);
+  }
+}
+
+/* ============================================
+   FORCED COLORS (Windows High Contrast)
+   ============================================ */
+
+@media (forced-colors: active) {
+  /* Respect system high contrast mode */
+  .work-card,
+  .contact-method,
+  .mind-map-container,
+  .error-content {
+    forced-color-adjust: none;
+    border: 2px solid ButtonText;
+  }
+
+  .primary-email {
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  .error-code {
+    color: Highlight;
+  }
+}
+
+/* ============================================
+   CONTAINER QUERIES (Future-proofing)
+   ============================================ */
+
+/* When container queries are widely supported, we can add these */
+/*
+@container (max-width: 400px) {
+  .work-card {
+    padding: var(--space-md);
+  }
+}
+
+@container (min-width: 800px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+*/
+
+/* ============================================
+   PRINT OPTIMIZATIONS
+   ============================================ */
+
+@media print {
+  /* Hide interactive elements */
+  .nav,
+  .filter-container,
+  .mind-map-controls,
+  .error-actions,
+  .theme-toggle,
+  .bot-fab,
+  .error-bg {
+    display: none !important;
+  }
+
+  /* Optimize for print */
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+  }
+
+  .work-grid,
+  .error-suggestions {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-md) !important;
+  }
+
+  .work-card,
+  .contact-method,
+  .mind-map-container,
+  .error-content {
+    background: white !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  /* Show URLs for links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Page breaks */
+  .work-card,
+  .contact-card {
+    page-break-inside: avoid;
+    margin-bottom: var(--space-lg);
+  }
+}

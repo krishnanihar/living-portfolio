@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Nihar Sunkara</title>
+  <meta name="description" content="Get in touch with Nihar Sunkara for design system consultation, product design collaboration, or consciousness-aware interface projects.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/theme-consolidated.css">
+  <link rel="stylesheet" href="css/responsive-polish.css">
+
+  <style>
+    /* Contact Page Specific Styles */
+    body {
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-2xl) var(--space-lg);
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .contact-card {
+      background: var(--surface-primary);
+      backdrop-filter: blur(var(--blur-md));
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-3xl) var(--space-2xl);
+      text-align: center;
+      width: 100%;
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg,
+        transparent,
+        var(--brand-red),
+        transparent
+      );
+      opacity: 0.8;
+    }
+
+    .contact-title {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .contact-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      padding: var(--space-lg) var(--space-xl);
+      background: var(--surface-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all var(--transition-base);
+      min-height: 64px;
+      position: relative;
+    }
+
+    .contact-method:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contact-method:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    .contact-method:active {
+      transform: translateY(0);
+      transition: all var(--transition-fast);
+    }
+
+    .contact-method-icon {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .contact-method-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .contact-method-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .contact-method-value {
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Primary Email CTA */
+    .primary-email {
+      background: var(--brand-red);
+      color: white;
+      border-color: var(--brand-red);
+    }
+
+    .primary-email:hover {
+      background: #c50d26;
+      border-color: #c50d26;
+      color: white;
+    }
+
+    .primary-email .contact-method-label,
+    .primary-email .contact-method-value {
+      color: white;
+    }
+
+    .primary-email .contact-method-icon {
+      opacity: 1;
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--surface-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all var(--transition-base);
+      font-size: 1.25rem;
+    }
+
+    .social-link:hover {
+      background: var(--surface-hover);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      border-color: var(--border-hover);
+    }
+
+    .social-link:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    .social-link[data-platform="linkedin"]:hover {
+      background: #0077b5;
+      border-color: #0077b5;
+      color: white;
+    }
+
+    .social-link[data-platform="twitter"]:hover {
+      background: #1da1f2;
+      border-color: #1da1f2;
+      color: white;
+    }
+
+    .social-link[data-platform="dribbble"]:hover {
+      background: #ea4c89;
+      border-color: #ea4c89;
+      color: white;
+    }
+
+    .social-link[data-platform="github"]:hover {
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+      color: var(--bg-primary);
+    }
+
+    /* Footer Note */
+    .contact-footer {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--border-primary);
+      color: var(--text-tertiary);
+      font-size: 0.875rem;
+    }
+
+    .response-time {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--bg-primary);
+      backdrop-filter: blur(var(--blur-lg));
+      border-bottom: 1px solid var(--border-primary);
+      padding: var(--space-lg) 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+
+    .nav-link:focus {
+      outline: 2px solid var(--brand-red);
+      outline-offset: 2px;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      .contact-container {
+        padding: var(--space-lg);
+      }
+
+      .contact-card {
+        padding: var(--space-2xl) var(--space-lg);
+      }
+
+      .contact-methods {
+        gap: var(--space-md);
+      }
+
+      .contact-method {
+        padding: var(--space-lg);
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-sm);
+      }
+
+      .contact-method-content {
+        align-items: center;
+        text-align: center;
+      }
+
+      .social-links {
+        gap: var(--space-md);
+      }
+
+      .nav-links {
+        gap: var(--space-md);
+      }
+
+      .nav-link {
+        padding: var(--space-xs) var(--space-sm);
+      }
+    }
+
+    /* High Contrast Support */
+    @media (prefers-contrast: high) {
+      .contact-method {
+        border-width: 2px;
+      }
+
+      .social-link {
+        border-width: 2px;
+      }
+    }
+
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      .contact-method,
+      .social-link,
+      .contact-card {
+        transition: none !important;
+      }
+
+      .contact-method:hover,
+      .social-link:hover {
+        transform: none;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .nav,
+      .social-links,
+      #theme-toggle-container,
+      #bot-container {
+        display: none !important;
+      }
+
+      .contact-card {
+        background: white;
+        border: 1px solid black;
+        box-shadow: none;
+        padding: 20px;
+      }
+
+      .contact-method {
+        background: white;
+        border: 1px solid black;
+      }
+
+      .primary-email {
+        background: white;
+        color: black;
+        border: 2px solid black;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Skip to main content -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" aria-label="Nihar - Home">NIHAR</a>
+      <ul class="nav-links" role="list">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/work.html" class="nav-link">Work</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/contact.html" class="nav-link active" aria-current="page">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main" role="main">
+    <div class="contact-container">
+      <div class="contact-card">
+        <h1 class="contact-title">Let's Connect</h1>
+        <p class="contact-subtitle">
+          Interested in design systems, consciousness-aware interfaces, or aviation UX?
+          I'd love to hear about your project.
+        </p>
+
+        <div class="contact-methods">
+          <!-- Primary Email -->
+          <a href="mailto:nihar@example.com?subject=Project Inquiry&body=Hi Nihar,%0A%0AI'd like to discuss..."
+             class="contact-method primary-email"
+             aria-label="Send email to Nihar">
+            <span class="contact-method-icon" aria-hidden="true">✉️</span>
+            <div class="contact-method-content">
+              <span class="contact-method-label">Email</span>
+              <span class="contact-method-value">nihar@example.com</span>
+            </div>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/in/niharsunkara"
+             class="contact-method"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Connect on LinkedIn - opens in new tab">
+            <span class="contact-method-icon" aria-hidden="true">💼</span>
+            <div class="contact-method-content">
+              <span class="contact-method-label">Professional Network</span>
+              <span class="contact-method-value">LinkedIn</span>
+            </div>
+          </a>
+
+          <!-- Calendar Link -->
+          <a href="https://cal.com/niharsunkara/30min"
+             class="contact-method"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Schedule a meeting - opens in new tab">
+            <span class="contact-method-icon" aria-hidden="true">📅</span>
+            <div class="contact-method-content">
+              <span class="contact-method-label">Quick Chat</span>
+              <span class="contact-method-value">Book 30 minutes</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-links" role="group" aria-label="Social media profiles">
+          <a href="https://twitter.com/niharsunkara"
+             class="social-link"
+             data-platform="twitter"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Follow on Twitter">
+            <span aria-hidden="true">𝕏</span>
+          </a>
+
+          <a href="https://dribbble.com/niharsunkara"
+             class="social-link"
+             data-platform="dribbble"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="View work on Dribbble">
+            <span aria-hidden="true">🎨</span>
+          </a>
+
+          <a href="https://github.com/niharsunkara"
+             class="social-link"
+             data-platform="github"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Code on GitHub">
+            <span aria-hidden="true">⚡</span>
+          </a>
+
+          <a href="https://read.cv/niharsunkara"
+             class="social-link"
+             data-platform="readcv"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Professional CV on Read.cv">
+            <span aria-hidden="true">📄</span>
+          </a>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="contact-footer">
+          <p>
+            Currently based in India, working across global timezones.<br>
+            <span class="response-time">Typical response time: 24-48 hours</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Theme Toggle & Bot -->
+  <div id="theme-toggle-container"></div>
+  <div id="bot-container"></div>
+
+  <!-- JavaScript -->
+  <script src="js/design-tokens.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/lazy-loader.js"></script>
+  <script src="js/bot-simple.js"></script>
+
+  <script>
+    // Contact Page Enhancements
+    class ContactEnhancer {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        // Initialize theme
+        if (window.Theme) {
+          Theme.init();
+        }
+
+        // Add copy email functionality
+        this.addCopyEmailFeature();
+
+        // Add contact form tracking
+        this.trackContactInteractions();
+
+        // Add availability indicator
+        this.addAvailabilityIndicator();
+
+        console.log('✅ Contact page enhanced');
+      }
+
+      addCopyEmailFeature() {
+        const emailLink = document.querySelector('.primary-email');
+
+        if (emailLink) {
+          // Add secondary action for copying email
+          emailLink.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.copyEmailToClipboard();
+          });
+
+          // Add keyboard shortcut (Ctrl/Cmd + C when focused)
+          emailLink.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+              e.preventDefault();
+              this.copyEmailToClipboard();
+            }
+          });
+        }
+      }
+
+      async copyEmailToClipboard() {
+        const email = 'nihar@example.com';
+
+        try {
+          await navigator.clipboard.writeText(email);
+          this.showCopyFeedback('Email copied to clipboard!');
+        } catch (err) {
+          // Fallback for older browsers
+          this.fallbackCopyToClipboard(email);
+        }
+      }
+
+      fallbackCopyToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          this.showCopyFeedback('Email copied to clipboard!');
+        } catch (err) {
+          this.showCopyFeedback('Unable to copy email');
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      showCopyFeedback(message) {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.className = 'copy-toast';
+        toast.style.cssText = `
+          position: fixed;
+          bottom: 100px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--surface-secondary);
+          color: var(--text-primary);
+          padding: var(--space-md) var(--space-lg);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--border-primary);
+          z-index: 10000;
+          opacity: 0;
+          transition: all var(--transition-base);
+          backdrop-filter: blur(var(--blur-md));
+        `;
+
+        document.body.appendChild(toast);
+
+        // Animate in
+        setTimeout(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateX(-50%) translateY(-10px)';
+        }, 10);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(10px)';
+          setTimeout(() => {
+            document.body.removeChild(toast);
+          }, 300);
+        }, 3000);
+
+        // Announce to screen readers
+        this.announceToScreenReader(message);
+      }
+
+      trackContactInteractions() {
+        // Track which contact methods are used (analytics)
+        const contactMethods = document.querySelectorAll('.contact-method');
+        const socialLinks = document.querySelectorAll('.social-link');
+
+        contactMethods.forEach(method => {
+          method.addEventListener('click', (e) => {
+            const methodType = method.querySelector('.contact-method-label').textContent;
+            console.log(`Contact method clicked: ${methodType}`);
+
+            // Could send to analytics here
+            // analytics.track('contact_method_clicked', { method: methodType });
+          });
+        });
+
+        socialLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            const platform = link.dataset.platform || link.getAttribute('aria-label');
+            console.log(`Social link clicked: ${platform}`);
+
+            // Could send to analytics here
+            // analytics.track('social_link_clicked', { platform });
+          });
+        });
+      }
+
+      addAvailabilityIndicator() {
+        // Simple availability based on Indian Standard Time business hours
+        const now = new Date();
+        const istTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+        const hour = istTime.getHours();
+        const day = istTime.getDay(); // 0 = Sunday, 6 = Saturday
+
+        const isWeekday = day >= 1 && day <= 5;
+        const isBusinessHours = hour >= 9 && hour <= 18;
+        const isAvailable = isWeekday && isBusinessHours;
+
+        const responseTimeElement = document.querySelector('.response-time');
+        if (responseTimeElement && isAvailable) {
+          responseTimeElement.innerHTML = `
+            <span style="color: #10b981;">● Online now</span> -
+            Typical response time: 1-2 hours
+          `;
+        }
+      }
+
+      announceToScreenReader(message) {
+        let liveRegion = document.getElementById('contact-announcement');
+        if (!liveRegion) {
+          liveRegion = document.createElement('div');
+          liveRegion.id = 'contact-announcement';
+          liveRegion.className = 'sr-only';
+          liveRegion.setAttribute('aria-live', 'polite');
+          document.body.appendChild(liveRegion);
+        }
+        liveRegion.textContent = message;
+      }
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new ContactEnhancer();
+    });
+
+    // Update page title with current year
+    const currentYear = new Date().getFullYear();
+    document.title = `Contact ${currentYear} — Nihar Sunkara`;
+  </script>
+</body>
+</html>
