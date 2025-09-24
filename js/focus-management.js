@@ -207,11 +207,14 @@ class FocusManager {
         link.style.pointerEvents = 'none';
       });
 
-      // VISUAL_TUNE_2025Q3: Dismiss skip link after first section navigation
-      link.addEventListener('click', () => {
-        setTimeout(() => {
-          link.style.display = 'none';
-        }, 1000);
+      // VISUAL_TUNE_2025Q3: Auto-hide after entering main
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href').substring(1);
+        if (targetId === 'main' || targetId.includes('main')) {
+          setTimeout(() => {
+            link.style.display = 'none';
+          }, 1000);
+        }
       });
 
       // Smooth scroll to target

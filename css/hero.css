@@ -36,31 +36,31 @@
 }
 
 /* ============================================
-   HERO SECTION BASE - TRANSPARENT
+   HERO SECTION BASE - VISUAL_TUNE_2025Q3: Grid centered
    ============================================ */
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height */
+  min-height: calc(100dvh - var(--lp-nav-h, 0px) - var(--lp-footer-h, 0px) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   min-height: -webkit-fill-available; /* iOS fix */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   padding: var(--hero-padding);
   background: transparent !important; /* Critical for particles */
-  z-index: 2;
+  z-index: 200; /* VISUAL_TUNE_2025Q3: Hero z-index */
   overflow: hidden;
   perspective: var(--tilt-perspective);
   -webkit-perspective: var(--tilt-perspective);
   transform-style: preserve-3d;
 }
 
-/* Hero Inner - Glass Effect Only */
+/* VISUAL_TUNE_2025Q3: Hero Inner - Grid centered with responsive margins */
 .hero-inner {
   position: relative;
   width: 100%;
-  max-width: var(--hero-max-width);
+  max-width: clamp(680px, 68vw, 980px);
+  margin: 0 auto;
+  margin-block: clamp(32px, 6vh, 72px);
   padding: var(--hero-inner-padding);
   
   /* VISUAL_TUNE_2025Q3: Crisp hero card with reduced surface alpha */
@@ -87,7 +87,7 @@
   will-change: transform;
   transform: rotateX(0deg) rotateY(0deg) translateZ(0);
   
-  z-index: 3;
+  z-index: 200; /* VISUAL_TUNE_2025Q3: Hero content z-index */
 }
 
 /* 3D hover effect for testing */
@@ -338,12 +338,13 @@
 }
 
 [data-theme="light"] .hero-inner {
-  background: rgba(255, 255, 255, 0.85) !important; /* More opaque for readability */
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.02),
-    0 8px 16px rgba(0, 0, 0, 0.03),
-    0 16px 32px rgba(0, 0, 0, 0.04),
-    0 24px 48px rgba(0, 0, 0, 0.05);
+  /* VISUAL_TUNE_2025Q3: Lower surface alpha, add soft shadow */
+  background: rgba(255, 255, 255, 0.75) !important;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    0 16px 32px rgba(0, 0, 0, 0.06),
+    0 24px 48px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 

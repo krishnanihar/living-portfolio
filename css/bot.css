@@ -7,7 +7,7 @@
   position: fixed !important;
   right: 24px !important;
   bottom: 24px !important;
-  z-index: 10000 !important;
+  z-index: 800 !important; /* VISUAL_TUNE_2025Q3: Chat FAB z-index */
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -87,22 +87,23 @@
   position: fixed !important;
   right: 24px !important;
   bottom: 100px !important;
-  width: clamp(320px, 28vw, 380px);
+  /* VISUAL_TUNE_2025Q3: Desktop width clamp, mobile full-width minus safe margins */
+  width: clamp(320px, 34vw, 420px);
   height: clamp(420px, 60vh, 520px);
-  max-width: calc(100vw - 48px);
-  max-height: 75vh;
+  max-width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 48px);
+  max-height: calc(100vh - 200px); /* Never cover hero headline */
   border-radius: 24px;
   overflow: hidden;
-  z-index: 10001 !important;
+  z-index: 800 !important; /* VISUAL_TUNE_2025Q3: Chat z-index */
 
-  /* OLED Black advanced glassmorphism */
+  /* VISUAL_TUNE_2025Q3: Glass alpha -1 step, blur 12px */
   background: linear-gradient(135deg,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(3, 3, 3, 0.95) 50%,
-    rgba(0, 0, 0, 0.98) 100%);
-  backdrop-filter: blur(28px) saturate(1.8);
-  -webkit-backdrop-filter: blur(28px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(3, 3, 3, 0.04) 50%,
+    rgba(0, 0, 0, 0.04) 100%);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Hairline border */
 
   /* OLED-optimized shadow system */
   box-shadow:
@@ -114,9 +115,10 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     inset 0 -1px 0 rgba(255, 255, 255, 0.02);
 
-  /* Layout */
+  /* Layout with internal scroll */
   display: none;
   flex-direction: column;
+  overflow-y: auto;
 
   /* Elegant entrance animation */
   opacity: 0;

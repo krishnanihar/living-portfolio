@@ -133,8 +133,9 @@ class MicroInteractions {
   // ============================================
 
   initCursorParallax() {
-    if (this.reducedMotion) {
-      console.log('Cursor parallax disabled (reduced motion)');
+    // VISUAL_TUNE_2025Q3: Disable on touch and reduced-motion
+    if (this.reducedMotion || this.isTouch) {
+      console.log('Cursor parallax disabled (reduced motion or touch)');
       return;
     }
 
@@ -253,9 +254,9 @@ class MicroInteractions {
       right: 0;
       bottom: 0;
       pointer-events: none;
-      z-index: 1;
+      z-index: 20; /* VISUAL_TUNE_2025Q3: Spotlight below hero */
       opacity: 0;
-      transition: opacity 150ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 100ms cubic-bezier(0.22, 1, 0.36, 1);
       background: ${this.getSpotlightGradient()};
       will-change: transform, opacity;
     `;
@@ -267,17 +268,17 @@ class MicroInteractions {
     const isDark = this.currentTheme === 'dark';
 
     if (isDark) {
-      // VISUAL_TUNE_2025Q3: Tighter radius, lower opacity, steeper falloff
-      return `radial-gradient(circle 10vw at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-        rgba(218, 14, 41, 0.04) 0%,
+      // VISUAL_TUNE_2025Q3: Dark 0.05 opacity cap, 10-12vw radius
+      return `radial-gradient(circle 11vw at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+        rgba(218, 14, 41, 0.05) 0%,
         rgba(59, 130, 246, 0.03) 25%,
-        transparent 60%)`;
+        transparent 55%)`;
     } else {
-      // VISUAL_TUNE_2025Q3: Light theme with reduced halo
-      return `radial-gradient(circle 12vw at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-        rgba(0, 0, 0, 0.02) 0%,
-        rgba(218, 14, 41, 0.025) 30%,
-        transparent 65%)`;
+      // VISUAL_TUNE_2025Q3: Light 0.03 opacity cap, larger radius, steep falloff
+      return `radial-gradient(circle 16vw at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+        rgba(0, 0, 0, 0.03) 0%,
+        rgba(218, 14, 41, 0.02) 30%,
+        transparent 60%)`;
     }
   }
 
@@ -317,7 +318,7 @@ class MicroInteractions {
     document.addEventListener('mousemove', updateSpotlight, { passive: true });
     document.addEventListener('mouseleave', hideSpotlight);
 
-    // VISUAL_TUNE_2025Q3: Faster fade on blur/scroll
+    // VISUAL_TUNE_2025Q3: Fade faster on scroll
     window.addEventListener('blur', hideSpotlight);
 
     let scrollTimeout;
@@ -325,8 +326,8 @@ class MicroInteractions {
       hideSpotlight();
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
-        // Keep hidden for 150ms after scroll stops
-      }, 150);
+        // Keep hidden for 100ms after scroll stops
+      }, 100);
     };
 
     window.addEventListener('scroll', fastHideOnScroll, { passive: true });
