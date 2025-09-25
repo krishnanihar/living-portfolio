@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/theme-consolidated.css">
   <link rel="stylesheet" href="css/responsive-polish.css">
+  <link rel="stylesheet" href="css/navigation.css?v=1758793219">
   <link rel="stylesheet" href="css/bot.css">
 
   <style>
@@ -232,62 +233,7 @@
       line-height: 1.5;
     }
 
-    /* Navigation */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--bg-primary);
-      backdrop-filter: blur(var(--blur-lg));
-      border-bottom: 1px solid var(--border-primary);
-      padding: var(--space-lg) 0;
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--space-lg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: var(--space-lg);
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-fast);
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-link:hover {
-      color: var(--text-primary);
-      background: var(--surface-hover);
-    }
-
-    .nav-link:focus {
-      outline: 2px solid var(--brand-red);
-      outline-offset: 2px;
-    }
+    /* Navigation styles handled by css/navigation.css */
 
     /* Footer */
     .error-footer {
@@ -319,14 +265,6 @@
 
       .error-suggestions {
         grid-template-columns: 1fr;
-      }
-
-      .nav-links {
-        gap: var(--space-md);
-      }
-
-      .nav-link {
-        padding: var(--space-xs) var(--space-sm);
       }
     }
 
@@ -401,16 +339,23 @@
   <!-- Animated Background -->
   <div class="error-bg" aria-hidden="true" id="errorBg"></div>
 
-  <!-- Navigation -->
-  <nav class="nav" role="navigation" aria-label="Primary navigation">
+  <!-- Floating Glassmorphic Navigation -->
+  <nav class="floating-nav" id="floating-nav" aria-label="Primary navigation">
     <div class="nav-container">
-      <a href="/" class="nav-logo" aria-label="Nihar - Home">NIHAR</a>
+      <!-- Logo/Brand -->
+      <a href="index.html" class="nav-logo kinetic" id="nav-logo" data-magnetic aria-label="Nihar - Home">
+        <span class="logo-text">NIHAR</span>
+      </a>
+
+      <!-- Navigation Links -->
       <ul class="nav-links" role="list">
-        <li><a href="/" class="nav-link">Home</a></li>
-        <li><a href="/work.html" class="nav-link">Work</a></li>
-        <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        <li><a href="work.html" class="nav-link" data-magnetic data-page="work">Work</a></li>
+        <li><a href="about.html" class="nav-link" data-magnetic data-page="about">About</a></li>
+        <li><a href="contact.html" class="nav-link" data-magnetic data-page="contact">Contact</a></li>
       </ul>
+
+      <!-- Navigation Glow Effect -->
+      <div class="nav-glow" aria-hidden="true"></div>
     </div>
   </nav>
 
@@ -470,6 +415,8 @@
   <script src="js/lazy-loader.js"></script>
   <script src="js/micro-interactions.js"></script>
   <script src="js/focus-management.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/navigation.js"></script>
   <script src="js/chat.js"></script>
 
   <script>
@@ -672,6 +619,11 @@
 
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
+      // Initialize navigation if available
+      if (window.Navigation) {
+        Navigation.init();
+      }
+
       new Error404();
     });
 
