@@ -243,65 +243,7 @@
       font-weight: 500;
     }
 
-    /* Navigation */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: var(--bg-primary);
-      backdrop-filter: blur(var(--blur-lg));
-      border-bottom: 1px solid var(--border-primary);
-      padding: var(--space-lg) 0;
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--space-lg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: var(--space-lg);
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-fast);
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--text-primary);
-      background: var(--surface-hover);
-    }
-
-    .nav-link:focus {
-      outline: 2px solid var(--brand-red);
-      outline-offset: 2px;
-    }
+    /* Navigation styles handled by css/navigation.css */
 
     /* Mobile Optimizations */
     @media (max-width: 768px) {
