@@ -19,12 +19,11 @@
   <link rel="stylesheet" href="css/theme-consolidated.css">
   <link rel="stylesheet" href="css/responsive-polish.css">
   <link rel="stylesheet" href="css/bot.css">
-  <link rel="stylesheet" href="css/navigation.css?v=1758793219">
+  <link rel="stylesheet" href="css/navigation.css?v=1758793780">
 
   <style>
     /* Work Index Specific Styles */
     body {
-      padding-top: 80px;
       min-height: 100vh;
     }
 
@@ -814,9 +813,29 @@
 
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-      // Initialize navigation if available
+      // Initialize navigation with proper error handling
       if (window.Navigation) {
-        Navigation.init();
+        try {
+          // Ensure Utils are available
+          if (typeof $ === 'undefined' || typeof $$ === 'undefined') {
+            console.warn('Navigation init delayed: Utils not ready');
+            setTimeout(() => {
+              try {
+                Navigation.init();
+                console.log('✅ Navigation initialized (delayed)');
+              } catch (e) {
+                console.error('Navigation delayed init failed:', e);
+              }
+            }, 100);
+          } else {
+            Navigation.init();
+            console.log('✅ Navigation initialized');
+          }
+        } catch (e) {
+          console.error('Navigation init failed:', e);
+        }
+      } else {
+        console.warn('Navigation module not found');
       }
 
       new WorkFilter();
