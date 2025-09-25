@@ -64,7 +64,7 @@ const Sections = {
             <button class="pill pill-work" data-section="work" onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})">
               Show me work
             </button>
-            <button class="pill pill-about" data-section="about" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+            <button class="pill pill-about" data-section="about" onclick="window.location.href='about.html'">
               About me
             </button>
           </div>
