@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="css/about.css">
   <link rel="stylesheet" href="css/bot.css">
   <link rel="stylesheet" href="css/particles.css">
+  <link rel="stylesheet" href="css/navigation.css">
 
   <!-- Critical Inline Styles -->
   <style>
@@ -703,16 +704,23 @@
   <!-- Particle Canvas (Base Layer) -->
   <canvas id="particles" aria-hidden="true" role="presentation"></canvas>
 
-  <!-- Navigation -->
-  <nav class="nav" id="nav" aria-label="Primary navigation">
-    <div class="container">
-      <a href="index.html" class="logo kinetic" id="logo" data-magnetic
-         aria-label="Nihar - Home">NIHAR</a>
-      <ul role="list">
-        <li><a href="work.html" class="nav-link" data-magnetic>Work</a></li>
-        <li><a href="about.html" class="nav-link active" data-magnetic>About</a></li>
-        <li><a href="contact.html" class="nav-link" data-magnetic>Contact</a></li>
+  <!-- Floating Glassmorphic Navigation -->
+  <nav class="floating-nav" id="floating-nav" aria-label="Primary navigation">
+    <div class="nav-container">
+      <!-- Logo/Brand -->
+      <a href="index.html" class="nav-logo kinetic" id="nav-logo" data-magnetic aria-label="Nihar - Home">
+        <span class="logo-text">NIHAR</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links" role="list">
+        <li><a href="work.html" class="nav-link" data-magnetic data-page="work">Work</a></li>
+        <li><a href="about.html" class="nav-link active" data-magnetic data-page="about">About</a></li>
+        <li><a href="contact.html" class="nav-link" data-magnetic data-page="contact">Contact</a></li>
       </ul>
+
+      <!-- Navigation Glow Effect -->
+      <div class="nav-glow" aria-hidden="true"></div>
     </div>
   </nav>
 

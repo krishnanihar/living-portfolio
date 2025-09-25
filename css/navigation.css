@@ -1,0 +1,551 @@
+/* ============================================
+   FLOATING GLASSMORPHIC NAVIGATION
+   ============================================ */
+
+/* Navigation Container */
+.floating-nav {
+  /* Positioning */
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 1000;
+
+  /* Transform for centering and entrance animation */
+  transform: translateX(-50%) translateY(0);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.4s ease-out;
+
+  /* Initial state - hidden for entrance animation */
+  opacity: 0;
+  animation: navEnter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+
+  /* Responsive sizing */
+  width: min(90%, 600px);
+  height: 56px;
+
+  /* Ensure proper layering */
+  isolation: isolate;
+}
+
+/* Entrance Animation */
+@keyframes navEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Navigation Container Inner */
+.nav-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+
+  /* Premium Glassmorphism - Dark Theme */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+
+  /* Pill shape */
+  border-radius: 32px;
+
+  /* Elegant border */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* Multi-layer shadows for depth */
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.12),
+    0 16px 32px rgba(0, 0, 0, 0.16),
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Prevent content overflow */
+  overflow: hidden;
+}
+
+/* Hover effect for entire nav */
+.floating-nav:hover .nav-container {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.12),
+    0 16px 32px rgba(0, 0, 0, 0.16),
+    0 32px 64px rgba(0, 0, 0, 0.2),
+    0 48px 96px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Logo/Brand */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: 0.05em;
+
+  /* Ensure proper hit target */
+  min-height: 44px;
+  padding: 0 4px;
+}
+
+.nav-logo:hover {
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+.nav-logo:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  min-height: 44px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  position: relative;
+
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Ensure good contrast */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Navigation link hover */
+.nav-link:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Active navigation link */
+.nav-link.active {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.nav-link.active:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Focus states */
+.nav-link:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+}
+
+/* Navigation Glow Effect */
+.nav-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 34px;
+  background: linear-gradient(45deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-nav:hover .nav-glow {
+  opacity: 1;
+}
+
+/* ============================================
+   LIGHT THEME SUPPORT
+   ============================================ */
+
+[data-theme="light"] .nav-container {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 16px 32px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="light"] .floating-nav:hover .nav-container {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    0 32px 64px rgba(0, 0, 0, 0.16),
+    0 48px 96px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] .nav-logo {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme="light"] .nav-logo:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+[data-theme="light"] .nav-logo:focus {
+  outline-color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .nav-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .nav-link:hover {
+  color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav-link.active {
+  color: rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .nav-link.active:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .nav-link:focus {
+  outline-color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .nav-glow {
+  background: linear-gradient(45deg,
+    transparent,
+    rgba(0, 0, 0, 0.03),
+    transparent
+  );
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .floating-nav {
+    width: min(95%, 500px);
+    height: 48px;
+    top: 16px;
+  }
+
+  .nav-container {
+    padding: 0 20px;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+  }
+
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+  }
+
+  .nav-links {
+    gap: 4px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .floating-nav {
+    width: calc(100% - 32px);
+    height: 44px;
+    top: 12px;
+  }
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .nav-logo {
+    font-size: 0.95rem;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* iOS Safe Area Support */
+@supports (padding: max(0px)) {
+  .floating-nav {
+    top: max(20px, env(safe-area-inset-top, 20px));
+    left: max(50%, calc(50% + env(safe-area-inset-left, 0px) / 2 - env(safe-area-inset-right, 0px) / 2));
+  }
+
+  @media (max-width: 768px) {
+    .floating-nav {
+      top: max(16px, env(safe-area-inset-top, 16px));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .floating-nav {
+      top: max(12px, env(safe-area-inset-top, 12px));
+      width: calc(100% - 32px - env(safe-area-inset-left, 16px) - env(safe-area-inset-right, 16px));
+      left: calc(50% + env(safe-area-inset-left, 16px) / 2 - env(safe-area-inset-right, 16px) / 2);
+    }
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .floating-nav,
+  .nav-container,
+  .nav-logo,
+  .nav-link,
+  .nav-glow {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .floating-nav {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .floating-nav:hover .nav-container,
+  .nav-link:hover {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .nav-container {
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .nav-link {
+    border: 1px solid transparent;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  [data-theme="light"] .nav-container {
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+
+  [data-theme="light"] .nav-link:hover,
+  [data-theme="light"] .nav-link:focus {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ============================================
+   BROWSER SPECIFIC OPTIMIZATIONS
+   ============================================ */
+
+/* Safari optimizations */
+@supports (-webkit-backdrop-filter: blur()) {
+  .nav-container {
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+  }
+
+  .nav-link {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+/* Firefox optimizations */
+@-moz-document url-prefix() {
+  .nav-container {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  [data-theme="light"] .nav-container {
+    background: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* Performance optimizations */
+.floating-nav,
+.nav-container,
+.nav-logo,
+.nav-link {
+  will-change: transform, opacity;
+  transform-style: flat;
+  backface-visibility: hidden;
+}
+
+/* Remove will-change after interactions */
+.nav-interaction-complete .floating-nav,
+.nav-interaction-complete .nav-container,
+.nav-interaction-complete .nav-logo,
+.nav-interaction-complete .nav-link {
+  will-change: auto;
+}
+
+/* ============================================
+   MICRO-INTERACTION ENHANCEMENTS
+   ============================================ */
+
+/* Ripple effect animation */
+@keyframes navRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Touch active state for mobile */
+.nav-link.touch-active {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(0.95);
+}
+
+[data-theme="light"] .nav-link.touch-active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Logo pressing state */
+.nav-logo.logo-pressing {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* Enhanced hover states with better performance */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transition: left 0.5s ease;
+  border-radius: 20px;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+[data-theme="light"] .nav-link::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.04),
+    transparent
+  );
+}
+
+/* Entrance animation enhancement */
+.nav-entered {
+  animation: none; /* Override initial animation */
+}
+
+/* Subtle breathing animation for nav container */
+@keyframes navBreathe {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 8px 16px rgba(0, 0, 0, 0.12),
+      0 16px 32px rgba(0, 0, 0, 0.16),
+      0 24px 48px rgba(0, 0, 0, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 3px 12px rgba(0, 0, 0, 0.1),
+      0 12px 24px rgba(0, 0, 0, 0.14),
+      0 24px 48px rgba(0, 0, 0, 0.18),
+      0 36px 72px rgba(0, 0, 0, 0.22),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 -1px 3px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Apply subtle breathing only when not interacting */
+.nav-interaction-complete .nav-container {
+  animation: navBreathe 8s ease-in-out infinite;
+}
+
+/* Pause breathing on interaction */
+.floating-nav:hover .nav-container,
+.floating-nav:focus-within .nav-container {
+  animation-play-state: paused;
+}

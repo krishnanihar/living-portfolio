@@ -321,44 +321,7 @@ body.scrolled .nav {
 }
 
 /* Floating Navigation Override - Always visible */
-.nav {
-  position: fixed !important;
-  top: 20px !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) translateY(0) !important;
-  width: min(90%, 600px) !important;
-  height: 56px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 16px !important;
-  opacity: 1 !important;
-  transition: all 400ms ease !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-.nav.visible {
-  transform: translateX(-50%) translateY(0) !important;
-  opacity: 1 !important;
-}
-
-.nav .container {
-  justify-content: space-between !important;
-  height: 100% !important;
-  padding: 0 24px !important;
-}
-
-.nav-meta {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 6px 12px;
-  background: rgba(181, 131, 255, 0.1);
-  border-radius: 12px;
-}
+/* Navigation styles removed - now handled by css/navigation.css */
 
 /* Disable 3D effects on hero card */
 .hero-inner {
