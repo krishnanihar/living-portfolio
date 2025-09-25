@@ -911,15 +911,17 @@
     
     // Navigation visibility handler
     function handleNavVisibility() {
-      const nav = document.getElementById('nav');
+      const nav = document.getElementById('floating-nav');
       const scrollY = window.scrollY || window.pageYOffset;
-      
-      if (scrollY > 100) {
-        nav.classList.add('visible');
-        document.body.classList.add('scrolled');
-      } else if (scrollY === 0) {
-        nav.classList.remove('visible');
-        document.body.classList.remove('scrolled');
+
+      if (nav) {
+        if (scrollY > 100) {
+          nav.classList.add('visible');
+          document.body.classList.add('scrolled');
+        } else if (scrollY === 0) {
+          nav.classList.remove('visible');
+          document.body.classList.remove('scrolled');
+        }
       }
     }
     
@@ -1118,6 +1120,7 @@
         if (window.Utils) {
           try {
             Utils.init();
+            console.log('✅ Utils initialized');
           } catch (e) {
             console.warn('Utils init failed:', e);
           }
@@ -1125,6 +1128,7 @@
 
         if (window.Theme) {
           Theme.init();
+          console.log('✅ Theme initialized');
         }
 
         // Particles should already be running, just add event handlers
@@ -1156,10 +1160,26 @@
         
         if (window.Navigation) {
           try {
-            Navigation.init();
+            // Ensure Utils are available before Navigation init
+            if (typeof $ === 'undefined' || typeof $$ === 'undefined') {
+              console.warn('Navigation init delayed: Utils not ready');
+              setTimeout(() => {
+                try {
+                  Navigation.init();
+                  console.log('✅ Navigation initialized (delayed)');
+                } catch (e) {
+                  console.error('Navigation delayed init failed:', e);
+                }
+              }, 100);
+            } else {
+              Navigation.init();
+              console.log('✅ Navigation initialized');
+            }
           } catch (e) {
-            console.warn('Navigation init failed:', e);
+            console.error('Navigation init failed:', e);
           }
+        } else {
+          console.warn('Navigation module not found');
         }
         
         // Load sections - MOST CRITICAL
