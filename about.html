@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — Nihar Sunkara</title>
-  <meta name="description" content="Product & New Media Designer specializing in design systems, aviation UX, and consciousness-aware interfaces. From NID to Air India DesignLAB.">
+  <title>About — Nihar</title>
+  <meta name="description" content="Learn more about Nihar — Product & New Media Designer. Personal insights, experience, and the books & games that shape my thinking.">
   <meta name="theme-color" content="#0a0a0a">
 
   <!-- Google Fonts -->
@@ -12,948 +12,1355 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-  <!-- CSS Files -->
+  <!-- CSS Files - Optimized Order -->
   <link rel="stylesheet" href="css/design-tokens.css">
   <link rel="stylesheet" href="css/accessibility.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/theme-consolidated.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/work.css">
   <link rel="stylesheet" href="css/responsive-polish.css">
+  <link rel="stylesheet" href="css/deck.css">
+  <link rel="stylesheet" href="css/life.css">
+  <link rel="stylesheet" href="css/about.css">
   <link rel="stylesheet" href="css/bot.css">
+  <link rel="stylesheet" href="css/particles.css">
 
+  <!-- Critical Inline Styles -->
   <style>
-    /* About Page Specific Styles */
-    body {
-      padding-top: 80px;
-      min-height: 100vh;
-    }
-
-    .about-header {
-      text-align: center;
-      padding: var(--space-3xl) var(--space-lg) var(--space-2xl);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .about-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      margin-bottom: var(--space-lg);
-      background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .about-subtitle {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: var(--space-xl);
-    }
-
-    /* Mind Map Container */
-    .mind-map-section {
-      padding: var(--space-2xl) var(--space-lg);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .mind-map-container {
-      position: relative;
-      background: var(--surface-primary);
-      backdrop-filter: blur(var(--blur-md));
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-xl);
-      padding: var(--space-2xl);
-      min-height: 600px;
-      overflow: hidden;
-    }
-
-    /* Mind Map SVG */
-    .mind-map-svg {
-      width: 100%;
-      height: 600px;
-      cursor: grab;
-    }
-
-    .mind-map-svg:active {
-      cursor: grabbing;
-    }
-
-    /* Mind Map Nodes */
-    .mind-node {
-      cursor: pointer;
-      transition: all var(--transition-base);
-    }
-
-    .mind-node:hover .node-circle,
-    .mind-node:focus .node-circle {
-      stroke-width: 3;
-      filter: drop-shadow(0 0 8px currentColor);
-    }
-
-    .mind-node:focus {
-      outline: 2px solid var(--brand-red);
-      outline-offset: 4px;
-      border-radius: 50%;
-    }
-
-    .node-circle {
-      fill: var(--surface-secondary);
-      stroke: currentColor;
-      stroke-width: 2;
-      transition: all var(--transition-base);
-    }
-
-    .node-text {
-      fill: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      font-size: 14px;
+    /* ============================================
+       PARTICLE CANVAS - Base Layer (IMMEDIATE VISIBILITY)
+       ============================================ */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
+      z-index: 0; /* Behind everything */
+      opacity: 1;
+      background: transparent;
+      /* Ensure immediate rendering */
+      will-change: auto;
+      transform: translateZ(0); /* Force GPU acceleration */
     }
 
-    .node-subtext {
-      fill: var(--text-secondary);
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      font-size: 11px;
-      pointer-events: none;
-    }
-
-    /* Connection Lines */
-    .connection-line {
-      stroke: var(--border-secondary);
-      stroke-width: 2;
-      fill: none;
-      transition: all var(--transition-base);
-    }
-
-    .connection-line.active {
-      stroke: var(--brand-red);
-      stroke-width: 3;
-    }
-
-    /* Mind Map Categories */
-    .mind-node[data-category="center"] {
-      color: var(--brand-red);
-    }
-
-    .mind-node[data-category="skills"] {
-      color: #3b82f6;
-    }
-
-    .mind-node[data-category="tools"] {
-      color: #10b981;
-    }
-
-    .mind-node[data-category="domains"] {
-      color: #8b5cf6;
-    }
-
-    .mind-node[data-category="interests"] {
-      color: #f59e0b;
-    }
-
-    /* Mind Map Controls */
-    .mind-map-controls {
+    /* Preloader effect for immediate particle impression */
+    #particles::before {
+      content: '';
       position: absolute;
-      top: var(--space-lg);
-      right: var(--space-lg);
-      display: flex;
-      gap: var(--space-xs);
-      z-index: 10;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(147, 197, 253, 0.03) 0%, transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(196, 181, 253, 0.03) 0%, transparent 60%),
+                  radial-gradient(circle at 60% 70%, rgba(147, 197, 253, 0.03) 0%, transparent 60%),
+                  radial-gradient(circle at 30% 80%, rgba(196, 181, 253, 0.03) 0%, transparent 60%);
+      animation: preloaderTwinkle 3s ease-in-out infinite;
+      opacity: 1;
+      pointer-events: none;
+      z-index: -1;
     }
 
-    .control-btn {
-      width: 40px;
-      height: 40px;
-      background: var(--surface-secondary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-sm);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.875rem;
-      font-weight: 600;
+    /* Mobile optimization - disable preloader completely */
+    @media (max-width: 768px) {
+      #particles::before {
+        display: none;
+      }
     }
 
-    .control-btn:hover {
-      background: var(--surface-hover);
-      color: var(--text-primary);
+    /* Hide preloader when particles are active */
+    #particles.particles-active::before {
+      opacity: 0;
+      transition: opacity 1s ease-out;
     }
 
-    .control-btn:focus {
-      outline: 2px solid var(--brand-red);
-      outline-offset: 2px;
+    @keyframes preloaderTwinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
     }
 
-    .control-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    [data-theme="light"] #particles::before {
+      background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.02) 0%, transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.02) 0%, transparent 60%),
+                  radial-gradient(circle at 60% 70%, rgba(59, 130, 246, 0.02) 0%, transparent 60%),
+                  radial-gradient(circle at 30% 80%, rgba(139, 92, 246, 0.02) 0%, transparent 60%);
     }
 
-    /* Mind Map Instructions */
-    .mind-map-instructions {
-      margin-top: var(--space-lg);
-      text-align: center;
-      color: var(--text-tertiary);
-      font-size: 0.875rem;
+    /* Light theme mobile optimization - disable preloader */
+    @media (max-width: 768px) {
+      [data-theme="light"] #particles::before {
+        display: none;
+      }
     }
 
-    .instruction-item {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      margin: 0 var(--space-md);
+    /* Safari-specific particle adjustments */
+    @supports (-webkit-backdrop-filter: blur()) {
+      #particles {
+        opacity: 0.2 !important; /* Much lower base opacity for Safari */
+      }
+
+      /* Disable preloader on Safari */
+      #particles::before {
+        display: none !important;
+      }
     }
 
-    .instruction-key {
-      background: var(--surface-secondary);
-      border: 1px solid var(--border-primary);
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--radius-xs);
-      font-size: 0.75rem;
-      font-weight: 600;
+    /* ============================================
+       BODY & MAIN STRUCTURE
+       ============================================ */
+    body {
+      background: #000000; /* Pure black */
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.8s ease;
     }
 
-    /* Bio Section */
-    .bio-section {
-      padding: var(--space-2xl) var(--space-lg);
-      max-width: 800px;
-      margin: 0 auto;
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      pointer-events: none;
+      z-index: 1;
+      transition: background-color 0.8s ease;
     }
 
-    .bio-content {
-      background: var(--surface-primary);
-      backdrop-filter: blur(var(--blur-md));
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-xl);
-      padding: var(--space-xl);
-      color: var(--text-secondary);
-      line-height: 1.7;
+    /* Dimmed state when not in hero - MOBILE OPTIMIZED */
+    body.section-dimmed::after {
+      background: rgba(0, 0, 0, 0.08); /* Much lighter overlay for mobile */
     }
 
-    .bio-content h3 {
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      margin-bottom: var(--space-md);
-      font-weight: 700;
+    /* Disable section dimming completely on mobile */
+    @media (max-width: 768px) {
+      body.section-dimmed::after {
+        display: none; /* No dimming overlay on mobile */
+      }
     }
 
-    .bio-content p {
-      margin-bottom: var(--space-md);
+    [data-theme="light"] body {
+      background: #ffffff;
     }
 
-    .bio-content p:last-child {
-      margin-bottom: 0;
+    [data-theme="light"] body.section-dimmed::after {
+      background: rgba(0, 0, 0, 0.03); /* Very subtle light theme overlay */
     }
 
-    /* Navigation */
+    /* Light theme mobile optimization - disable dimming */
+    @media (max-width: 768px) {
+      [data-theme="light"] body.section-dimmed::after {
+        display: none; /* No dimming overlay on mobile light mode */
+      }
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      background: transparent !important;
+    }
+
+    /* Remove any default styles that might cause overlay */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
     .nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      background: var(--bg-primary);
-      backdrop-filter: blur(var(--blur-lg));
-      border-bottom: 1px solid var(--border-primary);
-      padding: var(--space-lg) 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      transform: translateY(0); /* Always visible on about page */
+      opacity: 1;
     }
 
-    .nav-container {
+    [data-theme="light"] .nav {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* ============================================
+       SECTIONS
+       ============================================ */
+    section {
+      position: relative;
+      z-index: 2;
+      background: transparent;
+      min-height: auto;
+    }
+
+    /* Make sure sections are visible */
+    #about-section,
+    #life-section {
+      display: block;
+      width: 100%;
+    }
+
+    /* Section containers - Compact layout with 3D perspective */
+    #about .container,
+    #life .container {
+      background: transparent !important;
+      padding: 2rem 3rem;
+      margin: 0.5rem auto;
       max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--space-lg);
+      perspective: 1500px;
+      -webkit-perspective: 1500px;
+      transform-style: preserve-3d;
+    }
+
+    /* Add specific spacing control between sections */
+    #about-section {
+      padding-top: 6rem; /* Space for fixed nav */
+    }
+
+    #life-section {
+      padding-top: 1rem; /* Minimal gap between sections */
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      position: relative;
+      z-index: 10;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px);
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] footer {
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* ============================================
+       FAB BUTTONS
+       ============================================ */
+    .bot-fab {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 9999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      /* Glassmorphism design to match hero card */
+      background: rgba(218, 14, 41, 0.1);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(218, 14, 41, 0.3);
+      box-shadow:
+        0 2px 8px rgba(218, 14, 41, 0.2),
+        0 8px 16px rgba(218, 14, 41, 0.15),
+        0 16px 32px rgba(218, 14, 41, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      color: rgba(218, 14, 41, 0.9);
+    }
+
+    .bot-fab:hover {
+      transform: scale(1.05) translateY(-2px);
+      background: rgba(218, 14, 41, 0.15);
+      border-color: rgba(218, 14, 41, 0.4);
+      box-shadow:
+        0 4px 16px rgba(218, 14, 41, 0.3),
+        0 16px 32px rgba(218, 14, 41, 0.2),
+        0 32px 64px rgba(218, 14, 41, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .bot-fab:active {
+      transform: scale(0.98);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      /* Glassmorphism design to match hero card */
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05) translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 1);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        0 32px 64px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] .theme-toggle {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      color: rgba(0, 0, 0, 0.7);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: rgba(0, 0, 0, 0.9);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        0 16px 32px rgba(0, 0, 0, 0.06),
+        0 32px 64px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ============================================
+       CARDS - Hero Card Styling
+       ============================================ */
+    .uni-card,
+    .card {
+      position: relative;
+
+      /* Pure glassmorphism - exactly like hero */
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      background: rgba(255, 255, 255, 0.02) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: clamp(16px, 4vw, 24px);
+
+      /* Enhanced 3D shadow layers - exactly like hero */
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.2),
+        0 24px 48px rgba(0, 0, 0, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 -20px 40px rgba(0, 0, 0, 0.05);
+
+      /* 3D transform setup - exactly like hero */
+      transform-style: preserve-3d !important;
+      -webkit-transform-style: preserve-3d !important;
+      transform-origin: center center;
+      transition: transform 0.08s cubic-bezier(0.2, 0, 0.2, 1);
+      will-change: transform;
+      transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+
+      padding: clamp(20px, 5vw, 32px);
+      margin-bottom: 24px;
+    }
+
+    /* 3D hover effect - exactly like hero */
+    @media (hover: hover) {
+      .uni-card:hover,
+      .card:hover {
+        transform: rotateX(-10deg) rotateY(10deg) translateZ(50px);
+      }
+    }
+
+    /* Light theme adjustments - exactly like hero */
+    [data-theme="light"] .uni-card,
+    [data-theme="light"] .card {
+      background: rgba(255, 255, 255, 0.85) !important;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04),
+        0 24px 48px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .uni-card:hover,
+    [data-theme="light"] .card:hover {
+      transform: rotateX(-10deg) rotateY(10deg) translateZ(50px);
+    }
+
+    /* Safari-specific card adjustments */
+    @supports (-webkit-backdrop-filter: blur()) {
+      .uni-card,
+      .card {
+        backdrop-filter: blur(16px) saturate(1.2);
+        -webkit-backdrop-filter: blur(16px) saturate(1.2);
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.08),
+          0 8px 16px rgba(0, 0, 0, 0.12),
+          0 16px 32px rgba(0, 0, 0, 0.15),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      }
+
+      [data-theme="light"] .uni-card,
+      [data-theme="light"] .card {
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.02),
+          0 8px 16px rgba(0, 0, 0, 0.03),
+          0 16px 32px rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    /* ============================================
+       LIFE SECTION LAYOUT
+       ============================================ */
+    .life-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem; /* Reduce gap between graph and content */
+      margin-top: 1rem; /* Reduce top margin */
+    }
+
+    .life-graph-column {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+    }
+
+    .life-content-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .knowledge-graph-container {
+      position: relative;
+      height: 600px;
+      min-height: 450px;
+      border-radius: clamp(16px, 4vw, 24px);
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.2),
+        0 24px 48px rgba(0, 0, 0, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 -20px 40px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .knowledge-graph-container {
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.03),
+        0 16px 32px rgba(0, 0, 0, 0.04),
+        0 24px 48px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+
+    /* Life cards container - show exactly 3 cards with matched height to graph */
+    .life-cards-container {
+      display: flex;
+      flex-direction: column;
+      height: 600px; /* Match graph height exactly */
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .life-card {
+      flex: 1; /* Each card takes 1/3 of the container height */
+      padding: 16px !important;
+      margin-bottom: 0 !important;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+    }
+
+    .life-card.highlighted {
+      transform: scale(1.02) translateZ(10px);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.2),
+        0 32px 64px rgba(0, 0, 0, 0.25),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="light"] .life-card.highlighted {
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        0 32px 64px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 2px rgba(0, 0, 0, 0.1);
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .life-card .uni-card-header {
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .life-card .uni-card-title {
+      font-size: 16px;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .life-card .uni-card-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+
+    .life-card .uni-card-body {
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
     }
 
-    .nav-logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      text-decoration: none;
+    .life-card .uni-card-meta {
+      font-size: 11px;
+      margin-bottom: 6px;
+      opacity: 0.8;
     }
 
-    .nav-links {
-      display: flex;
-      gap: var(--space-lg);
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .life-card .uni-card-description {
+      font-size: 12px;
+      line-height: 1.3;
+      margin: 0 0 8px 0;
+      flex: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
 
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-fast);
-      min-height: 44px;
-      display: flex;
-      align-items: center;
+    .life-card .uni-progress {
+      margin: 8px 0 0 0;
+      flex-shrink: 0;
     }
 
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--text-primary);
-      background: var(--surface-hover);
+    .life-card .uni-progress-header {
+      margin-bottom: 4px;
     }
 
-    .nav-link:focus {
-      outline: 2px solid var(--brand-red);
-      outline-offset: 2px;
+    .life-card .uni-progress-label,
+    .life-card .uni-progress-value {
+      font-size: 10px;
     }
 
-    /* Mobile Optimizations */
+    /* Remove stats and tags completely */
+    .life-card .uni-stats,
+    .life-card .uni-card-footer,
+    .life-card .uni-tags {
+      display: none !important;
+    }
+
+    /* Mobile responsive - stack layout */
     @media (max-width: 768px) {
-      .mind-map-svg {
-        height: 400px;
+      .life-cards-container {
+        height: 350px; /* Match mobile graph height */
+        gap: 6px;
       }
 
-      .mind-map-container {
-        padding: var(--space-lg);
-        min-height: 400px;
+      .life-card {
+        padding: 12px !important;
       }
 
-      .about-header {
-        padding: var(--space-xl) var(--space-lg);
+      .life-card .uni-card-title {
+        font-size: 14px;
       }
 
-      .bio-section {
-        padding: var(--space-lg);
-      }
-
-      .bio-content {
-        padding: var(--space-lg);
-      }
-
-      .instruction-item {
-        display: block;
-        margin-bottom: var(--space-xs);
-      }
-
-      .nav-links {
-        gap: var(--space-md);
-      }
-
-      .nav-link {
-        padding: var(--space-xs) var(--space-sm);
+      .life-card .uni-card-description {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
       }
     }
 
-    /* Reduced Motion Support */
-    @media (prefers-reduced-motion: reduce) {
-      .mind-node,
-      .connection-line,
-      .control-btn,
-      .node-circle {
-        transition: none !important;
+    /* Responsive: Stack on mobile with compact spacing */
+    @media (max-width: 768px) {
+      .life-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem; /* Reduce mobile gap */
+        margin-top: 0.5rem;
       }
 
-      .mind-node:hover .node-circle,
-      .mind-node:focus .node-circle {
-        filter: none;
-        transform: none;
+      .knowledge-graph-container {
+        height: 350px;
+        min-height: 280px;
       }
 
-      .mind-map-svg {
-        cursor: default;
+      /* Reduce mobile section spacing */
+      #about .container,
+      #life .container {
+        padding: 1.5rem 2rem; /* Less padding on mobile */
+        margin: 0.25rem auto; /* Minimal margins on mobile */
+      }
+
+      #about-section {
+        padding-top: 4rem; /* Less gap after nav on mobile */
+      }
+
+      #life-section {
+        padding-top: 0.5rem; /* Very minimal gap on mobile */
       }
     }
+
+    /* ============================================
+       MOBILE SPECIFIC
+       ============================================ */
+    @media (max-width: 768px) {
+      .bot-fab {
+        right: 16px !important;
+        bottom: 16px !important;
+        width: 56px !important;
+        height: 56px !important;
+      }
+
+      .theme-toggle {
+        left: 16px !important;
+        bottom: 16px !important;
+        width: 44px !important;
+        height: 44px !important;
+      }
+
+      /* iOS safe areas */
+      @supports (padding: max(0px)) {
+        .bot-fab {
+          right: max(16px, env(safe-area-inset-right)) !important;
+          bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        }
+
+        .theme-toggle {
+          left: max(16px, env(safe-area-inset-left)) !important;
+          bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        }
+      }
+    }
+
+    /* ============================================
+       UTILITIES
+       ============================================ */
+    .perf-monitor {
+      display: none;
+    }
+
   </style>
 </head>
 <body data-theme="dark">
-  <!-- Skip to main content -->
-  <a href="#main" class="skip-link">Skip to main content</a>
+  <!-- Skip to main content link for keyboard users -->
+  <a href="#content" class="skip-link">Skip to main content</a>
+
+  <!-- Screen reader announcements -->
+  <div class="sr-live-region" aria-live="polite" aria-atomic="true" id="announcements"></div>
+
+  <!-- Performance Monitor -->
+  <div class="perf-monitor" id="perfMonitor" aria-hidden="true">
+    FPS: <span id="fps">60</span><br>
+    Particles: <span id="partCount">0</span><br>
+    Device: <span id="deviceType">Desktop</span>
+  </div>
+
+  <!-- Hint Tooltip -->
+  <div class="hint-tooltip" id="hintTooltip" role="tooltip" aria-hidden="true"></div>
+
+  <!-- Particle Canvas (Base Layer) -->
+  <canvas id="particles" aria-hidden="true" role="presentation"></canvas>
 
   <!-- Navigation -->
-  <nav class="nav" role="navigation" aria-label="Primary navigation">
-    <div class="nav-container">
-      <a href="/" class="nav-logo" aria-label="Nihar - Home">NIHAR</a>
-      <ul class="nav-links" role="list">
-        <li><a href="/" class="nav-link">Home</a></li>
-        <li><a href="/work.html" class="nav-link">Work</a></li>
-        <li><a href="/about.html" class="nav-link active" aria-current="page">About</a></li>
-        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+  <nav class="nav" id="nav" aria-label="Primary navigation">
+    <div class="container">
+      <a href="index.html" class="logo kinetic" id="logo" data-magnetic
+         aria-label="Nihar - Home">NIHAR</a>
+      <ul role="list">
+        <li><a href="work.html" class="nav-link" data-magnetic>Work</a></li>
+        <li><a href="about.html" class="nav-link active" data-magnetic>About</a></li>
+        <li><a href="contact.html" class="nav-link" data-magnetic>Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- Main Content -->
-  <main id="main" role="main">
-    <!-- Header Section -->
-    <header class="about-header">
-      <h1 class="about-title">About Nihar</h1>
-      <p class="about-subtitle">
-        Product & New Media Designer who believes interfaces should have consciousness —
-        they should breathe, remember, and evolve with their users.
-      </p>
-    </header>
-
-    <!-- Interactive Mind Map Section -->
-    <section class="mind-map-section" aria-labelledby="mindmap-title">
-      <div class="mind-map-container">
-        <div class="mind-map-controls">
-          <button class="control-btn" id="reset-btn" aria-label="Reset mind map view">⌂</button>
-          <button class="control-btn" id="zoom-in-btn" aria-label="Zoom in">+</button>
-          <button class="control-btn" id="zoom-out-btn" aria-label="Zoom out">−</button>
-        </div>
-
-        <svg class="mind-map-svg" id="mindMapSvg" viewBox="0 0 800 600" role="img"
-             aria-labelledby="mindmap-title" aria-describedby="mindmap-desc">
-          <title id="mindmap-title">Interactive mind map of Nihar's skills and expertise</title>
-          <desc id="mindmap-desc">Navigate with keyboard or mouse to explore different skill categories including design, development, and domain expertise</desc>
-
-          <!-- Connection Lines (drawn first, behind nodes) -->
-          <g class="connections" aria-hidden="true">
-            <!-- Center to main categories -->
-            <line x1="400" y1="300" x2="400" y2="180" class="connection-line" data-from="center" data-to="skills"/>
-            <line x1="400" y1="300" x2="600" y2="220" class="connection-line" data-from="center" data-to="tools"/>
-            <line x1="400" y1="300" x2="600" y2="380" class="connection-line" data-from="center" data-to="domains"/>
-            <line x1="400" y1="300" x2="200" y2="380" class="connection-line" data-from="center" data-to="interests"/>
-            <line x1="400" y1="300" x2="200" y2="220" class="connection-line" data-from="center" data-to="education"/>
-
-            <!-- Skills subcategories -->
-            <line x1="400" y1="180" x2="320" y2="120" class="connection-line" data-from="skills" data-to="design-systems"/>
-            <line x1="400" y1="180" x2="480" y2="120" class="connection-line" data-from="skills" data-to="ux-research"/>
-            <line x1="400" y1="180" x2="350" y2="100" class="connection-line" data-from="skills" data-to="prototyping"/>
-            <line x1="400" y1="180" x2="450" y2="100" class="connection-line" data-from="skills" data-to="data-viz"/>
-
-            <!-- Tools subcategories -->
-            <line x1="600" y1="220" x2="680" y2="160" class="connection-line" data-from="tools" data-to="figma"/>
-            <line x1="600" y1="220" x2="720" y2="200" class="connection-line" data-from="tools" data-to="react"/>
-            <line x1="600" y1="220" x2="700" y2="240" class="connection-line" data-from="tools" data-to="touchdesigner"/>
-
-            <!-- Domains subcategories -->
-            <line x1="600" y1="380" x2="720" y2="320" class="connection-line" data-from="domains" data-to="aviation"/>
-            <line x1="600" y1="380" x2="680" y2="420" class="connection-line" data-from="domains" data-to="enterprise"/>
-            <line x1="600" y1="380" x2="720" y2="440" class="connection-line" data-from="domains" data-to="ai-interfaces"/>
-
-            <!-- Interests subcategories -->
-            <line x1="200" y1="380" x2="120" y2="320" class="connection-line" data-from="interests" data-to="consciousness"/>
-            <line x1="200" y1="380" x2="80" y2="380" class="connection-line" data-from="interests" data-to="sci-fi"/>
-            <line x1="200" y1="380" x2="120" y2="440" class="connection-line" data-from="interests" data-to="gaming"/>
-
-            <!-- Education subcategories -->
-            <line x1="200" y1="220" x2="120" y2="160" class="connection-line" data-from="education" data-to="nid"/>
-            <line x1="200" y1="220" x2="80" y2="220" class="connection-line" data-from="education" data-to="jntu"/>
-          </g>
-
-          <!-- Mind Map Nodes -->
-          <g class="mind-nodes">
-            <!-- Center Node -->
-            <g class="mind-node" data-category="center" data-id="center" tabindex="0" role="button"
-               aria-label="Nihar Sunkara - Product Designer">
-              <circle cx="400" cy="300" r="45" class="node-circle"/>
-              <text x="400" y="296" class="node-text">NIHAR</text>
-              <text x="400" y="308" class="node-subtext">Product Designer</text>
-            </g>
-
-            <!-- Main Categories -->
-            <g class="mind-node" data-category="skills" data-id="skills" tabindex="0" role="button"
-               aria-label="Core Skills - Design and UX">
-              <circle cx="400" cy="180" r="35" class="node-circle"/>
-              <text x="400" y="176" class="node-text">Skills</text>
-              <text x="400" y="188" class="node-subtext">Core Design</text>
-            </g>
-
-            <g class="mind-node" data-category="tools" data-id="tools" tabindex="0" role="button"
-               aria-label="Tools and Technologies">
-              <circle cx="600" cy="220" r="30" class="node-circle"/>
-              <text x="600" y="216" class="node-text">Tools</text>
-              <text x="600" y="228" class="node-subtext">Tech Stack</text>
-            </g>
-
-            <g class="mind-node" data-category="domains" data-id="domains" tabindex="0" role="button"
-               aria-label="Domain Expertise">
-              <circle cx="600" cy="380" r="30" class="node-circle"/>
-              <text x="600" y="376" class="node-text">Domains</text>
-              <text x="600" y="388" class="node-subtext">Expertise</text>
-            </g>
-
-            <g class="mind-node" data-category="interests" data-id="interests" tabindex="0" role="button"
-               aria-label="Personal Interests">
-              <circle cx="200" cy="380" r="30" class="node-circle"/>
-              <text x="200" y="376" class="node-text">Interests</text>
-              <text x="200" y="388" class="node-subtext">Personal</text>
-            </g>
-
-            <g class="mind-node" data-category="education" data-id="education" tabindex="0" role="button"
-               aria-label="Educational Background">
-              <circle cx="200" cy="220" r="30" class="node-circle"/>
-              <text x="200" y="216" class="node-text">Education</text>
-              <text x="200" y="228" class="node-subtext">Background</text>
-            </g>
-
-            <!-- Skills Subcategories -->
-            <g class="mind-node" data-category="skills" data-id="design-systems" tabindex="0" role="button"
-               aria-label="Design Systems - 4+ years experience">
-              <circle cx="320" cy="120" r="20" class="node-circle"/>
-              <text x="320" y="124" class="node-text" style="font-size: 11px">Design Systems</text>
-            </g>
-
-            <g class="mind-node" data-category="skills" data-id="ux-research" tabindex="0" role="button"
-               aria-label="UX Research - User interviews and testing">
-              <circle cx="480" cy="120" r="20" class="node-circle"/>
-              <text x="480" y="124" class="node-text" style="font-size: 11px">UX Research</text>
-            </g>
-
-            <g class="mind-node" data-category="skills" data-id="prototyping" tabindex="0" role="button"
-               aria-label="Prototyping - High-fidelity interactive prototypes">
-              <circle cx="350" cy="100" r="18" class="node-circle"/>
-              <text x="350" y="104" class="node-text" style="font-size: 10px">Prototyping</text>
-            </g>
-
-            <g class="mind-node" data-category="skills" data-id="data-viz" tabindex="0" role="button"
-               aria-label="Data Visualization - Analytics dashboards">
-              <circle cx="450" cy="100" r="18" class="node-circle"/>
-              <text x="450" y="104" class="node-text" style="font-size: 10px">Data Viz</text>
-            </g>
-
-            <!-- Tools Subcategories -->
-            <g class="mind-node" data-category="tools" data-id="figma" tabindex="0" role="button"
-               aria-label="Figma - Expert level, plugin development">
-              <circle cx="680" cy="160" r="18" class="node-circle"/>
-              <text x="680" y="164" class="node-text" style="font-size: 10px">Figma</text>
-            </g>
-
-            <g class="mind-node" data-category="tools" data-id="react" tabindex="0" role="button"
-               aria-label="React - Frontend development and prototyping">
-              <circle cx="720" cy="200" r="18" class="node-circle"/>
-              <text x="720" y="204" class="node-text" style="font-size: 10px">React</text>
-            </g>
-
-            <g class="mind-node" data-category="tools" data-id="touchdesigner" tabindex="0" role="button"
-               aria-label="TouchDesigner - Creative coding and installations">
-              <circle cx="700" cy="240" r="18" class="node-circle"/>
-              <text x="700" y="244" class="node-text" style="font-size: 10px">TouchDesigner</text>
-            </g>
-
-            <!-- Domain Subcategories -->
-            <g class="mind-node" data-category="domains" data-id="aviation" tabindex="0" role="button"
-               aria-label="Aviation - Air India systems and operations">
-              <circle cx="720" cy="320" r="18" class="node-circle"/>
-              <text x="720" y="324" class="node-text" style="font-size: 10px">Aviation</text>
-            </g>
-
-            <g class="mind-node" data-category="domains" data-id="enterprise" tabindex="0" role="button"
-               aria-label="Enterprise - B2B applications and workflows">
-              <circle cx="680" cy="420" r="18" class="node-circle"/>
-              <text x="680" y="424" class="node-text" style="font-size: 10px">Enterprise</text>
-            </g>
-
-            <g class="mind-node" data-category="domains" data-id="ai-interfaces" tabindex="0" role="button"
-               aria-label="AI Interfaces - Machine learning and generative UI">
-              <circle cx="720" cy="440" r="18" class="node-circle"/>
-              <text x="720" y="444" class="node-text" style="font-size: 10px">AI/ML UI</text>
-            </g>
-
-            <!-- Interest Subcategories -->
-            <g class="mind-node" data-category="interests" data-id="consciousness" tabindex="0" role="button"
-               aria-label="Consciousness Studies - Interface philosophy">
-              <circle cx="120" cy="320" r="18" class="node-circle"/>
-              <text x="120" y="324" class="node-text" style="font-size: 10px">Consciousness</text>
-            </g>
-
-            <g class="mind-node" data-category="interests" data-id="sci-fi" tabindex="0" role="button"
-               aria-label="Science Fiction - Currently reading Gödel Escher Bach">
-              <circle cx="80" cy="380" r="18" class="node-circle"/>
-              <text x="80" y="384" class="node-text" style="font-size: 10px">Sci-Fi</text>
-            </g>
-
-            <g class="mind-node" data-category="interests" data-id="gaming" tabindex="0" role="button"
-               aria-label="Gaming - Currently playing Baldur's Gate 3">
-              <circle cx="120" cy="440" r="18" class="node-circle"/>
-              <text x="120" y="444" class="node-text" style="font-size: 10px">Gaming</text>
-            </g>
-
-            <!-- Education Subcategories -->
-            <g class="mind-node" data-category="education" data-id="nid" tabindex="0" role="button"
-               aria-label="National Institute of Design - Master's in New Media Design">
-              <circle cx="120" cy="160" r="18" class="node-circle"/>
-              <text x="120" y="164" class="node-text" style="font-size: 10px">NID</text>
-            </g>
-
-            <g class="mind-node" data-category="education" data-id="jntu" tabindex="0" role="button"
-               aria-label="JNTU - Bachelor's in Fine Arts">
-              <circle cx="80" cy="220" r="18" class="node-circle"/>
-              <text x="80" y="224" class="node-text" style="font-size: 10px">JNTU</text>
-            </g>
-          </g>
-        </svg>
-
-        <div class="mind-map-instructions" aria-label="Mind map navigation instructions">
-          <span class="instruction-item">
-            <kbd class="instruction-key">Tab</kbd>
-            <span>Navigate nodes</span>
-          </span>
-          <span class="instruction-item">
-            <kbd class="instruction-key">Enter</kbd>
-            <span>Select</span>
-          </span>
-          <span class="instruction-item">
-            <kbd class="instruction-key">Arrows</kbd>
-            <span>Move between connected nodes</span>
-          </span>
-          <span class="instruction-item">
-            <kbd class="instruction-key">Esc</kbd>
-            <span>Reset view</span>
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bio Section -->
-    <section class="bio-section">
-      <div class="bio-content">
-        <h3>The Journey</h3>
-        <p>
-          I'm a Product & New Media Designer currently transforming digital experiences at Air India DesignLAB.
-          My work serves 450+ daily users across operations, crew management, and passenger systems.
-        </p>
-        <p>
-          With a Master's from the National Institute of Design (NID) and 4+ years of experience,
-          I specialize in design systems that scale, data visualizations that inform, and interfaces that adapt.
-          I believe the best digital products feel alive — they breathe, remember, and evolve with their users.
-        </p>
-        <p>
-          Beyond design, I explore consciousness through technology. My installations have investigated ego dissolution,
-          dream-to-meaning engines, and the intersection of AI with human perception. I'm fascinated by how interfaces
-          can become more than tools — they can become partners in human creativity.
-        </p>
-        <p>
-          When not designing, you'll find me reading Douglas Hofstadter, playing Baldur's Gate 3,
-          or prototyping the next generation of conscious interfaces.
-        </p>
-      </div>
-    </section>
+  <main id="content" role="main">
+    <section id="about-section" aria-labelledby="about-title"></section>
+    <section id="life-section" aria-labelledby="life-title"></section>
   </main>
 
-  <!-- Theme Toggle & Bot -->
-  <div id="theme-toggle-container"></div>
+  <!-- Footer -->
+  <footer>
+    Built as a living interface. © Nihar — <span id="year"></span>
+  </footer>
+
+  <!-- Bot Chat Container -->
   <div id="bot-container"></div>
 
-  <!-- JavaScript -->
+  <!-- Portfolio Deck Container -->
+  <div id="deck-container"></div>
+
+  <!-- JavaScript Files - Core First -->
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/lazy-loader.js"></script>
   <script src="js/micro-interactions.js"></script>
   <script src="js/focus-management.js"></script>
+  <script src="js/navigation.js"></script>
   <script src="js/chat.js"></script>
+  <script src="js/deck.js"></script>
+  <script src="js/life.js"></script>
+  <script src="js/mobile-enhancements.js"></script>
 
+  <!-- About page specific JavaScript -->
   <script>
-    // Interactive Mind Map
-    class InteractiveMindMap {
-      constructor() {
-        this.svg = document.getElementById('mindMapSvg');
-        this.nodes = document.querySelectorAll('.mind-node');
-        this.connections = document.querySelectorAll('.connection-line');
-        this.currentFocus = null;
-        this.scale = 1;
-        this.translateX = 0;
-        this.translateY = 0;
-        this.isDragging = false;
-        this.dragStart = { x: 0, y: 0 };
+    // About Page Sections Module
+    const AboutSections = {
+      async init() {
+        console.log('📄 Loading about page sections...');
 
-        // Node relationships for arrow navigation
-        this.nodeConnections = {
-          center: ['skills', 'tools', 'domains', 'interests', 'education'],
-          skills: ['center', 'design-systems', 'ux-research', 'prototyping', 'data-viz'],
-          tools: ['center', 'figma', 'react', 'touchdesigner'],
-          domains: ['center', 'aviation', 'enterprise', 'ai-interfaces'],
-          interests: ['center', 'consciousness', 'sci-fi', 'gaming'],
-          education: ['center', 'nid', 'jntu'],
-          'design-systems': ['skills'],
-          'ux-research': ['skills'],
-          'prototyping': ['skills'],
-          'data-viz': ['skills'],
-          figma: ['tools'],
-          react: ['tools'],
-          touchdesigner: ['tools'],
-          aviation: ['domains'],
-          enterprise: ['domains'],
-          'ai-interfaces': ['domains'],
-          consciousness: ['interests'],
-          'sci-fi': ['interests'],
-          gaming: ['interests'],
-          nid: ['education'],
-          jntu: ['education']
-        };
+        try {
+          await this.loadAbout();
+          await this.loadLife();
 
-        this.init();
-      }
+          this.setupInteractions();
 
-      init() {
-        // Check for reduced motion
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          // Re-initialize navigation and theme after sections load
+          setTimeout(() => {
+            // Re-initialize navigation to observe new sections
+            if (window.Navigation && Navigation.setupScrollSpy) {
+              console.log('🔄 Re-initializing navigation for loaded sections...');
+              // Update sections for about page
+              Navigation.sections = ['about', 'life'];
+              Navigation.setupScrollSpy();
+            }
 
-        // Add keyboard support
-        this.nodes.forEach(node => {
-          node.addEventListener('click', (e) => this.handleNodeClick(e));
-          node.addEventListener('keydown', (e) => this.handleNodeKeydown(e));
-          node.addEventListener('focus', (e) => this.handleNodeFocus(e));
-          node.addEventListener('blur', (e) => this.handleNodeBlur(e));
-        });
+            // Re-initialize theme snap scrolling
+            if (window.Theme && Theme.initMobileSnapScroll) {
+              Theme.initMobileSnapScroll();
+            }
+          }, 100);
 
-        // Add control buttons
-        document.getElementById('reset-btn').addEventListener('click', () => this.resetView());
-        document.getElementById('zoom-in-btn').addEventListener('click', () => this.zoomIn());
-        document.getElementById('zoom-out-btn').addEventListener('click', () => this.zoomOut());
+          console.log('✅ All about page sections loaded');
+        } catch (error) {
+          console.error('Error loading about page sections:', error);
+        }
+      },
 
-        // Add pan/zoom support (only if reduced motion is disabled)
-        if (!prefersReducedMotion) {
-          this.svg.addEventListener('mousedown', (e) => this.startDrag(e));
-          this.svg.addEventListener('mousemove', (e) => this.drag(e));
-          this.svg.addEventListener('mouseup', () => this.endDrag());
-          this.svg.addEventListener('wheel', (e) => this.handleWheel(e));
+      async loadAbout() {
+        const html = `
+          <section id="about" aria-label="About">
+            <div class="container">
+              <div class="section-head">
+                <h2 class="section-title">About</h2>
+                <div class="section-sub">The human behind the consciousness</div>
+              </div>
+
+              <!-- Stats Grid -->
+              <div class="uni-card-grid" style="margin-bottom: 32px;">
+                <article class="uni-card">
+                  <div class="uni-card-body" style="text-align: center;">
+                    <div class="uni-metric">
+                      <span class="uni-metric-value">4+</span>
+                      <span class="uni-metric-label">Years Experience</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="uni-card">
+                  <div class="uni-card-body" style="text-align: center;">
+                    <div class="uni-metric">
+                      <span class="uni-metric-value">12</span>
+                      <span class="uni-metric-label">Products Shipped</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="uni-card">
+                  <div class="uni-card-body" style="text-align: center;">
+                    <div class="uni-metric">
+                      <span class="uni-metric-value">450+</span>
+                      <span class="uni-metric-label">Daily Active Users</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Info Cards -->
+              <div class="uni-card-grid">
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">Current Role</h3>
+                    <span class="uni-card-badge">Position</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-description">
+                      I'm <strong>Nihar</strong>, building living interfaces at <strong>Air India DesignLAB</strong>.
+                      I specialize in design systems and data visualization that reduce decision latency.
+                    </p>
+                  </div>
+                </article>
+
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">Design Philosophy</h3>
+                    <span class="uni-card-badge">Approach</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-description">
+                      Interfaces should breathe, remember, and evolve. Every system should reduce the time
+                      between thought and action.
+                    </p>
+                  </div>
+                </article>
+
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">Core Expertise</h3>
+                    <span class="uni-card-badge">Skills</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <div class="uni-tags">
+                      <span class="uni-tag">Design Systems</span>
+                      <span class="uni-tag">Data Viz</span>
+                      <span class="uni-tag">HCI</span>
+                      <span class="uni-tag">Prototyping</span>
+                      <span class="uni-tag">Creative Coding</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Experience Timeline -->
+              <h2 class="section-title" style="margin-top: 60px; margin-bottom: 32px;">Experience</h2>
+
+              <div class="uni-card-grid">
+                <!-- Current Position -->
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">Product Designer</h3>
+                    <span class="uni-card-badge">Current</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-meta">Air India Limited • Aug 2024 - Present</p>
+                    <p class="uni-card-description">
+                      Leading design transformation for India's flag carrier. Building scalable design systems and
+                      reimagining digital experiences.
+                    </p>
+                  </div>
+
+                  <footer class="uni-card-footer">
+                    <div class="uni-tags">
+                      <span class="uni-tag">Design Systems</span>
+                      <span class="uni-tag">Aviation UX</span>
+                    </div>
+                  </footer>
+                </article>
+
+                <!-- ISB -->
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">Digital Learning Designer</h3>
+                    <span class="uni-card-badge">Contract</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-meta">Indian School of Business • Sep - Dec 2023</p>
+                    <p class="uni-card-description">
+                      Designed digital learning experiences and interactive educational interfaces for executive
+                      education programs.
+                    </p>
+                  </div>
+
+                  <footer class="uni-card-footer">
+                    <div class="uni-tags">
+                      <span class="uni-tag">EdTech</span>
+                      <span class="uni-tag">Learning Design</span>
+                    </div>
+                  </footer>
+                </article>
+
+                <!-- WONGDOODY -->
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">UX Researcher</h3>
+                    <span class="uni-card-badge">Internship</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-meta">WONGDOODY • Mar - Oct 2021</p>
+                    <p class="uni-card-description">
+                      Conducted user research and created wireframes for digital products. Focused on HCI principles
+                      and usability testing.
+                    </p>
+                  </div>
+
+                  <footer class="uni-card-footer">
+                    <div class="uni-tags">
+                      <span class="uni-tag">UX Research</span>
+                      <span class="uni-tag">User Testing</span>
+                    </div>
+                  </footer>
+                </article>
+              </div>
+
+              <!-- Education -->
+              <h2 class="section-title" style="margin-top: 60px; margin-bottom: 32px;">Education</h2>
+
+              <div class="uni-card-grid">
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">National Institute of Design</h3>
+                    <span class="uni-card-badge">Masters</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-meta">Master's in New Media Design • 2021-2023</p>
+                    <div class="uni-tags">
+                      <span class="uni-tag">Prototyping</span>
+                      <span class="uni-tag">Systems Thinking</span>
+                      <span class="uni-tag">Creative Coding</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="uni-card">
+                  <header class="uni-card-header">
+                    <h3 class="uni-card-title">JNTU</h3>
+                    <span class="uni-card-badge">Bachelors</span>
+                  </header>
+
+                  <div class="uni-card-body">
+                    <p class="uni-card-meta">BFA in Design & Applied Arts • 2016-2020</p>
+                    <div class="uni-tags">
+                      <span class="uni-tag">Visual Design</span>
+                      <span class="uni-tag">Typography</span>
+                      <span class="uni-tag">Adobe Suite</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Mobile scroll indicators -->
+              <div class="uni-scroll-indicators" id="aboutIndicators"></div>
+            </div>
+          </section>
+        `;
+
+        const aboutSection = document.getElementById('about-section');
+        if (aboutSection) {
+          aboutSection.innerHTML = html;
+        }
+      },
+
+      async loadLife() {
+        const html = `
+          <section id="life" aria-label="Life">
+            <div class="container">
+              <div class="section-head">
+                <h2 class="section-title">Life</h2>
+                <div class="section-sub">Books & Games that shape my thinking</div>
+              </div>
+
+              <!-- Side-by-side Layout -->
+              <div class="life-layout">
+                <!-- Left Column: Knowledge Graph -->
+                <div class="life-graph-column">
+                  <div class="knowledge-graph-container">
+                    <canvas id="knowledgeGraph"></canvas>
+                    <div class="thought-stream" id="thoughtStream">
+                      <!-- Thoughts will appear here -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Column: Books & Games -->
+                <div class="life-content-column">
+                  <!-- Cards Container - No tabs needed -->
+                  <div class="life-cards-container" id="lifeCardsContainer">
+
+                  <!-- Book: Gödel, Escher, Bach -->
+                  <article class="uni-card life-card" data-type="book" data-id="geb">
+                    <header class="uni-card-header">
+                      <h3 class="uni-card-title">Gödel, Escher, Bach</h3>
+                      <span class="uni-card-badge">Book</span>
+                    </header>
+
+                    <div class="uni-card-body">
+                      <p class="uni-card-meta">Douglas Hofstadter</p>
+                      <p class="uni-card-description">
+                        An eternal golden braid exploring consciousness, recursion, and the nature of intelligence.
+                      </p>
+
+                      <div class="uni-progress">
+                        <div class="uni-progress-header">
+                          <span class="uni-progress-label">Reading Progress</span>
+                          <span class="uni-progress-value">35%</span>
+                        </div>
+                        <div class="uni-progress-bar">
+                          <div class="uni-progress-fill" style="width: 35%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+
+                  <!-- Game: Baldur's Gate 3 -->
+                  <article class="uni-card life-card" data-type="game" data-id="bg3">
+                    <header class="uni-card-header">
+                      <h3 class="uni-card-title">Baldur's Gate 3</h3>
+                      <span class="uni-card-badge">Game</span>
+                    </header>
+
+                    <div class="uni-card-body">
+                      <p class="uni-card-meta">RPG • Fantasy</p>
+                      <p class="uni-card-description">
+                        Masterclass in narrative design and player agency. Every choice ripples through the world.
+                      </p>
+
+                      <div class="uni-progress">
+                        <div class="uni-progress-header">
+                          <span class="uni-progress-label">Story Progress</span>
+                          <span class="uni-progress-value">78%</span>
+                        </div>
+                        <div class="uni-progress-bar">
+                          <div class="uni-progress-fill" style="width: 78%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+
+                  <!-- Book: Design of Everyday Things -->
+                  <article class="uni-card life-card" data-type="book" data-id="doet">
+                    <header class="uni-card-header">
+                      <h3 class="uni-card-title">The Design of Everyday Things</h3>
+                      <span class="uni-card-badge">Book</span>
+                    </header>
+
+                    <div class="uni-card-body">
+                      <p class="uni-card-meta">Don Norman</p>
+                      <p class="uni-card-description">
+                        Foundational text on human-centered design and the psychology of everyday interactions.
+                      </p>
+
+                      <div class="uni-progress">
+                        <div class="uni-progress-header">
+                          <span class="uni-progress-label">Reading Progress</span>
+                          <span class="uni-progress-value">100%</span>
+                        </div>
+                        <div class="uni-progress-bar">
+                          <div class="uni-progress-fill" style="width: 100%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+
+                  </div> <!-- Close life-cards-container -->
+                </div> <!-- Close life-content-column -->
+              </div> <!-- Close life-layout -->
+
+              <!-- Mobile scroll indicators -->
+              <div class="uni-scroll-indicators" id="lifeIndicators"></div>
+            </div>
+          </section>
+        `;
+
+        const lifeSection = document.getElementById('life-section');
+        if (lifeSection) {
+          lifeSection.innerHTML = html;
         }
 
-        // Initialize theme
+        // Initialize the Life section interactions
+        if (window.initializeLife) {
+          initializeLife();
+        }
+
+        // Initialize enhanced life interactions
+        this.initLifeInteractions();
+      },
+
+      initLifeInteractions() {
+        // Enhanced life section with graph-card interaction
+        const lifeData = {
+          'geb': { type: 'book', node: 'consciousness', theme: '#10b981' },
+          'bg3': { type: 'game', node: 'narrative', theme: '#3b82f6' },
+          'doet': { type: 'book', node: 'design', theme: '#f59e0b' }
+        };
+
+        // Initialize graph nodes (if graph exists)
+        const setupGraphNodes = () => {
+          const canvas = document.getElementById('knowledgeGraph');
+          if (!canvas) return;
+
+          // Performance optimized click handler
+          canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Simplified node detection for performance
+            this.handleGraphNodeClick(x, y, lifeData);
+          }, { passive: true });
+        };
+
+        // Initialize after DOM load
+        setTimeout(setupGraphNodes, 100);
+      },
+
+      handleGraphNodeClick(x, y, lifeData) {
+        // Performance-optimized node click handler
+        const cards = document.querySelectorAll('.life-card');
+
+        // Remove existing highlights efficiently
+        cards.forEach(card => card.classList.remove('highlighted'));
+
+        // Simple click zones for performance (instead of complex calculations)
+        let targetCard = null;
+        if (x < 200 && y < 200) targetCard = 'geb';
+        else if (x > 200 && y < 200) targetCard = 'bg3';
+        else if (y > 200) targetCard = 'doet';
+
+        if (targetCard) {
+          const card = document.querySelector(`[data-id="${targetCard}"]`);
+          if (card) {
+            // Performance-optimized highlight with RAF
+            requestAnimationFrame(() => {
+              card.classList.add('highlighted');
+
+              // Create particle burst effect
+              if (window.Particles && typeof Particles.createBurst === 'function') {
+                const rect = card.getBoundingClientRect();
+                Particles.createBurst(
+                  rect.left + rect.width / 2,
+                  rect.top + rect.height / 2,
+                  lifeData[targetCard]?.theme || '#10b981'
+                );
+              }
+            });
+
+            // Auto-remove highlight after 3 seconds
+            setTimeout(() => {
+              if (card) card.classList.remove('highlighted');
+            }, 3000);
+          }
+        }
+      },
+
+      setupInteractions() {
+        // Add hover effects to all unified cards
+        const cards = document.querySelectorAll('.uni-card');
+        cards.forEach(card => {
+          card.addEventListener('mouseenter', () => {
+            // Track interaction
+            if (window.State) {
+              State.interactionPatterns.explorer++;
+            }
+          });
+
+          card.addEventListener('click', (e) => {
+            // Track deep dive
+            if (window.State) {
+              State.interactionPatterns.deep_diver++;
+            }
+
+            // Animate card feedback
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+              card.style.transform = '';
+            }, 150);
+          });
+        });
+      }
+    };
+
+    // Export
+    window.AboutSections = AboutSections;
+  </script>
+
+  <!-- Main Initialization Script -->
+  <script>
+    // Initialize global State object properly
+    window.State = window.State || {};
+    State.heatmap = Array(10).fill(null).map(() => Array(10).fill(0));
+    State.visits = (State.visits || 0) + 1;
+    State.theme = 'dark';
+    State.skipFrames = 2;
+    State.pageLoadTime = Date.now();
+    State.interactionPatterns = State.interactionPatterns || {
+      explorer: 0,
+      deep_diver: 0,
+      speed_reader: 0,
+      conversationalist: 0
+    };
+
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Navigation visibility handler - always visible on about page
+    function handleNavVisibility() {
+      const nav = document.getElementById('nav');
+      nav.classList.add('visible');
+      document.body.classList.add('scrolled');
+    }
+
+    // Main initialization
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🚀 Initializing About Page...');
+
+      try {
+        // Initialize core systems with error handling
+        if (window.Config) {
+          try {
+            Config.init();
+          } catch (e) {
+            console.warn('Config init failed:', e);
+          }
+        }
+
+        // Initialize LazyLoader first for performance optimization
+        if (window.LazyLoader) {
+          try {
+            LazyLoader.init();
+            console.log('✅ LazyLoader initialized');
+          } catch (e) {
+            console.warn('LazyLoader init failed:', e);
+          }
+        }
+
+        if (window.Utils) {
+          try {
+            Utils.init();
+          } catch (e) {
+            console.warn('Utils init failed:', e);
+          }
+        }
+
         if (window.Theme) {
           Theme.init();
         }
 
-        console.log('✅ Interactive Mind Map initialized');
-      }
+        // Particles should already be running, just add event handlers
+        if (window.Particles && Particles.initialized) {
+          console.log('✅ Particles already running, adding event handlers...');
 
-      handleNodeClick(e) {
-        const node = e.currentTarget;
-        const nodeId = node.dataset.id;
-        this.selectNode(nodeId);
-      }
+          // Handle scroll events
+          let scrollTimer = null;
+          window.addEventListener('scroll', () => {
+            document.body.classList.add('scrolling');
+            handleNavVisibility();
 
-      handleNodeKeydown(e) {
-        const node = e.currentTarget;
-        const nodeId = node.dataset.id;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+              document.body.classList.remove('scrolling');
+            }, 150);
+          }, { passive: true });
 
-        switch (e.key) {
-          case 'Enter':
-          case ' ':
-            e.preventDefault();
-            this.selectNode(nodeId);
-            break;
-          case 'Escape':
-            e.preventDefault();
-            this.resetView();
-            this.focusNode('center');
-            break;
-          case 'ArrowUp':
-          case 'ArrowDown':
-          case 'ArrowLeft':
-          case 'ArrowRight':
-            e.preventDefault();
-            this.navigateWithArrows(nodeId, e.key);
-            break;
-          case 'Home':
-            e.preventDefault();
-            this.focusNode('center');
-            break;
-        }
-      }
+          handleNavVisibility();
 
-      navigateWithArrows(currentNodeId, direction) {
-        const connectedNodes = this.nodeConnections[currentNodeId] || [];
-        if (connectedNodes.length === 0) return;
-
-        // Simple navigation: cycle through connected nodes
-        const currentIndex = connectedNodes.indexOf(this.currentFocus?.dataset?.id);
-        let nextIndex;
-
-        switch (direction) {
-          case 'ArrowRight':
-          case 'ArrowDown':
-            nextIndex = currentIndex < connectedNodes.length - 1 ? currentIndex + 1 : 0;
-            break;
-          case 'ArrowLeft':
-          case 'ArrowUp':
-            nextIndex = currentIndex > 0 ? currentIndex - 1 : connectedNodes.length - 1;
-            break;
+          // Cleanup particles periodically
+          setInterval(() => {
+            if (window.Particles && Particles.cleanup) {
+              Particles.cleanup();
+            }
+          }, 5000);
         }
 
-        const nextNodeId = connectedNodes[nextIndex];
-        this.focusNode(nextNodeId);
-      }
-
-      handleNodeFocus(e) {
-        const node = e.currentTarget;
-        const nodeId = node.dataset.id;
-        this.currentFocus = node;
-        this.highlightConnections(nodeId);
-      }
-
-      handleNodeBlur(e) {
-        this.clearConnectionHighlights();
-      }
-
-      selectNode(nodeId) {
-        // Provide detailed information about the node
-        const nodeInfo = this.getNodeInfo(nodeId);
-        this.announceNodeSelection(nodeInfo);
-
-        // Visual feedback
-        this.highlightNode(nodeId);
-      }
-
-      highlightNode(nodeId) {
-        // Remove previous highlights
-        this.nodes.forEach(node => node.classList.remove('highlighted'));
-
-        // Add highlight to current node
-        const node = document.querySelector(`[data-id="${nodeId}"]`);
-        if (node) {
-          node.classList.add('highlighted');
-        }
-      }
-
-      highlightConnections(nodeId) {
-        const connectedNodes = this.nodeConnections[nodeId] || [];
-
-        this.connections.forEach(line => {
-          const from = line.dataset.from;
-          const to = line.dataset.to;
-
-          if (from === nodeId || to === nodeId) {
-            line.classList.add('active');
+        if (window.Navigation) {
+          try {
+            Navigation.init();
+          } catch (e) {
+            console.warn('Navigation init failed:', e);
           }
-        });
-      }
-
-      clearConnectionHighlights() {
-        this.connections.forEach(line => {
-          line.classList.remove('active');
-        });
-      }
-
-      focusNode(nodeId) {
-        const node = document.querySelector(`[data-id="${nodeId}"]`);
-        if (node) {
-          node.focus();
-        }
-      }
-
-      getNodeInfo(nodeId) {
-        const nodeData = {
-          center: "Nihar Sunkara - Product & New Media Designer specializing in consciousness-aware interfaces",
-          skills: "Core design skills including systems design, UX research, prototyping, and data visualization",
-          tools: "Technology stack: Figma for design, React for development, TouchDesigner for creative coding",
-          domains: "Domain expertise in aviation systems, enterprise applications, and AI interface design",
-          interests: "Personal interests in consciousness studies, science fiction, and interactive gaming",
-          education: "Educational background: Master's from NID, Bachelor's from JNTU",
-          'design-systems': "4+ years experience building scalable design systems serving 450+ daily users",
-          'ux-research': "User interviews, usability testing, and behavioral analysis for aviation interfaces",
-          'prototyping': "High-fidelity interactive prototypes using Figma, Framer, and custom code",
-          'data-viz': "Real-time dashboards and analytics visualization for operational decision-making",
-          figma: "Expert-level Figma usage including plugin development (Pixel Radar QA tool)",
-          react: "Frontend development for prototyping and production applications",
-          touchdesigner: "Creative coding for installations and consciousness exploration projects",
-          aviation: "3+ years designing for Air India operations, crew management, and passenger systems",
-          enterprise: "B2B application design with focus on workflow optimization and data density",
-          'ai-interfaces': "Designing for AI-powered systems, chatbots, and machine learning workflows",
-          consciousness: "Exploring interfaces that adapt to human consciousness states and cognitive load",
-          'sci-fi': "Currently reading Gödel, Escher, Bach - fascinated by recursive systems and emergence",
-          gaming: "Playing Baldur's Gate 3 - interested in narrative choice systems and player agency",
-          nid: "Master's in New Media Design from National Institute of Design, India's premier design school",
-          jntu: "Bachelor's in Fine Arts from JNTU, foundation in visual arts and design thinking"
-        };
-
-        return nodeData[nodeId] || `Information about ${nodeId}`;
-      }
-
-      announceNodeSelection(info) {
-        // Create announcement for screen readers
-        let liveRegion = document.getElementById('mindmap-announcement');
-        if (!liveRegion) {
-          liveRegion = document.createElement('div');
-          liveRegion.id = 'mindmap-announcement';
-          liveRegion.className = 'sr-only';
-          liveRegion.setAttribute('aria-live', 'polite');
-          liveRegion.setAttribute('aria-atomic', 'true');
-          document.body.appendChild(liveRegion);
         }
 
-        liveRegion.textContent = info;
+        // Load about page sections - MOST CRITICAL
+        if (window.AboutSections) {
+          console.log('📄 Loading about page sections...');
+          try {
+            await AboutSections.init();
+            console.log('✅ About page sections loaded successfully');
+          } catch (e) {
+            console.error('Failed to load about page sections:', error);
+          }
+        } else {
+          console.error('CRITICAL: AboutSections module not found!');
+        }
+
+        // Initialize other modules after sections are loaded
+        setTimeout(() => {
+          if (window.Chat) {
+            Chat.init();
+          }
+
+          if (window.Deck) {
+            Deck.init();
+          }
+
+          if (window.initializeLife) {
+            initializeLife();
+          }
+
+          if (window.MobileEnhancements) {
+            MobileEnhancements.init();
+          }
+        }, 100);
+
+        console.log('✅ All about page systems initialized');
+
+      } catch (error) {
+        console.error('Critical initialization error:', error);
       }
+    });
 
-      // Pan and Zoom functionality (for non-reduced-motion users)
-      startDrag(e) {
-        if (e.target.closest('.mind-node') || e.target.closest('.control-btn')) return;
-
-        this.isDragging = true;
-        this.dragStart = { x: e.clientX - this.translateX, y: e.clientY - this.translateY };
-        this.svg.style.cursor = 'grabbing';
+    // Handle visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (window.Particles && Particles.animationId) {
+          cancelAnimationFrame(Particles.animationId);
+        }
+      } else {
+        if (window.Particles && Particles.animate) {
+          Particles.animate();
+        }
       }
-
-      drag(e) {
-        if (!this.isDragging) return;
-
-        e.preventDefault();
-        this.translateX = e.clientX - this.dragStart.x;
-        this.translateY = e.clientY - this.dragStart.y;
-        this.updateTransform();
-      }
-
-      endDrag() {
-        this.isDragging = false;
-        this.svg.style.cursor = 'grab';
-      }
-
-      handleWheel(e) {
-        e.preventDefault();
-
-        const delta = e.deltaY > 0 ? 0.9 : 1.1;
-        const newScale = Math.max(0.3, Math.min(3, this.scale * delta));
-
-        // Zoom towards mouse position
-        const rect = this.svg.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        this.translateX = x - (x - this.translateX) * (newScale / this.scale);
-        this.translateY = y - (y - this.translateY) * (newScale / this.scale);
-        this.scale = newScale;
-
-        this.updateTransform();
-      }
-
-      zoomIn() {
-        this.scale = Math.min(3, this.scale * 1.2);
-        this.updateTransform();
-      }
-
-      zoomOut() {
-        this.scale = Math.max(0.3, this.scale * 0.8);
-        this.updateTransform();
-      }
-
-      resetView() {
-        this.scale = 1;
-        this.translateX = 0;
-        this.translateY = 0;
-        this.updateTransform();
-        this.clearConnectionHighlights();
-        this.announceNodeSelection("Mind map view reset to center");
-      }
-
-      updateTransform() {
-        const transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
-        this.svg.style.transform = transform;
-      }
-    }
-
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
-      new InteractiveMindMap();
     });
   </script>
 </body>

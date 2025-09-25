@@ -9,7 +9,7 @@ const Navigation = {
     this.nav = $('#nav');
     this.logo = $('#logo');
     this.links = $$('.nav-link');
-    this.sections = ['work', 'reading', 'about'];
+    this.sections = ['work'];
     
     this.setupScrollSpy();
     this.setupNavLinks();

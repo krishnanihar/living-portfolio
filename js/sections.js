@@ -2,13 +2,11 @@
 const Sections = {
   async init() {
     console.log('📄 Loading sections...');
-    
+
     try {
       await this.loadHero();
       await this.loadWork();
-      await this.loadReading();
-      await this.loadAbout();
-      
+
       this.setupInteractions();
 
       // Re-initialize navigation and theme after sections load
